@@ -640,8 +640,9 @@ ggsurvfit::ggcuminc(ci_obj) +
 
 ```{r}
 hrs_matched <- matched_data %>% filter(group == "hrs")
-a <- hrs %>% filter(subjectid %in% hrs_matched$subjectid) %>% select(site)
-table(a$site)
+site_info <- hrs %>% select(subjectid, site) %>% distinct(subjectid, .keep_all = TRUE)
+hrs_matched_with_site <- hrs_matched %>% left_join(site_info, by = "subjectid")
+table(hrs_matched_with_site$site)
 ```
 
 ```{r}
@@ -709,7 +710,8 @@ rrt_hrs <- hrs %>%
   rename(rrt = rrt_crrt) %>%
   mutate(rrt = as.numeric(rrt))
 
-rrt_all <- bind_rows(rrt_terli, rrt_hrs)
+rrt_all <- bind_rows(rrt_terli, rrt_hrs) %>%
+  distinct(subjectid, .keep_all = TRUE)
 
 matched_data_rrt <- matched_data %>%
   left_join(rrt_all, by = "subjectid")
