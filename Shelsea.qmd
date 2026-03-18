@@ -28,7 +28,7 @@ library(ggsurvfit)
 library(sqldf)
 library(table1)
 library(cobalt)
-
+library(kableExtra)
 library(MatchIt)
 ```
 
@@ -410,7 +410,9 @@ write.csv(
   file = "/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"
 )
 
-kableone(T1_all_final_subgroup, nonnormal = num_var, missing = TRUE)
+print(T1_all_final_subgroup, nonnormal = num_var, missing = TRUE, printToggle = FALSE) %>%
+  knitr::kable(format = "html", caption = "Table 1: Patient Characteristics") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
 ```
 
 ## Matching and balance diagnostics
@@ -499,7 +501,9 @@ T_req1 <- CreateTableOne(
   factorVars = c("etiology_cirrhosis_cat2")
 )
 
-kableone(T_req1, nonnormal = c("baseline_creatinine", "albumin_amount_admission", "creatinine_admission"))
+print(T_req1, nonnormal = c("baseline_creatinine", "albumin_amount_admission", "creatinine_admission"), printToggle = FALSE) %>%
+  knitr::kable(format = "html", caption = "Baseline Comparison Prior to Matching") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
 ```
 
 <!-- ## 2. Admission SCr ranges vs overall response (matched cohorts) -->
@@ -645,7 +649,9 @@ table1 <- CreateTableOne(
   factorVars = NULL
 )
 
-kableone(table1, nonnormal = "total_albumin")
+print(table1, nonnormal = "total_albumin", printToggle = FALSE) %>%
+  knitr::kable(format = "html", caption = "Total Albumin by Respiratory Failure") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
 ```
 
 #3  Multiviariate cmp:  
@@ -684,5 +690,7 @@ table1 <- CreateTableOne(
   factorVars = "AKI_responders_cat2"
 )
 
-kableone(table1)
+print(table1, printToggle = FALSE) %>%
+  knitr::kable(format = "html", caption = "AKI Responders by Group") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
 ```
