@@ -5,6 +5,9 @@ format:
     code-fold: true
     code-summary: "Show code"
 date: today
+execute:
+  warning: false
+  message: false
 ---
 
 ```{r, include=FALSE}
@@ -692,5 +695,18 @@ table1 <- CreateTableOne(
 
 print(table1, printToggle = FALSE) %>%
   knitr::kable(format = "html", caption = "AKI Responders by Group") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
+```
+
+```{r}
+table1_rrt <- CreateTableOne(
+  vars = "rrt",
+  strata = "group",
+  data = matched_data,
+  factorVars = "rrt"
+)
+
+print(table1_rrt, printToggle = FALSE) %>%
+  knitr::kable(format = "html", caption = "RRT by Group") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
 ```
