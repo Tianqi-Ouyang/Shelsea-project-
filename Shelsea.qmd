@@ -699,10 +699,25 @@ print(table1, printToggle = FALSE) %>%
 ```
 
 ```{r}
+# Build unified rrt variable from both cohorts
+rrt_terli <- terlipressin_numeric %>%
+  select(subjectid, rrt) %>%
+  mutate(rrt = as.numeric(rrt))
+
+rrt_hrs <- hrs %>%
+  select(subjectid, rrt_crrt) %>%
+  rename(rrt = rrt_crrt) %>%
+  mutate(rrt = as.numeric(rrt))
+
+rrt_all <- bind_rows(rrt_terli, rrt_hrs)
+
+matched_data_rrt <- matched_data %>%
+  left_join(rrt_all, by = "subjectid")
+
 table1_rrt <- CreateTableOne(
   vars = "rrt",
   strata = "group",
-  data = matched_data,
+  data = matched_data_rrt,
   factorVars = "rrt"
 )
 

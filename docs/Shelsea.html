@@ -332,214 +332,174 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>  <span class="st">"MELD_Na_baseline"</span>, <span class="st">"time_90days"</span>, <span class="st">"status_90days"</span>,<span class="st">"subjectid"</span></span>
 <span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>final_terlipressin <span class="ot">&lt;-</span> terlipressin_numeric <span class="sc">%&gt;%</span> <span class="fu">select</span>(var1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
-ℹ Please use `all_of()` or `any_of()` instead.
-  # Was:
-  data %&gt;% select(var1)
-
-  # Now:
-  data %&gt;% select(all_of(var1))
-
-See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>final_terlipressin <span class="ot">&lt;-</span> final_terlipressin <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MELD_Na_baseline =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(MELD_Na_baseline), <span class="fu">median</span>(MELD_Na_baseline, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), MELD_Na_baseline))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>order_names <span class="ot">&lt;-</span> <span class="fu">names</span>(final_terlipressin)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>final_terlipressin <span class="ot">&lt;-</span> terlipressin_numeric <span class="sc">%&gt;%</span> <span class="fu">select</span>(var1)</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>final_terlipressin <span class="ot">&lt;-</span> final_terlipressin <span class="sc">%&gt;%</span></span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MELD_Na_baseline =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(MELD_Na_baseline), <span class="fu">median</span>(MELD_Na_baseline, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), MELD_Na_baseline))</span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>order_names <span class="ot">&lt;-</span> <span class="fu">names</span>(final_terlipressin)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read hrs </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hrs <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/All_edited_new_12142022.xlsx"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read additional site-level data</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Baylor0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Baylor0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>Indiana0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Indiana0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>Jacksonville0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Jacksonville0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>New names:
-• `record_id` -&gt; `record_id...1`
-• `record_id` -&gt; `record_id...170`</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Kentukey0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Kentukey0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>MCW0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/MCW0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>MGH0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/MGH0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>Michigan0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Michigan0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sediment_description =</span> <span class="cn">NA</span>, <span class="at">albumin_amount_prior =</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>Oschner0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Oschner0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>Rochester0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Rochester0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>USC0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/USC0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sediment_description =</span> <span class="cn">NA</span>, <span class="at">creatinine_last_available =</span> <span class="cn">NA</span>,</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">rrt_crrt =</span> <span class="cn">NA</span>, <span class="at">days_peak_cre =</span> <span class="cn">NA</span>, <span class="at">days_last_cre =</span> <span class="cn">NA</span>, <span class="at">albumin_amount_prior =</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>New names:
-• `` -&gt; `...152`</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Yale0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Yale0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>addtional_vars <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  Baylor0913, Indiana0913, Jacksonville0913, Kentukey0913, MCW0913,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  MGH0913, Michigan0913, Oschner0913, Rochester0913, USC0913, Yale0913</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>albumin_amount_prior)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># merge all </span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>hrs <span class="ot">&lt;-</span> <span class="fu">merge</span>(hrs, addtional_vars, <span class="at">by =</span> <span class="st">"study_id"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">subjectid =</span> study_id)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean variables </span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>hrs <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">White =</span> <span class="fu">ifelse</span>(White <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiology_cirrhosis =</span> <span class="fu">case_when</span>(</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>) <span class="sc">~</span> <span class="dv">5</span>,</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co"># hrs &lt;- hrs %&gt;%</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#     liver_transplant_90days_time = ifelse(!is.na(days_liver), days_liver, 90),</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#     liver_transplant_90days_status=ifelse(!is.na(days_liver),1,0),</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Time variable: whichever event happens first</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#  # 1. TIME: The time is the minimum of the two event times</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#     time_to_death_90days_cmp = pmin(death_in_90days_time, liver_transplant_90days_time, na.rm = TRUE),</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#     </span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co">#     # 2. STATUS: Determine which event happened first</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co">#     status_90days = case_when(</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">#       # Condition 1: Death happened first (or on the exact same day as transplant)</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co">#       time_to_death_90days_cmp == death_in_90days_time &amp; death_in_90days_status == 1 ~ 1,</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co">#       </span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#       # Condition 2: Transplant happened first before death</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co">#       time_to_death_90days_cmp == liver_transplant_90days_time &amp; liver_transplant_90days_status == 1 ~ 2,</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#       </span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co">#       # Condition 0: Censored (Neither happened by the time of their follow-up/90 days)</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co">#       TRUE ~ 0</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#     )</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>final_hrs_aki <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"hrs"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(final_type_of_aki <span class="sc">==</span> <span class="dv">2</span>, hrs_vasoconstrictor <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(order_names) <span class="sc">%&gt;%</span></span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MELD_Na_baseline =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(MELD_Na_baseline), <span class="fu">median</span>(MELD_Na_baseline, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), MELD_Na_baseline))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
-ℹ Please use `all_of()` or `any_of()` instead.
-  # Was:
-  data %&gt;% select(order_names)
-
-  # Now:
-  data %&gt;% select(all_of(order_names))
-
-See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>all_final <span class="ot">&lt;-</span> <span class="fu">rbind</span>(final_hrs_aki, final_terlipressin) <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">liver_transplant =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(liver_transplant), <span class="dv">0</span>, liver_transplant),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">disposition_new =</span> <span class="fu">case_when</span>(</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      discharge_disposition <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      discharge_disposition <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">1</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">hrs_responders_cat_2 =</span> <span class="fu">ifelse</span>(AKI_responders <span class="sc">==</span> <span class="st">"no response"</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiology_cirrhosis_cat2 =</span> <span class="fu">ifelse</span>(etiology_cirrhosis <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_numerical =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">"hrs"</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read hrs </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>hrs <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/All_edited_new_12142022.xlsx"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read additional site-level data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Baylor0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Baylor0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>Indiana0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Indiana0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>Jacksonville0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Jacksonville0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>Kentukey0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Kentukey0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>MCW0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/MCW0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>MGH0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/MGH0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>Michigan0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Michigan0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sediment_description =</span> <span class="cn">NA</span>, <span class="at">albumin_amount_prior =</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>Oschner0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Oschner0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>Rochester0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Rochester0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>USC0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/USC0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sediment_description =</span> <span class="cn">NA</span>, <span class="at">creatinine_last_available =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>         <span class="at">rrt_crrt =</span> <span class="cn">NA</span>, <span class="at">days_peak_cre =</span> <span class="cn">NA</span>, <span class="at">days_last_cre =</span> <span class="cn">NA</span>, <span class="at">albumin_amount_prior =</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>Yale0913 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/Users/to909/Desktop/Andrew/Yale0913.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>addtional_vars <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  Baylor0913, Indiana0913, Jacksonville0913, Kentukey0913, MCW0913,</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  MGH0913, Michigan0913, Oschner0913, Rochester0913, USC0913, Yale0913</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>albumin_amount_prior)</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co"># merge all </span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>hrs <span class="ot">&lt;-</span> <span class="fu">merge</span>(hrs, addtional_vars, <span class="at">by =</span> <span class="st">"study_id"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">subjectid =</span> study_id)</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean variables </span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>hrs <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">White =</span> <span class="fu">ifelse</span>(White <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiology_cirrhosis =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>      etiology_cirrhosis <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">7</span>) <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="co"># hrs &lt;- hrs %&gt;%</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="co">#     liver_transplant_90days_time = ifelse(!is.na(days_liver), days_liver, 90),</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="co">#     liver_transplant_90days_status=ifelse(!is.na(days_liver),1,0),</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Time variable: whichever event happens first</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="co">#  # 1. TIME: The time is the minimum of the two event times</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="co">#     time_to_death_90days_cmp = pmin(death_in_90days_time, liver_transplant_90days_time, na.rm = TRUE),</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="co">#     </span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="co">#     # 2. STATUS: Determine which event happened first</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="co">#     status_90days = case_when(</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="co">#       # Condition 1: Death happened first (or on the exact same day as transplant)</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="co">#       time_to_death_90days_cmp == death_in_90days_time &amp; death_in_90days_status == 1 ~ 1,</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="co">#       </span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="co">#       # Condition 2: Transplant happened first before death</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="co">#       time_to_death_90days_cmp == liver_transplant_90days_time &amp; liver_transplant_90days_status == 1 ~ 2,</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="co">#       </span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="co">#       # Condition 0: Censored (Neither happened by the time of their follow-up/90 days)</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="co">#       TRUE ~ 0</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="co">#     )</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>final_hrs_aki <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"hrs"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(final_type_of_aki <span class="sc">==</span> <span class="dv">2</span>, hrs_vasoconstrictor <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(order_names) <span class="sc">%&gt;%</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MELD_Na_baseline =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(MELD_Na_baseline), <span class="fu">median</span>(MELD_Na_baseline, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), MELD_Na_baseline))</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>all_final <span class="ot">&lt;-</span> <span class="fu">rbind</span>(final_hrs_aki, final_terlipressin) <span class="sc">%&gt;%</span></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">liver_transplant =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(liver_transplant), <span class="dv">0</span>, liver_transplant),</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">disposition_new =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>      discharge_disposition <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>      discharge_disposition <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">1</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">hrs_responders_cat_2 =</span> <span class="fu">ifelse</span>(AKI_responders <span class="sc">==</span> <span class="st">"no response"</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiology_cirrhosis_cat2 =</span> <span class="fu">ifelse</span>(etiology_cirrhosis <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_numerical =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">"hrs"</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>num_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age_admission"</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age"</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumin_amount_admission"</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day1"</span>, <span class="st">"albumintotal_terli_day2"</span>, <span class="st">"albumintotal_terli_day3"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day4"</span>, <span class="st">"albumintotal_terli_day5"</span>, <span class="st">"albumintotal_terli_day6"</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day7"</span>, <span class="st">"albumintotal_terli_day8"</span>, <span class="st">"albumintotal_terli_day9"</span>,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day10"</span>, <span class="st">"albumintotal_terli_day11"</span>, <span class="st">"albumintotal_terli_day12"</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day13"</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"totalalbumin_before_terli"</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"na_admit"</span>, <span class="st">"sodium_admit"</span>, <span class="st">"k_admit"</span>, <span class="st">"k_terli_day0"</span>, <span class="st">"cl_admit"</span>,</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"chloride_terli_day0"</span>, <span class="st">"co2_admit"</span>, <span class="st">"bicarb_terli_day0"</span>, <span class="st">"bun_admit"</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bun_terli_day0"</span>, <span class="st">"creatinine_admission"</span>, <span class="st">"scr_admit"</span>, <span class="st">"urine_creatinine"</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ua_cr_value_hrs"</span>, <span class="st">"peak_creatinine"</span>, <span class="st">"scr_aki"</span>, <span class="st">"alt_admit"</span>, <span class="st">"alt_terli_day0"</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tb_admit"</span>, <span class="st">"bili_terli_day0"</span>, <span class="st">"alb_admit"</span>, <span class="st">"albumin_admit"</span>, <span class="st">"inr_admit"</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"wbc_admit"</span>, <span class="st">"wbc_terli_day0"</span>, <span class="st">"plt_admit"</span>, <span class="st">"plt_terli_day0"</span>, <span class="st">"urine_sodium"</span>,</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ua_na_value_hrs"</span>, <span class="st">"fena"</span>, <span class="st">"fena_hrs"</span>,</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sbp_admission"</span>, <span class="st">"aki_sbp"</span>, <span class="st">"dbp_admission"</span>, <span class="st">"aki_dbp"</span>,</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"MELD_baseline"</span>, <span class="st">"admit_meld"</span>, <span class="st">"MELD_Na_baseline"</span>, <span class="st">"admit_meld_na"</span>,</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"clif_score"</span>, <span class="st">"MAP"</span>, <span class="st">"map_terli_day0_time0"</span>, <span class="st">"CLIF_C_Score"</span>,</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"baseline_creatinine"</span>, <span class="st">"baseline_scr"</span>, <span class="st">"los"</span>, <span class="st">"days_to_discharge"</span>,</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"death_in_90days_time"</span>, <span class="st">"dc_days_to_death"</span>, <span class="st">"creatinine_admission"</span>, <span class="st">"time_90days"</span>,<span class="st">"site"</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>all_var <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(all_final), <span class="st">"subjectid"</span>)</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>cat_var <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(all_var, num_var)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>num_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age_admission"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumin_amount_admission"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day1"</span>, <span class="st">"albumintotal_terli_day2"</span>, <span class="st">"albumintotal_terli_day3"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day4"</span>, <span class="st">"albumintotal_terli_day5"</span>, <span class="st">"albumintotal_terli_day6"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day7"</span>, <span class="st">"albumintotal_terli_day8"</span>, <span class="st">"albumintotal_terli_day9"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day10"</span>, <span class="st">"albumintotal_terli_day11"</span>, <span class="st">"albumintotal_terli_day12"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumintotal_terli_day13"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"totalalbumin_before_terli"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"na_admit"</span>, <span class="st">"sodium_admit"</span>, <span class="st">"k_admit"</span>, <span class="st">"k_terli_day0"</span>, <span class="st">"cl_admit"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"chloride_terli_day0"</span>, <span class="st">"co2_admit"</span>, <span class="st">"bicarb_terli_day0"</span>, <span class="st">"bun_admit"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bun_terli_day0"</span>, <span class="st">"creatinine_admission"</span>, <span class="st">"scr_admit"</span>, <span class="st">"urine_creatinine"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ua_cr_value_hrs"</span>, <span class="st">"peak_creatinine"</span>, <span class="st">"scr_aki"</span>, <span class="st">"alt_admit"</span>, <span class="st">"alt_terli_day0"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tb_admit"</span>, <span class="st">"bili_terli_day0"</span>, <span class="st">"alb_admit"</span>, <span class="st">"albumin_admit"</span>, <span class="st">"inr_admit"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"wbc_admit"</span>, <span class="st">"wbc_terli_day0"</span>, <span class="st">"plt_admit"</span>, <span class="st">"plt_terli_day0"</span>, <span class="st">"urine_sodium"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ua_na_value_hrs"</span>, <span class="st">"fena"</span>, <span class="st">"fena_hrs"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sbp_admission"</span>, <span class="st">"aki_sbp"</span>, <span class="st">"dbp_admission"</span>, <span class="st">"aki_dbp"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"MELD_baseline"</span>, <span class="st">"admit_meld"</span>, <span class="st">"MELD_Na_baseline"</span>, <span class="st">"admit_meld_na"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"clif_score"</span>, <span class="st">"MAP"</span>, <span class="st">"map_terli_day0_time0"</span>, <span class="st">"CLIF_C_Score"</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"baseline_creatinine"</span>, <span class="st">"baseline_scr"</span>, <span class="st">"los"</span>, <span class="st">"days_to_discharge"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"death_in_90days_time"</span>, <span class="st">"dc_days_to_death"</span>, <span class="st">"creatinine_admission"</span>, <span class="st">"time_90days"</span>,<span class="st">"site"</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>all_var <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(all_final), <span class="st">"subjectid"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>cat_var <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(all_var, num_var)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="table-1" class="level2">
@@ -547,34 +507,34 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create Table 1 for exposure response</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>T1_all_final_subgroup <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> all_var,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeNA =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">addOverall =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> all_final,</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> cat_var</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>T1_all_final_subgroup_csv <span class="ot">&lt;-</span> <span class="fu">print</span>(</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  T1_all_final_subgroup,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">nonnormal =</span> num_var,</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">showAllLevels =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">noSpaces =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">printToggle =</span> <span class="cn">FALSE</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  T1_all_final_subgroup_csv,</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(T1_all_final_subgroup, <span class="at">nonnormal =</span> num_var, <span class="at">missing =</span> <span class="cn">TRUE</span>, <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"Table 1: Patient Characteristics"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create Table 1 for exposure response</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>T1_all_final_subgroup <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> all_var,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeNA =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">addOverall =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> all_final,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> cat_var</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>T1_all_final_subgroup_csv <span class="ot">&lt;-</span> <span class="fu">print</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  T1_all_final_subgroup,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">nonnormal =</span> num_var,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">showAllLevels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">noSpaces =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">printToggle =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  T1_all_final_subgroup_csv,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(T1_all_final_subgroup, <span class="at">nonnormal =</span> num_var, <span class="at">missing =</span> <span class="cn">TRUE</span>, <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"Table 1: Patient Characteristics"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="table-responsive">
@@ -1305,22 +1265,16 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">matchit</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  group_numerical <span class="sc">~</span> age_admission <span class="sc">+</span> sex <span class="sc">+</span> ascites_admission <span class="sc">+</span> etiology_cirrhosis_cat2 <span class="sc">+</span> MELD_Na_baseline,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data   =</span> all_final,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"nearest"</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">distance =</span> <span class="st">"glm"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ratio  =</span> <span class="dv">1</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">caliper =</span> <span class="fl">0.2</span>  <span class="co"># common recommendation: 0.2 on PS logit SD</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Fewer control units than treated units; not all treated units will get
-a match.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">match.data</span>(matched_data, <span class="at">drop.unmatched =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">matchit</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  group_numerical <span class="sc">~</span> age_admission <span class="sc">+</span> sex <span class="sc">+</span> ascites_admission <span class="sc">+</span> etiology_cirrhosis_cat2 <span class="sc">+</span> MELD_Na_baseline,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data   =</span> all_final,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"nearest"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">distance =</span> <span class="st">"glm"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ratio  =</span> <span class="dv">1</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">caliper =</span> <span class="fl">0.2</span>  <span class="co"># common recommendation: 0.2 on PS logit SD</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">match.data</span>(matched_data, <span class="at">drop.unmatched =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="balance-check-before-matching" class="level3">
@@ -1365,29 +1319,29 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="wdoktizpss" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wdoktizpss table {
+<div id="hhpsnmipyl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hhpsnmipyl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wdoktizpss thead, #wdoktizpss tbody, #wdoktizpss tfoot, #wdoktizpss tr, #wdoktizpss td, #wdoktizpss th {
+#hhpsnmipyl thead, #hhpsnmipyl tbody, #hhpsnmipyl tfoot, #hhpsnmipyl tr, #hhpsnmipyl td, #hhpsnmipyl th {
   border-style: none;
 }
 
-#wdoktizpss p {
+#hhpsnmipyl p {
   margin: 0;
   padding: 0;
 }
 
-#wdoktizpss .gt_table {
+#hhpsnmipyl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1413,12 +1367,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_caption {
+#hhpsnmipyl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wdoktizpss .gt_title {
+#hhpsnmipyl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1430,7 +1384,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#wdoktizpss .gt_subtitle {
+#hhpsnmipyl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1442,7 +1396,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#wdoktizpss .gt_heading {
+#hhpsnmipyl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1454,13 +1408,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_bottom_border {
+#hhpsnmipyl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_col_headings {
+#hhpsnmipyl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1475,7 +1429,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_col_heading {
+#hhpsnmipyl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1495,7 +1449,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#wdoktizpss .gt_column_spanner_outer {
+#hhpsnmipyl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1507,15 +1461,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#wdoktizpss .gt_column_spanner_outer:first-child {
+#hhpsnmipyl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wdoktizpss .gt_column_spanner_outer:last-child {
+#hhpsnmipyl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wdoktizpss .gt_column_spanner {
+#hhpsnmipyl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1527,11 +1481,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#wdoktizpss .gt_spanner_row {
+#hhpsnmipyl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wdoktizpss .gt_group_heading {
+#hhpsnmipyl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1557,7 +1511,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#wdoktizpss .gt_empty_group_heading {
+#hhpsnmipyl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1572,15 +1526,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#wdoktizpss .gt_from_md > :first-child {
+#hhpsnmipyl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wdoktizpss .gt_from_md > :last-child {
+#hhpsnmipyl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wdoktizpss .gt_row {
+#hhpsnmipyl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1599,7 +1553,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#wdoktizpss .gt_stub {
+#hhpsnmipyl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1612,7 +1566,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#wdoktizpss .gt_stub_row_group {
+#hhpsnmipyl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1626,15 +1580,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#wdoktizpss .gt_row_group_first td {
+#hhpsnmipyl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wdoktizpss .gt_row_group_first th {
+#hhpsnmipyl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wdoktizpss .gt_summary_row {
+#hhpsnmipyl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1644,16 +1598,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#wdoktizpss .gt_first_summary_row {
+#hhpsnmipyl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_first_summary_row.thick {
+#hhpsnmipyl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wdoktizpss .gt_last_summary_row {
+#hhpsnmipyl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1663,7 +1617,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_grand_summary_row {
+#hhpsnmipyl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1673,7 +1627,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#wdoktizpss .gt_first_grand_summary_row {
+#hhpsnmipyl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1683,7 +1637,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_last_grand_summary_row_top {
+#hhpsnmipyl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1693,11 +1647,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_striped {
+#hhpsnmipyl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wdoktizpss .gt_table_body {
+#hhpsnmipyl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1706,7 +1660,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_footnotes {
+#hhpsnmipyl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1720,7 +1674,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_footnote {
+#hhpsnmipyl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1729,7 +1683,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#wdoktizpss .gt_sourcenotes {
+#hhpsnmipyl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1743,7 +1697,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wdoktizpss .gt_sourcenote {
+#hhpsnmipyl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1751,72 +1705,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#wdoktizpss .gt_left {
+#hhpsnmipyl .gt_left {
   text-align: left;
 }
 
-#wdoktizpss .gt_center {
+#hhpsnmipyl .gt_center {
   text-align: center;
 }
 
-#wdoktizpss .gt_right {
+#hhpsnmipyl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wdoktizpss .gt_font_normal {
+#hhpsnmipyl .gt_font_normal {
   font-weight: normal;
 }
 
-#wdoktizpss .gt_font_bold {
+#hhpsnmipyl .gt_font_bold {
   font-weight: bold;
 }
 
-#wdoktizpss .gt_font_italic {
+#hhpsnmipyl .gt_font_italic {
   font-style: italic;
 }
 
-#wdoktizpss .gt_super {
+#hhpsnmipyl .gt_super {
   font-size: 65%;
 }
 
-#wdoktizpss .gt_footnote_marks {
+#hhpsnmipyl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wdoktizpss .gt_asterisk {
+#hhpsnmipyl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wdoktizpss .gt_indent_1 {
+#hhpsnmipyl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wdoktizpss .gt_indent_2 {
+#hhpsnmipyl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wdoktizpss .gt_indent_3 {
+#hhpsnmipyl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wdoktizpss .gt_indent_4 {
+#hhpsnmipyl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wdoktizpss .gt_indent_5 {
+#hhpsnmipyl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wdoktizpss .katex-display {
+#hhpsnmipyl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wdoktizpss div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hhpsnmipyl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1873,33 +1827,33 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>5 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="yrrygnlhcu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yrrygnlhcu table {
+<div id="hfilbblpwf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hfilbblpwf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yrrygnlhcu thead, #yrrygnlhcu tbody, #yrrygnlhcu tfoot, #yrrygnlhcu tr, #yrrygnlhcu td, #yrrygnlhcu th {
+#hfilbblpwf thead, #hfilbblpwf tbody, #hfilbblpwf tfoot, #hfilbblpwf tr, #hfilbblpwf td, #hfilbblpwf th {
   border-style: none;
 }
 
-#yrrygnlhcu p {
+#hfilbblpwf p {
   margin: 0;
   padding: 0;
 }
 
-#yrrygnlhcu .gt_table {
+#hfilbblpwf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1925,12 +1879,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_caption {
+#hfilbblpwf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yrrygnlhcu .gt_title {
+#hfilbblpwf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1942,7 +1896,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#yrrygnlhcu .gt_subtitle {
+#hfilbblpwf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1954,7 +1908,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#yrrygnlhcu .gt_heading {
+#hfilbblpwf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1966,13 +1920,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_bottom_border {
+#hfilbblpwf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_col_headings {
+#hfilbblpwf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1987,7 +1941,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_col_heading {
+#hfilbblpwf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2007,7 +1961,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#yrrygnlhcu .gt_column_spanner_outer {
+#hfilbblpwf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2019,15 +1973,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#yrrygnlhcu .gt_column_spanner_outer:first-child {
+#hfilbblpwf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yrrygnlhcu .gt_column_spanner_outer:last-child {
+#hfilbblpwf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yrrygnlhcu .gt_column_spanner {
+#hfilbblpwf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2039,11 +1993,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#yrrygnlhcu .gt_spanner_row {
+#hfilbblpwf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yrrygnlhcu .gt_group_heading {
+#hfilbblpwf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2069,7 +2023,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#yrrygnlhcu .gt_empty_group_heading {
+#hfilbblpwf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2084,15 +2038,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#yrrygnlhcu .gt_from_md > :first-child {
+#hfilbblpwf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yrrygnlhcu .gt_from_md > :last-child {
+#hfilbblpwf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yrrygnlhcu .gt_row {
+#hfilbblpwf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2111,7 +2065,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#yrrygnlhcu .gt_stub {
+#hfilbblpwf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2124,7 +2078,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yrrygnlhcu .gt_stub_row_group {
+#hfilbblpwf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2138,15 +2092,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#yrrygnlhcu .gt_row_group_first td {
+#hfilbblpwf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yrrygnlhcu .gt_row_group_first th {
+#hfilbblpwf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yrrygnlhcu .gt_summary_row {
+#hfilbblpwf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2156,16 +2110,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yrrygnlhcu .gt_first_summary_row {
+#hfilbblpwf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_first_summary_row.thick {
+#hfilbblpwf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yrrygnlhcu .gt_last_summary_row {
+#hfilbblpwf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2175,7 +2129,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_grand_summary_row {
+#hfilbblpwf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2185,7 +2139,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yrrygnlhcu .gt_first_grand_summary_row {
+#hfilbblpwf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2195,7 +2149,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_last_grand_summary_row_top {
+#hfilbblpwf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2205,11 +2159,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_striped {
+#hfilbblpwf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yrrygnlhcu .gt_table_body {
+#hfilbblpwf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2218,7 +2172,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_footnotes {
+#hfilbblpwf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2232,7 +2186,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_footnote {
+#hfilbblpwf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2241,7 +2195,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yrrygnlhcu .gt_sourcenotes {
+#hfilbblpwf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2255,7 +2209,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yrrygnlhcu .gt_sourcenote {
+#hfilbblpwf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2263,72 +2217,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yrrygnlhcu .gt_left {
+#hfilbblpwf .gt_left {
   text-align: left;
 }
 
-#yrrygnlhcu .gt_center {
+#hfilbblpwf .gt_center {
   text-align: center;
 }
 
-#yrrygnlhcu .gt_right {
+#hfilbblpwf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yrrygnlhcu .gt_font_normal {
+#hfilbblpwf .gt_font_normal {
   font-weight: normal;
 }
 
-#yrrygnlhcu .gt_font_bold {
+#hfilbblpwf .gt_font_bold {
   font-weight: bold;
 }
 
-#yrrygnlhcu .gt_font_italic {
+#hfilbblpwf .gt_font_italic {
   font-style: italic;
 }
 
-#yrrygnlhcu .gt_super {
+#hfilbblpwf .gt_super {
   font-size: 65%;
 }
 
-#yrrygnlhcu .gt_footnote_marks {
+#hfilbblpwf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yrrygnlhcu .gt_asterisk {
+#hfilbblpwf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yrrygnlhcu .gt_indent_1 {
+#hfilbblpwf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yrrygnlhcu .gt_indent_2 {
+#hfilbblpwf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yrrygnlhcu .gt_indent_3 {
+#hfilbblpwf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yrrygnlhcu .gt_indent_4 {
+#hfilbblpwf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yrrygnlhcu .gt_indent_5 {
+#hfilbblpwf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yrrygnlhcu .katex-display {
+#hfilbblpwf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yrrygnlhcu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hfilbblpwf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2399,36 +2353,36 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score <span class="sc">+</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    prophylactic_antibiotic <span class="sc">+</span> beta_blockers <span class="sc">+</span> k_admit <span class="sc">+</span> cl_admit,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    prophylactic_antibiotic <span class="sc">+</span> beta_blockers <span class="sc">+</span> k_admit <span class="sc">+</span> cl_admit,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>14 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="vbljcigaxk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vbljcigaxk table {
+<div id="zozxfidqap" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zozxfidqap table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vbljcigaxk thead, #vbljcigaxk tbody, #vbljcigaxk tfoot, #vbljcigaxk tr, #vbljcigaxk td, #vbljcigaxk th {
+#zozxfidqap thead, #zozxfidqap tbody, #zozxfidqap tfoot, #zozxfidqap tr, #zozxfidqap td, #zozxfidqap th {
   border-style: none;
 }
 
-#vbljcigaxk p {
+#zozxfidqap p {
   margin: 0;
   padding: 0;
 }
 
-#vbljcigaxk .gt_table {
+#zozxfidqap .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2454,12 +2408,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_caption {
+#zozxfidqap .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vbljcigaxk .gt_title {
+#zozxfidqap .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2471,7 +2425,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#vbljcigaxk .gt_subtitle {
+#zozxfidqap .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2483,7 +2437,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#vbljcigaxk .gt_heading {
+#zozxfidqap .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2495,13 +2449,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_bottom_border {
+#zozxfidqap .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_col_headings {
+#zozxfidqap .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2516,7 +2470,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_col_heading {
+#zozxfidqap .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2536,7 +2490,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#vbljcigaxk .gt_column_spanner_outer {
+#zozxfidqap .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2548,15 +2502,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#vbljcigaxk .gt_column_spanner_outer:first-child {
+#zozxfidqap .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vbljcigaxk .gt_column_spanner_outer:last-child {
+#zozxfidqap .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vbljcigaxk .gt_column_spanner {
+#zozxfidqap .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2568,11 +2522,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#vbljcigaxk .gt_spanner_row {
+#zozxfidqap .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vbljcigaxk .gt_group_heading {
+#zozxfidqap .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2598,7 +2552,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#vbljcigaxk .gt_empty_group_heading {
+#zozxfidqap .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2613,15 +2567,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#vbljcigaxk .gt_from_md > :first-child {
+#zozxfidqap .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vbljcigaxk .gt_from_md > :last-child {
+#zozxfidqap .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vbljcigaxk .gt_row {
+#zozxfidqap .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2640,7 +2594,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#vbljcigaxk .gt_stub {
+#zozxfidqap .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2653,7 +2607,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#vbljcigaxk .gt_stub_row_group {
+#zozxfidqap .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2667,15 +2621,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#vbljcigaxk .gt_row_group_first td {
+#zozxfidqap .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vbljcigaxk .gt_row_group_first th {
+#zozxfidqap .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vbljcigaxk .gt_summary_row {
+#zozxfidqap .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2685,16 +2639,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#vbljcigaxk .gt_first_summary_row {
+#zozxfidqap .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_first_summary_row.thick {
+#zozxfidqap .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vbljcigaxk .gt_last_summary_row {
+#zozxfidqap .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2704,7 +2658,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_grand_summary_row {
+#zozxfidqap .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2714,7 +2668,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#vbljcigaxk .gt_first_grand_summary_row {
+#zozxfidqap .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2724,7 +2678,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_last_grand_summary_row_top {
+#zozxfidqap .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2734,11 +2688,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_striped {
+#zozxfidqap .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vbljcigaxk .gt_table_body {
+#zozxfidqap .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2747,7 +2701,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_footnotes {
+#zozxfidqap .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2761,7 +2715,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_footnote {
+#zozxfidqap .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2770,7 +2724,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#vbljcigaxk .gt_sourcenotes {
+#zozxfidqap .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2784,7 +2738,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#vbljcigaxk .gt_sourcenote {
+#zozxfidqap .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2792,72 +2746,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#vbljcigaxk .gt_left {
+#zozxfidqap .gt_left {
   text-align: left;
 }
 
-#vbljcigaxk .gt_center {
+#zozxfidqap .gt_center {
   text-align: center;
 }
 
-#vbljcigaxk .gt_right {
+#zozxfidqap .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vbljcigaxk .gt_font_normal {
+#zozxfidqap .gt_font_normal {
   font-weight: normal;
 }
 
-#vbljcigaxk .gt_font_bold {
+#zozxfidqap .gt_font_bold {
   font-weight: bold;
 }
 
-#vbljcigaxk .gt_font_italic {
+#zozxfidqap .gt_font_italic {
   font-style: italic;
 }
 
-#vbljcigaxk .gt_super {
+#zozxfidqap .gt_super {
   font-size: 65%;
 }
 
-#vbljcigaxk .gt_footnote_marks {
+#zozxfidqap .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vbljcigaxk .gt_asterisk {
+#zozxfidqap .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vbljcigaxk .gt_indent_1 {
+#zozxfidqap .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vbljcigaxk .gt_indent_2 {
+#zozxfidqap .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vbljcigaxk .gt_indent_3 {
+#zozxfidqap .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vbljcigaxk .gt_indent_4 {
+#zozxfidqap .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vbljcigaxk .gt_indent_5 {
+#zozxfidqap .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vbljcigaxk .katex-display {
+#zozxfidqap .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vbljcigaxk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zozxfidqap div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2957,27 +2911,27 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>vars_req1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"etiology_cirrhosis_cat2"</span>,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"baseline_creatinine"</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumin_amount_admission"</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"creatinine_admission"</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>T_req1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> vars_req1,</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeNA =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">addOverall =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> all_final,</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">"etiology_cirrhosis_cat2"</span>)</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(T_req1, <span class="at">nonnormal =</span> <span class="fu">c</span>(<span class="st">"baseline_creatinine"</span>, <span class="st">"albumin_amount_admission"</span>, <span class="st">"creatinine_admission"</span>), <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"Baseline Comparison Prior to Matching"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>vars_req1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"etiology_cirrhosis_cat2"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"baseline_creatinine"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumin_amount_admission"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"creatinine_admission"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>T_req1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> vars_req1,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeNA =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">addOverall =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> all_final,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">"etiology_cirrhosis_cat2"</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(T_req1, <span class="at">nonnormal =</span> <span class="fu">c</span>(<span class="st">"baseline_creatinine"</span>, <span class="st">"albumin_amount_admission"</span>, <span class="st">"creatinine_admission"</span>), <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"Baseline Comparison Prior to Matching"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="table-responsive">
@@ -3037,58 +2991,58 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define admission SCr using creatinine_admission for both groups</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>scr_day0 <span class="ot">&lt;-</span> terlipressin_numeric <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjectid, scr_terli_day0)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">merge</span>(scr_day0, <span class="at">by =</span> <span class="st">"subjectid"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_terli_day0 =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(scr_terli_day0),creatinine_admission,scr_terli_day0))</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">scr =</span> scr_terli_day0)</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_cat =</span> <span class="fu">cut</span>(scr, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>tab_req2 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scr_cat, group) <span class="sc">%&gt;%</span></span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> scr_cat,</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(scr_cat) <span class="sc">%&gt;%</span></span>
-<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
-<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"scr_cat"</span></span>
-<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(scr_cat)</span>
-<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>tab_req2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define admission SCr using creatinine_admission for both groups</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>scr_day0 <span class="ot">&lt;-</span> terlipressin_numeric <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjectid, scr_terli_day0)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">merge</span>(scr_day0, <span class="at">by =</span> <span class="st">"subjectid"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_terli_day0 =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(scr_terli_day0),creatinine_admission,scr_terli_day0))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">scr =</span> scr_terli_day0)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_cat =</span> <span class="fu">cut</span>(scr, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>tab_req2 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scr_cat, group) <span class="sc">%&gt;%</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> scr_cat,</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(scr_cat) <span class="sc">%&gt;%</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"scr_cat"</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(scr_cat)</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>tab_req2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 4
@@ -3109,46 +3063,46 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">peak_creatinine_cat =</span> <span class="fu">cut</span>(peak_creatinine, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>tab_req3 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(peak_creatinine_cat, group) <span class="sc">%&gt;%</span></span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> peak_creatinine_cat,</span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(peak_creatinine_cat) <span class="sc">%&gt;%</span></span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
-<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"peak_creatinine_cat"</span></span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(peak_creatinine_cat)</span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>tab_req3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">peak_creatinine_cat =</span> <span class="fu">cut</span>(peak_creatinine, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>tab_req3 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(peak_creatinine_cat, group) <span class="sc">%&gt;%</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> peak_creatinine_cat,</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(peak_creatinine_cat) <span class="sc">%&gt;%</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"peak_creatinine_cat"</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(peak_creatinine_cat)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>tab_req3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 4
@@ -3169,28 +3123,25 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ci_obj <span class="ot">&lt;-</span> tidycmprsk<span class="sc">::</span><span class="fu">cuminc</span>(</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cencode =</span> <span class="dv">0</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>ggsurvfit<span class="sc">::</span><span class="fu">ggcuminc</span>(ci_obj) <span class="sc">+</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Days"</span>,</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cumulative incidence of death"</span>,</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Cohort"</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">15</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ci_obj <span class="ot">&lt;-</span> tidycmprsk<span class="sc">::</span><span class="fu">cuminc</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cencode =</span> <span class="dv">0</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>ggsurvfit<span class="sc">::</span><span class="fu">ggcuminc</span>(ci_obj) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Days"</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cumulative incidence of death"</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Cohort"</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">15</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Plotting outcome "1".</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3203,9 +3154,9 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>hrs_matched <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"hrs"</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subjectid <span class="sc">%in%</span> hrs_matched<span class="sc">$</span>subjectid) <span class="sc">%&gt;%</span> <span class="fu">select</span>(site)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(a<span class="sc">$</span>site)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>hrs_matched <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"hrs"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subjectid <span class="sc">%in%</span> hrs_matched<span class="sc">$</span>subjectid) <span class="sc">%&gt;%</span> <span class="fu">select</span>(site)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(a<span class="sc">$</span>site)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -3218,16 +3169,16 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"total_albumin"</span>,</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"terli_ae_respfail"</span>,</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> terlipressin_numeric,</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="cn">NULL</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1, <span class="at">nonnormal =</span> <span class="st">"total_albumin"</span>, <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"Total Albumin by Respiratory Failure"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"total_albumin"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"terli_ae_respfail"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> terlipressin_numeric,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="cn">NULL</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1, <span class="at">nonnormal =</span> <span class="st">"total_albumin"</span>, <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"Total Albumin by Respiratory Failure"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="table-responsive">
@@ -3265,23 +3216,23 @@ All     190     190</code></pre>
 <p>#3 Multiviariate cmp:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="uggvxcxhek" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#uggvxcxhek table {
+<div id="wiwaunlawj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wiwaunlawj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#uggvxcxhek thead, #uggvxcxhek tbody, #uggvxcxhek tfoot, #uggvxcxhek tr, #uggvxcxhek td, #uggvxcxhek th {
+#wiwaunlawj thead, #wiwaunlawj tbody, #wiwaunlawj tfoot, #wiwaunlawj tr, #wiwaunlawj td, #wiwaunlawj th {
   border-style: none;
 }
 
-#uggvxcxhek p {
+#wiwaunlawj p {
   margin: 0;
   padding: 0;
 }
 
-#uggvxcxhek .gt_table {
+#wiwaunlawj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3307,12 +3258,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_caption {
+#wiwaunlawj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#uggvxcxhek .gt_title {
+#wiwaunlawj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3324,7 +3275,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#uggvxcxhek .gt_subtitle {
+#wiwaunlawj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3336,7 +3287,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#uggvxcxhek .gt_heading {
+#wiwaunlawj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3348,13 +3299,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_bottom_border {
+#wiwaunlawj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_col_headings {
+#wiwaunlawj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3369,7 +3320,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_col_heading {
+#wiwaunlawj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3389,7 +3340,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#uggvxcxhek .gt_column_spanner_outer {
+#wiwaunlawj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3401,15 +3352,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#uggvxcxhek .gt_column_spanner_outer:first-child {
+#wiwaunlawj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#uggvxcxhek .gt_column_spanner_outer:last-child {
+#wiwaunlawj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#uggvxcxhek .gt_column_spanner {
+#wiwaunlawj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3421,11 +3372,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#uggvxcxhek .gt_spanner_row {
+#wiwaunlawj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#uggvxcxhek .gt_group_heading {
+#wiwaunlawj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3451,7 +3402,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#uggvxcxhek .gt_empty_group_heading {
+#wiwaunlawj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3466,15 +3417,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#uggvxcxhek .gt_from_md > :first-child {
+#wiwaunlawj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#uggvxcxhek .gt_from_md > :last-child {
+#wiwaunlawj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#uggvxcxhek .gt_row {
+#wiwaunlawj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3493,7 +3444,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#uggvxcxhek .gt_stub {
+#wiwaunlawj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3506,7 +3457,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#uggvxcxhek .gt_stub_row_group {
+#wiwaunlawj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3520,15 +3471,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#uggvxcxhek .gt_row_group_first td {
+#wiwaunlawj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#uggvxcxhek .gt_row_group_first th {
+#wiwaunlawj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#uggvxcxhek .gt_summary_row {
+#wiwaunlawj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3538,16 +3489,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#uggvxcxhek .gt_first_summary_row {
+#wiwaunlawj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_first_summary_row.thick {
+#wiwaunlawj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#uggvxcxhek .gt_last_summary_row {
+#wiwaunlawj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3557,7 +3508,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_grand_summary_row {
+#wiwaunlawj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3567,7 +3518,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#uggvxcxhek .gt_first_grand_summary_row {
+#wiwaunlawj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3577,7 +3528,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_last_grand_summary_row_top {
+#wiwaunlawj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3587,11 +3538,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_striped {
+#wiwaunlawj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#uggvxcxhek .gt_table_body {
+#wiwaunlawj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3600,7 +3551,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_footnotes {
+#wiwaunlawj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3614,7 +3565,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_footnote {
+#wiwaunlawj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3623,7 +3574,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#uggvxcxhek .gt_sourcenotes {
+#wiwaunlawj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3637,7 +3588,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#uggvxcxhek .gt_sourcenote {
+#wiwaunlawj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3645,72 +3596,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#uggvxcxhek .gt_left {
+#wiwaunlawj .gt_left {
   text-align: left;
 }
 
-#uggvxcxhek .gt_center {
+#wiwaunlawj .gt_center {
   text-align: center;
 }
 
-#uggvxcxhek .gt_right {
+#wiwaunlawj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#uggvxcxhek .gt_font_normal {
+#wiwaunlawj .gt_font_normal {
   font-weight: normal;
 }
 
-#uggvxcxhek .gt_font_bold {
+#wiwaunlawj .gt_font_bold {
   font-weight: bold;
 }
 
-#uggvxcxhek .gt_font_italic {
+#wiwaunlawj .gt_font_italic {
   font-style: italic;
 }
 
-#uggvxcxhek .gt_super {
+#wiwaunlawj .gt_super {
   font-size: 65%;
 }
 
-#uggvxcxhek .gt_footnote_marks {
+#wiwaunlawj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#uggvxcxhek .gt_asterisk {
+#wiwaunlawj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#uggvxcxhek .gt_indent_1 {
+#wiwaunlawj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#uggvxcxhek .gt_indent_2 {
+#wiwaunlawj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#uggvxcxhek .gt_indent_3 {
+#wiwaunlawj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#uggvxcxhek .gt_indent_4 {
+#wiwaunlawj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#uggvxcxhek .gt_indent_5 {
+#wiwaunlawj .gt_indent_5 {
   text-indent: 25px;
 }
 
-#uggvxcxhek .katex-display {
+#wiwaunlawj .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#uggvxcxhek div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wiwaunlawj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3777,23 +3728,23 @@ All     190     190</code></pre>
 <pre><code>49 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="hqxareakic" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hqxareakic table {
+<div id="iyapgljiny" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#iyapgljiny table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hqxareakic thead, #hqxareakic tbody, #hqxareakic tfoot, #hqxareakic tr, #hqxareakic td, #hqxareakic th {
+#iyapgljiny thead, #iyapgljiny tbody, #iyapgljiny tfoot, #iyapgljiny tr, #iyapgljiny td, #iyapgljiny th {
   border-style: none;
 }
 
-#hqxareakic p {
+#iyapgljiny p {
   margin: 0;
   padding: 0;
 }
 
-#hqxareakic .gt_table {
+#iyapgljiny .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3819,12 +3770,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#hqxareakic .gt_caption {
+#iyapgljiny .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hqxareakic .gt_title {
+#iyapgljiny .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3836,7 +3787,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#hqxareakic .gt_subtitle {
+#iyapgljiny .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3848,7 +3799,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#hqxareakic .gt_heading {
+#iyapgljiny .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3860,13 +3811,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hqxareakic .gt_bottom_border {
+#iyapgljiny .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hqxareakic .gt_col_headings {
+#iyapgljiny .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3881,7 +3832,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hqxareakic .gt_col_heading {
+#iyapgljiny .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3901,7 +3852,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#hqxareakic .gt_column_spanner_outer {
+#iyapgljiny .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3913,15 +3864,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#hqxareakic .gt_column_spanner_outer:first-child {
+#iyapgljiny .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hqxareakic .gt_column_spanner_outer:last-child {
+#iyapgljiny .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hqxareakic .gt_column_spanner {
+#iyapgljiny .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3933,11 +3884,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#hqxareakic .gt_spanner_row {
+#iyapgljiny .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hqxareakic .gt_group_heading {
+#iyapgljiny .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3963,7 +3914,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#hqxareakic .gt_empty_group_heading {
+#iyapgljiny .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3978,15 +3929,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#hqxareakic .gt_from_md > :first-child {
+#iyapgljiny .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hqxareakic .gt_from_md > :last-child {
+#iyapgljiny .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hqxareakic .gt_row {
+#iyapgljiny .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4005,7 +3956,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#hqxareakic .gt_stub {
+#iyapgljiny .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4018,7 +3969,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#hqxareakic .gt_stub_row_group {
+#iyapgljiny .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4032,15 +3983,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#hqxareakic .gt_row_group_first td {
+#iyapgljiny .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hqxareakic .gt_row_group_first th {
+#iyapgljiny .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hqxareakic .gt_summary_row {
+#iyapgljiny .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4050,16 +4001,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#hqxareakic .gt_first_summary_row {
+#iyapgljiny .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hqxareakic .gt_first_summary_row.thick {
+#iyapgljiny .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hqxareakic .gt_last_summary_row {
+#iyapgljiny .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4069,7 +4020,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hqxareakic .gt_grand_summary_row {
+#iyapgljiny .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4079,7 +4030,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#hqxareakic .gt_first_grand_summary_row {
+#iyapgljiny .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4089,7 +4040,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#hqxareakic .gt_last_grand_summary_row_top {
+#iyapgljiny .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4099,11 +4050,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hqxareakic .gt_striped {
+#iyapgljiny .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hqxareakic .gt_table_body {
+#iyapgljiny .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4112,7 +4063,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hqxareakic .gt_footnotes {
+#iyapgljiny .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4126,7 +4077,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hqxareakic .gt_footnote {
+#iyapgljiny .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4135,7 +4086,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#hqxareakic .gt_sourcenotes {
+#iyapgljiny .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4149,7 +4100,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hqxareakic .gt_sourcenote {
+#iyapgljiny .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4157,72 +4108,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#hqxareakic .gt_left {
+#iyapgljiny .gt_left {
   text-align: left;
 }
 
-#hqxareakic .gt_center {
+#iyapgljiny .gt_center {
   text-align: center;
 }
 
-#hqxareakic .gt_right {
+#iyapgljiny .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hqxareakic .gt_font_normal {
+#iyapgljiny .gt_font_normal {
   font-weight: normal;
 }
 
-#hqxareakic .gt_font_bold {
+#iyapgljiny .gt_font_bold {
   font-weight: bold;
 }
 
-#hqxareakic .gt_font_italic {
+#iyapgljiny .gt_font_italic {
   font-style: italic;
 }
 
-#hqxareakic .gt_super {
+#iyapgljiny .gt_super {
   font-size: 65%;
 }
 
-#hqxareakic .gt_footnote_marks {
+#iyapgljiny .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hqxareakic .gt_asterisk {
+#iyapgljiny .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hqxareakic .gt_indent_1 {
+#iyapgljiny .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hqxareakic .gt_indent_2 {
+#iyapgljiny .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hqxareakic .gt_indent_3 {
+#iyapgljiny .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hqxareakic .gt_indent_4 {
+#iyapgljiny .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hqxareakic .gt_indent_5 {
+#iyapgljiny .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hqxareakic .katex-display {
+#iyapgljiny .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hqxareakic div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#iyapgljiny div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4317,23 +4268,23 @@ All     190     190</code></pre>
 <pre><code>49 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="yclxfllzds" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yclxfllzds table {
+<div id="kywbwtxxrn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kywbwtxxrn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yclxfllzds thead, #yclxfllzds tbody, #yclxfllzds tfoot, #yclxfllzds tr, #yclxfllzds td, #yclxfllzds th {
+#kywbwtxxrn thead, #kywbwtxxrn tbody, #kywbwtxxrn tfoot, #kywbwtxxrn tr, #kywbwtxxrn td, #kywbwtxxrn th {
   border-style: none;
 }
 
-#yclxfllzds p {
+#kywbwtxxrn p {
   margin: 0;
   padding: 0;
 }
 
-#yclxfllzds .gt_table {
+#kywbwtxxrn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4359,12 +4310,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_caption {
+#kywbwtxxrn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yclxfllzds .gt_title {
+#kywbwtxxrn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4376,7 +4327,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#yclxfllzds .gt_subtitle {
+#kywbwtxxrn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4388,7 +4339,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#yclxfllzds .gt_heading {
+#kywbwtxxrn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4400,13 +4351,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_bottom_border {
+#kywbwtxxrn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_col_headings {
+#kywbwtxxrn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4421,7 +4372,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_col_heading {
+#kywbwtxxrn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4441,7 +4392,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#yclxfllzds .gt_column_spanner_outer {
+#kywbwtxxrn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4453,15 +4404,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#yclxfllzds .gt_column_spanner_outer:first-child {
+#kywbwtxxrn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yclxfllzds .gt_column_spanner_outer:last-child {
+#kywbwtxxrn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yclxfllzds .gt_column_spanner {
+#kywbwtxxrn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4473,11 +4424,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#yclxfllzds .gt_spanner_row {
+#kywbwtxxrn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yclxfllzds .gt_group_heading {
+#kywbwtxxrn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4503,7 +4454,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#yclxfllzds .gt_empty_group_heading {
+#kywbwtxxrn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4518,15 +4469,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#yclxfllzds .gt_from_md > :first-child {
+#kywbwtxxrn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yclxfllzds .gt_from_md > :last-child {
+#kywbwtxxrn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yclxfllzds .gt_row {
+#kywbwtxxrn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4545,7 +4496,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#yclxfllzds .gt_stub {
+#kywbwtxxrn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4558,7 +4509,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yclxfllzds .gt_stub_row_group {
+#kywbwtxxrn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4572,15 +4523,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#yclxfllzds .gt_row_group_first td {
+#kywbwtxxrn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yclxfllzds .gt_row_group_first th {
+#kywbwtxxrn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yclxfllzds .gt_summary_row {
+#kywbwtxxrn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4590,16 +4541,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yclxfllzds .gt_first_summary_row {
+#kywbwtxxrn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_first_summary_row.thick {
+#kywbwtxxrn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yclxfllzds .gt_last_summary_row {
+#kywbwtxxrn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4609,7 +4560,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_grand_summary_row {
+#kywbwtxxrn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4619,7 +4570,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yclxfllzds .gt_first_grand_summary_row {
+#kywbwtxxrn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4629,7 +4580,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_last_grand_summary_row_top {
+#kywbwtxxrn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4639,11 +4590,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_striped {
+#kywbwtxxrn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yclxfllzds .gt_table_body {
+#kywbwtxxrn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4652,7 +4603,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_footnotes {
+#kywbwtxxrn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4666,7 +4617,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_footnote {
+#kywbwtxxrn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4675,7 +4626,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yclxfllzds .gt_sourcenotes {
+#kywbwtxxrn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4689,7 +4640,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yclxfllzds .gt_sourcenote {
+#kywbwtxxrn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4697,72 +4648,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yclxfllzds .gt_left {
+#kywbwtxxrn .gt_left {
   text-align: left;
 }
 
-#yclxfllzds .gt_center {
+#kywbwtxxrn .gt_center {
   text-align: center;
 }
 
-#yclxfllzds .gt_right {
+#kywbwtxxrn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yclxfllzds .gt_font_normal {
+#kywbwtxxrn .gt_font_normal {
   font-weight: normal;
 }
 
-#yclxfllzds .gt_font_bold {
+#kywbwtxxrn .gt_font_bold {
   font-weight: bold;
 }
 
-#yclxfllzds .gt_font_italic {
+#kywbwtxxrn .gt_font_italic {
   font-style: italic;
 }
 
-#yclxfllzds .gt_super {
+#kywbwtxxrn .gt_super {
   font-size: 65%;
 }
 
-#yclxfllzds .gt_footnote_marks {
+#kywbwtxxrn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yclxfllzds .gt_asterisk {
+#kywbwtxxrn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yclxfllzds .gt_indent_1 {
+#kywbwtxxrn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yclxfllzds .gt_indent_2 {
+#kywbwtxxrn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yclxfllzds .gt_indent_3 {
+#kywbwtxxrn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yclxfllzds .gt_indent_4 {
+#kywbwtxxrn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yclxfllzds .gt_indent_5 {
+#kywbwtxxrn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yclxfllzds .katex-display {
+#kywbwtxxrn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yclxfllzds div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kywbwtxxrn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4854,18 +4805,18 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AKI_responders_cat2 =</span> <span class="fu">ifelse</span>(AKI_responders <span class="sc">==</span> <span class="st">"no response"</span>, <span class="st">"no response"</span>, <span class="st">"overall response"</span>))</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"AKI_responders_cat2"</span>,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="st">"AKI_responders_cat2"</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1, <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"AKI Responders by Group"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AKI_responders_cat2 =</span> <span class="fu">ifelse</span>(AKI_responders <span class="sc">==</span> <span class="st">"no response"</span>, <span class="st">"no response"</span>, <span class="st">"overall response"</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"AKI_responders_cat2"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="st">"AKI_responders_cat2"</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1, <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"AKI Responders by Group"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="table-responsive">
@@ -4893,6 +4844,68 @@ All     190     190</code></pre>
 <td style="text-align: left;">75 (39.7)</td>
 <td style="text-align: left;">106 (55.8)</td>
 <td style="text-align: left;">0.002</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build unified rrt variable from both cohorts</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>rrt_terli <span class="ot">&lt;-</span> terlipressin_numeric <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjectid, rrt) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rrt =</span> <span class="fu">as.numeric</span>(rrt))</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>rrt_hrs <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjectid, rrt_crrt) <span class="sc">%&gt;%</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">rrt =</span> rrt_crrt) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rrt =</span> <span class="fu">as.numeric</span>(rrt))</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>rrt_all <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(rrt_terli, rrt_hrs)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>matched_data_rrt <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(rrt_all, <span class="at">by =</span> <span class="st">"subjectid"</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>table1_rrt <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"rrt"</span>,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data_rrt,</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="st">"rrt"</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1_rrt, <span class="at">printToggle =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>, <span class="at">caption =</span> <span class="st">"RRT by Group"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
+<caption>RRT by Group</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">hrs</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">terli</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">n</td>
+<td style="text-align: left;">191</td>
+<td style="text-align: left;">219</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rrt = 1 (%)</td>
+<td style="text-align: left;">29 (38.7)</td>
+<td style="text-align: left;">59 (30.7)</td>
+<td style="text-align: left;">0.273</td>
 <td style="text-align: left;"></td>
 </tr>
 </tbody>
