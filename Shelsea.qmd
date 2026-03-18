@@ -1,0 +1,701 @@
+---
+title: "HRS Terli project"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show code"
+date: today
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(tableone)
+library(writexl)
+library(gtsummary)
+library(survival)
+library(ggplot2)
+library(readxl)
+library(ggpubr)
+library(splines)
+library(xlsx)
+library(lattice)
+library(mice)
+library(DescTools)
+library(survminer)
+library(finalfit)
+library(tidycmprsk)
+library(ggsurvfit) 
+library(sqldf)
+library(table1)
+library(cobalt)
+
+library(MatchIt)
+```
+
+```{r}
+terlipressin <- read_xlsx("/Users/to909/Desktop/Terlipressin/final_master_0508.xlsx")
+
+terlipressin_numeric <- terlipressin  # make a copy
+
+
+
+for (col in names(terlipressin_numeric)) {
+  # Suppress warnings like "NAs introduced by coercion"
+  converted <- suppressWarnings(as.numeric(terlipressin_numeric[[col]]))
+  
+  # If at least one value successfully converted (not NA), keep it
+  if (any(!is.na(converted))) {
+    terlipressin_numeric[[col]] <- converted
+  }
+}
+
+terlipressin_numeric <- terlipressin_numeric %>% 
+  mutate(
+    group = "terli",
+    death_discharge = ifelse(disposition == 5, 1, 0)
+  ) %>% 
+  rename(
+    terli_resfailuretype_day2 = terli_resfailuretype_day1_day2
+  ) %>% 
+  select(-any_of(c("fena"))) %>% 
+  rename(
+    age_admission = age, 
+    sex = sex_male,
+    White = race, 
+    hispanic_race = hispanic,
+    loop_diuretic = diuretics_preadmission,
+    aldosterone_antagonist = potsp_diuretic_preadmission,
+    lactulose = lactulose_preadmission,
+    rifaximin = rifaximin_preadmission,
+    prophylactic_antibiotic = sbp_ppx_preadmission,
+    nsaids = nsaid_preadmission,
+    beta_blockers = nsbb_preadmission,
+    albumin_amount_admission = totalalbumin_before_terli, # changed 1129
+    diabetes = dm_medical_hx,
+    cad = cad_medical_hx,
+    htn = htn_medical_hx,
+    etiology_cirrhosis = cirrhosis_etiology,
+    ascites_admission = ascites_previous_comp,
+    encephalopathy_admission = he_previous_comp,
+    gi_bleed_admission = gibleed_hosp,
+    peritonitis_admission = sbp_previous_comp,
+    hcc_admission = hcc_previous_comp,
+    tips_admission = tips_previous_comp,
+    na_admit = na_terli_day0,
+    k_admit = k_terli_day0,
+    cl_admit = chloride_terli_day0,
+    co2_admit = bicarb_terli_day0,
+    bun_admit = bun_terli_day0,
+    urine_creatinine = ua_cr_value_hrs,
+    fena = fena_hrs,
+    he_grade_admission = hegrade_admit,
+    baseline_creatinine = baseline_scr,
+    CLIF_C_Score = clif_c_score,
+    aclf_grade = aclf_grade,
+    liver_transplant_listed = listed_transplant,
+    icu_admission = icu_admit,
+    liver_transplant = transplant_lt_status,
+    peak_creatinine = peakhospit_scr,
+    AKI_responders = hrs_responders,
+    death_in_90days_status = time_to_death_status, # checked 1129
+    los = days_to_discharge,
+    intubated = mv_use, # checked 1129
+    discharge_disposition = disposition,
+    creatinine_admission = scr_admit,
+    time_90days = time_to_death_90days_cmp,
+    status_90days = time_to_death_status_90days_cmp,
+    MELD_baseline = admit_meld, # checked 1129
+    MELD_Na_baseline = admit_meld_na, # checked 1129
+    palliative_care = pall_consult # checked 1129
+  ) %>%
+  mutate(
+    # sex_male==1 -> sex==2 (male)
+    sex = if_else(sex == 1, 1, 2), # updated 1129
+    
+    # race / ethnicity
+    White = if_else(White == 1, 1, 0),
+    hispanic_race = if_else(hispanic_race == 1, 1, 0),
+    
+    # medication use
+    Loop_diuretic = if_else(loop_diuretic == 1, 1, 0),
+    aldosterone_antagonist = if_else(aldosterone_antagonist == 1, 1, 0),
+    lactulose = if_else(lactulose == 1, 1, 0),
+    rifaximin = if_else(rifaximin == 1, 1, 0),
+    prophylactic_antibiotic = if_else(prophylactic_antibiotic == 0, 0, 1),
+    nsaids = if_else(nsaids == 1, 1, 0),
+    beta_blockers = if_else(beta_blockers == 1, 1, 0),
+    # rrt 
+    rrt = ifelse(rrt == 2, 0, rrt),
+    
+    # comorbidities
+    diabetes = if_else(diabetes == 1, 1, 0),
+    cad = if_else(cad == 1, 1, 0),
+    htn = if_else(htn == 1, 1, 0),
+    
+    # cirrhosis etiology mapping (reverse of your previous)
+    etiology_cirrhosis = case_when(
+      etiology_cirrhosis == 1 ~ 1,
+      etiology_cirrhosis == 3 ~ 2,
+      etiology_cirrhosis == 2 ~ 3,
+      etiology_cirrhosis %in% c(4, 5) ~ 4,
+      etiology_cirrhosis == 6 ~ 5,
+      TRUE ~ NA_real_
+    ),  # changed 1129
+    
+    # complications
+    ascites_admission = if_else(ascites_admission == 1, 1, 0),
+    encephalopathy_admission = if_else(encephalopathy_admission == 1, 1, 0),
+    gi_bleed_admission = if_else(gi_bleed_admission == 1, 1, 0),
+    peritonitis_admission = if_else(peritonitis_admission == 1, 1, 0),
+    hcc_admission = if_else(hcc_admission == 1, 1, 0),
+    tips_admission = if_else(tips_admission == 1, 1, 0),
+    
+    # hepatic encephalopathy grade: new(0–4) → old(1–5)
+    he_grade_admission = case_when(
+      he_grade_admission == 0 ~ 1,
+      he_grade_admission == 1 ~ 2,
+      he_grade_admission == 2 ~ 3,
+      he_grade_admission == 3 ~ 4,
+      he_grade_admission == 4 ~ 5,
+      TRUE ~ NA_real_
+    ),
+    liver_transplant = ifelse(liver_transplant == 1 | liver_transplant == 2, 1, 0),
+    
+    discharge_disposition = case_when(
+      discharge_disposition == 5 ~ 1,
+      discharge_disposition == 1 ~ 2,
+      discharge_disposition == 2 ~ 3,
+      discharge_disposition == 3 ~ 3,
+      discharge_disposition == 4 ~ 4,
+      TRUE ~ NA_real_
+    ),
+    AKI_responders = case_when(
+      AKI_responders == 2 ~ "complete response",
+      AKI_responders == 1 ~ "partial response",
+      AKI_responders == 0 ~ "no response"
+    )
+  )
+
+create_first_nonzero_value <- function(data, original_variable, new_variable) {
+  # Build the expected column names
+  day_vars <- paste0(original_variable, "_day", 1:13)
+  
+  # Keep only those that exist in the dataset
+  valid_day_vars <- day_vars[day_vars %in% names(data)]
+  
+  # Apply logic and keep only subjectid + new_variable
+  data %>%
+    rowwise() %>%
+    mutate(
+      !!sym(new_variable) := {
+        values <- c_across(all_of(valid_day_vars))
+        first_valid <- values[!is.na(values) & values != 0]
+        if (length(first_valid) > 0) first_valid[1] else NA
+      }
+    ) %>%
+    ungroup() %>%
+    select(subjectid, all_of(new_variable))  # keep subjectid + new var
+}
+
+var1 <- c(
+  "group",
+  "age_admission", "sex", "White", "hispanic_race", "loop_diuretic",
+  "aldosterone_antagonist", "lactulose", "rifaximin", "prophylactic_antibiotic",
+  "nsaids", "beta_blockers", "albumin_amount_admission",
+  "diabetes", "cad", "htn", "etiology_cirrhosis",
+  "ascites_admission", "encephalopathy_admission", "gi_bleed_admission",
+  "peritonitis_admission", "hcc_admission", "tips_admission", "na_admit",
+  "k_admit", "cl_admit", "co2_admit", "bun_admit", "urine_creatinine", "fena",
+  "he_grade_admission", "baseline_creatinine", "CLIF_C_Score", "aclf_grade",
+  "liver_transplant_listed", "icu_admission", "liver_transplant",
+  "peak_creatinine", "AKI_responders",
+  "creatinine_admission",
+  "death_in_90days_status", "los", "discharge_disposition",
+  "palliative_care", "intubated", "MELD_baseline",
+  "MELD_Na_baseline", "time_90days", "status_90days","subjectid"
+)
+
+final_terlipressin <- terlipressin_numeric %>% select(var1)
+final_terlipressin <- final_terlipressin %>%
+  mutate(MELD_Na_baseline = ifelse(is.na(MELD_Na_baseline), median(MELD_Na_baseline, na.rm = TRUE), MELD_Na_baseline))
+
+order_names <- names(final_terlipressin)
+```
+
+```{r}
+# read hrs 
+hrs <- read_excel("/Users/to909/Desktop/Andrew/All_edited_new_12142022.xlsx")
+
+# read additional site-level data
+Baylor0913 <- read_excel("/Users/to909/Desktop/Andrew/Baylor0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+Indiana0913 <- read_excel("/Users/to909/Desktop/Andrew/Indiana0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+Jacksonville0913 <- read_excel("/Users/to909/Desktop/Andrew/Jacksonville0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+Kentukey0913 <- read_excel("/Users/to909/Desktop/Andrew/Kentukey0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+MCW0913 <- read_excel("/Users/to909/Desktop/Andrew/MCW0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+MGH0913 <- read_excel("/Users/to909/Desktop/Andrew/MGH0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+Michigan0913 <- read_excel("/Users/to909/Desktop/Andrew/Michigan0913.xlsx") %>%
+  mutate(sediment_description = NA, albumin_amount_prior = NA) %>%
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+Oschner0913 <- read_excel("/Users/to909/Desktop/Andrew/Oschner0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+Rochester0913 <- read_excel("/Users/to909/Desktop/Andrew/Rochester0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+USC0913 <- read_excel("/Users/to909/Desktop/Andrew/USC0913.xlsx") %>%
+  mutate(sediment_description = NA, creatinine_last_available = NA,
+         rrt_crrt = NA, days_peak_cre = NA, days_last_cre = NA, albumin_amount_prior = NA) %>%
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+Yale0913 <- read_excel("/Users/to909/Desktop/Andrew/Yale0913.xlsx") %>%
+
+  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
+         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+
+addtional_vars <- rbind(
+  Baylor0913, Indiana0913, Jacksonville0913, Kentukey0913, MCW0913,
+  MGH0913, Michigan0913, Oschner0913, Rochester0913, USC0913, Yale0913
+) %>%
+  select(-albumin_amount_prior)
+
+# merge all 
+hrs <- merge(hrs, addtional_vars, by = "study_id", all.x = TRUE) %>%
+  rename(subjectid = study_id)
+
+# Clean variables 
+hrs <- hrs %>%
+  mutate(
+    White = ifelse(White == 1, 1, 0),
+    etiology_cirrhosis = case_when(
+      etiology_cirrhosis == 1 ~ 1,
+      etiology_cirrhosis == 2 ~ 2,
+      etiology_cirrhosis == 3 ~ 3,
+      etiology_cirrhosis == 5 ~ 4,
+      etiology_cirrhosis %in% c(4, 6, 7) ~ 5,
+      TRUE ~ NA_real_
+    )
+  )
+
+# hrs <- hrs %>%
+#   mutate(
+#     liver_transplant_90days_time = ifelse(!is.na(days_liver), days_liver, 90),
+#     liver_transplant_90days_status=ifelse(!is.na(days_liver),1,0),
+#     # Time variable: whichever event happens first
+#  # 1. TIME: The time is the minimum of the two event times
+#     time_to_death_90days_cmp = pmin(death_in_90days_time, liver_transplant_90days_time, na.rm = TRUE),
+#     
+#     # 2. STATUS: Determine which event happened first
+#     status_90days = case_when(
+#       # Condition 1: Death happened first (or on the exact same day as transplant)
+#       time_to_death_90days_cmp == death_in_90days_time & death_in_90days_status == 1 ~ 1,
+#       
+#       # Condition 2: Transplant happened first before death
+#       time_to_death_90days_cmp == liver_transplant_90days_time & liver_transplant_90days_status == 1 ~ 2,
+#       
+#       # Condition 0: Censored (Neither happened by the time of their follow-up/90 days)
+#       TRUE ~ 0
+#     )
+#   )
+
+
+
+
+
+
+final_hrs_aki <- hrs %>%
+  mutate(group = "hrs") %>%
+  filter(final_type_of_aki == 2, hrs_vasoconstrictor == 1) %>%
+  select(order_names) %>%
+  mutate(MELD_Na_baseline = ifelse(is.na(MELD_Na_baseline), median(MELD_Na_baseline, na.rm = TRUE), MELD_Na_baseline))
+
+all_final <- rbind(final_hrs_aki, final_terlipressin) %>%
+  mutate(
+    liver_transplant = ifelse(is.na(liver_transplant), 0, liver_transplant),
+    disposition_new = case_when(
+      discharge_disposition == 2 ~ 0,
+      discharge_disposition == 3 ~ 1
+    ),
+    hrs_responders_cat_2 = ifelse(AKI_responders == "no response", 0, 1),
+    etiology_cirrhosis_cat2 = ifelse(etiology_cirrhosis == 1, 1, 0),
+    group_numerical = ifelse(group == "hrs", 0, 1)
+  )
+```
+
+
+```{r}
+num_var <- c(
+  "age_admission",
+  "age",
+  "albumin_amount_admission",
+  "albumintotal_terli_day1", "albumintotal_terli_day2", "albumintotal_terli_day3",
+  "albumintotal_terli_day4", "albumintotal_terli_day5", "albumintotal_terli_day6",
+  "albumintotal_terli_day7", "albumintotal_terli_day8", "albumintotal_terli_day9",
+  "albumintotal_terli_day10", "albumintotal_terli_day11", "albumintotal_terli_day12",
+  "albumintotal_terli_day13",
+  "totalalbumin_before_terli",
+  "na_admit", "sodium_admit", "k_admit", "k_terli_day0", "cl_admit",
+  "chloride_terli_day0", "co2_admit", "bicarb_terli_day0", "bun_admit",
+  "bun_terli_day0", "creatinine_admission", "scr_admit", "urine_creatinine",
+  "ua_cr_value_hrs", "peak_creatinine", "scr_aki", "alt_admit", "alt_terli_day0",
+  "tb_admit", "bili_terli_day0", "alb_admit", "albumin_admit", "inr_admit",
+  "wbc_admit", "wbc_terli_day0", "plt_admit", "plt_terli_day0", "urine_sodium",
+  "ua_na_value_hrs", "fena", "fena_hrs",
+  "sbp_admission", "aki_sbp", "dbp_admission", "aki_dbp",
+  "MELD_baseline", "admit_meld", "MELD_Na_baseline", "admit_meld_na",
+  "clif_score", "MAP", "map_terli_day0_time0", "CLIF_C_Score",
+  "baseline_creatinine", "baseline_scr", "los", "days_to_discharge",
+  "death_in_90days_time", "dc_days_to_death", "creatinine_admission", "time_90days","site"
+)
+
+all_var <- setdiff(names(all_final), "subjectid")
+cat_var <- setdiff(all_var, num_var)
+```
+
+## Table 1 
+
+```{r}
+# create Table 1 for exposure response
+T1_all_final_subgroup <- CreateTableOne(
+  vars = all_var,
+  strata = "group",
+  includeNA = FALSE,
+  addOverall = TRUE,
+  data = all_final,
+  factorVars = cat_var
+)
+
+T1_all_final_subgroup_csv <- print(
+  T1_all_final_subgroup,
+  nonnormal = num_var,
+  showAllLevels = FALSE,
+  missing = TRUE,
+  quote = FALSE,
+  noSpaces = TRUE
+)
+
+write.csv(
+  T1_all_final_subgroup_csv,
+  file = "/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"
+)
+```
+
+## Matching and balance diagnostics
+
+```{r}
+matched_data <- matchit(
+  group_numerical ~ age_admission + sex + ascites_admission + etiology_cirrhosis_cat2 + MELD_Na_baseline,
+  data   = all_final,
+  method = "nearest",
+  distance = "glm",
+  ratio  = 1,
+  caliper = 0.2  # common recommendation: 0.2 on PS logit SD
+)
+
+matched_data <- match.data(matched_data, drop.unmatched = TRUE)
+```
+
+### Balance check before matching
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+bal.tab(
+  group_numerical ~ age_admission + sex + ascites_admission + etiology_cirrhosis_cat2 + MELD_Na_baseline,
+  data    = all_final,
+  disp    = c("means", "sds")
+)
+```
+
+### Balance check after matching
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+bal.tab(
+  group_numerical ~ age_admission + sex + ascites_admission + etiology_cirrhosis_cat2 + MELD_Na_baseline,
+  data    = matched_data,
+  treat   = matched_data$group_numerical,
+  weights = matched_data$weight.ATE,
+  disp    = c("means", "sds")
+)
+```
+
+## Fine and Gray models (death vs transplant)
+
+```{r}
+matched_data$status_90days <- as.factor(matched_data$status_90days)
+tidycmprsk::crr(Surv(time_90days, status_90days) ~ group,
+                failcode = 1, cencode = 0, data = matched_data) %>%
+  tbl_regression(exp = TRUE)
+```
+
+```{r}
+matched_data$status_90days <- as.factor(matched_data$status_90days)
+tidycmprsk::crr(Surv(time_90days, status_90days) ~ group + CLIF_C_Score,
+                failcode = 1, cencode = 0, data = matched_data) %>%
+  tbl_regression(exp = TRUE) %>%
+  add_n()
+```
+
+```{r}
+matched_data$status_90days <- as.factor(matched_data$status_90days)
+tidycmprsk::crr(
+  Surv(time_90days, status_90days) ~ group + CLIF_C_Score +
+    prophylactic_antibiotic + beta_blockers + k_admit + cl_admit,
+  failcode = 1, cencode = 0, data = matched_data
+) %>%
+  tbl_regression(exp = TRUE) %>%
+  add_n()
+```
+
+<!-- ## 1. Baseline comparison prior to matching -->
+
+```{r}
+vars_req1 <- c(
+  "etiology_cirrhosis_cat2",
+  "baseline_creatinine",
+  "albumin_amount_admission",
+  "creatinine_admission"
+)
+
+
+
+T_req1 <- CreateTableOne(
+  vars = vars_req1,
+  strata = "group",
+  includeNA = FALSE,
+  addOverall = FALSE,
+  data = all_final,
+  factorVars = c("etiology_cirrhosis_cat2")
+)
+
+T_req1_print <- print(
+  T_req1,
+  nonnormal = c("baseline_creatinine", "albumin_amount_admission", "creatinine_admission"),
+  showAllLevels = FALSE,
+  missing = FALSE,
+  quote = FALSE,
+  noSpaces = TRUE
+)
+
+T_req1_print
+```
+
+<!-- ## 2. Admission SCr ranges vs overall response (matched cohorts) -->
+
+```{r}
+# Define admission SCr using creatinine_admission for both groups
+
+scr_day0 <- terlipressin_numeric %>%
+  select(subjectid, scr_terli_day0)
+
+
+matched_data <- matched_data %>% merge(scr_day0, by = "subjectid", all.x = TRUE) %>%
+  mutate(
+    scr_terli_day0 = ifelse(is.na(scr_terli_day0),creatinine_admission,scr_terli_day0))
+
+matched_data <- matched_data %>%
+  rename(scr = scr_terli_day0)
+
+scr_breaks <- c(1.51, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, Inf)
+scr_labels <- c(
+  "1.51–1.99",
+  "2.0–2.49",
+  "2.5–2.99",
+  "3.0–3.49",
+  "3.5–3.99",
+  "4.0–4.49",
+  "4.5–4.99",
+  "≥5.0"
+)
+
+matched_data <- matched_data %>%
+  mutate(
+    scr_cat = cut(scr, breaks = scr_breaks, labels = scr_labels, right = FALSE)
+  )
+
+tab_req2 <- matched_data %>%
+  group_by(scr_cat, group) %>%
+  summarise(
+    n = n(),
+    resp_rate = mean(hrs_responders_cat_2, na.rm = TRUE) * 100,
+    .groups = "drop"
+  ) %>%
+  tidyr::pivot_wider(
+    id_cols = scr_cat,
+    names_from = group,
+    values_from = resp_rate,
+    names_glue = "{group}_pct"
+  ) %>%
+  dplyr::left_join(
+    matched_data %>%
+      group_by(scr_cat) %>%
+      summarise(overall_pct = mean(hrs_responders_cat_2, na.rm = TRUE) * 100, .groups = "drop"),
+    by = "scr_cat"
+  ) %>%
+  arrange(scr_cat)
+
+tab_req2
+```
+
+<!-- ## 3. Peak SCr ranges vs overall response (overall cohorts) -->
+
+```{r}
+
+scr_breaks <- c(1.51, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, Inf)
+scr_labels <- c(
+  "1.51–1.99",
+  "2.0–2.49",
+  "2.5–2.99",
+  "3.0–3.49",
+  "3.5–3.99",
+  "4.0–4.49",
+  "4.5–4.99",
+  "≥5.0"
+)
+
+
+matched_data <- matched_data %>%
+  mutate(
+    peak_creatinine_cat = cut(peak_creatinine, breaks = scr_breaks, labels = scr_labels, right = FALSE)
+  )
+
+tab_req3 <- matched_data %>%
+  group_by(peak_creatinine_cat, group) %>%
+  summarise(
+    n = n(),
+    resp_rate = mean(hrs_responders_cat_2, na.rm = TRUE) * 100,
+    .groups = "drop"
+  ) %>%
+  tidyr::pivot_wider(
+    id_cols = peak_creatinine_cat,
+    names_from = group,
+    values_from = resp_rate,
+    names_glue = "{group}_pct"
+  ) %>%
+  dplyr::left_join(
+    matched_data %>%
+      group_by(peak_creatinine_cat) %>%
+      summarise(overall_pct = mean(hrs_responders_cat_2, na.rm = TRUE) * 100, .groups = "drop"),
+    by = "peak_creatinine_cat"
+  ) %>%
+  arrange(peak_creatinine_cat)
+
+tab_req3
+```
+
+<!-- ## 4. Cumulative incidence of 90-day death (competing risk: transplant) -->
+
+```{r}
+matched_data$status_90days <- as.factor(matched_data$status_90days)
+ci_obj <- tidycmprsk::cuminc(
+  formula = Surv(time_90days, status_90days) ~ group,
+  data = matched_data,
+  cencode = 0
+)
+ggsurvfit::ggcuminc(ci_obj) +
+  labs(
+    x = "Days",
+    y = "Cumulative incidence of death",
+    color = "Cohort"
+  ) +
+  scale_x_continuous(breaks = seq(0, 90, by = 15), limits = c(0, 90)) +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+```
+
+<!-- ## 5. Off-label vasoconstrictor participants per site (matched off-label cohort) -->
+
+```{r}
+hrs_matched <- matched_data %>% filter(group == "hrs")
+a <- hrs %>% filter(subjectid %in% hrs_matched$subjectid) %>% select(site)
+table(a$site)
+```
+
+```{r}
+table1 <- CreateTableOne(
+  vars = "total_albumin",
+  strata = "terli_ae_respfail",
+  data = terlipressin_numeric,
+  factorVars = NULL
+)
+
+print(
+  table1,
+  nonnormal = "total_albumin",
+  showAllLevels = TRUE
+)
+```
+
+#3  Multiviariate cmp:  
+```{r,echo=FALSE,warning=FALSE,message=F}
+tidycmprsk::crr(Surv(time_90days,status_90days) ~group,failcode=1,cencode=0, data = matched_data) %>% tbl_regression(exp = TRUE) %>% add_n()%>%
+  bold_p(0.05) %>%        # bold p-values under a given threshold (default 0.05)
+  bold_labels()      # bold variable labels with significant p-values
+
+```
+
+#4  Multiviariate cmp:   death
+```{r,echo=FALSE,warning=FALSE,message=F}
+tidycmprsk::crr(Surv(time_90days,status_90days) ~group +CLIF_C_Score+age_admission+gi_bleed_admission+albumin_amount_admission,failcode=1,cencode=0, data = matched_data) %>% tbl_regression(exp = TRUE) %>% add_n()%>%
+  bold_p(0.05) %>%        # bold p-values under a given threshold (default 0.05)
+  bold_labels()      # bold variable labels with significant p-values
+
+```
+
+#4  Multiviariate cmp:   livertransplant 
+```{r,echo=FALSE,warning=FALSE,message=F}
+tidycmprsk::crr(Surv(time_90days,status_90days) ~group +CLIF_C_Score+age_admission+gi_bleed_admission+albumin_amount_admission,failcode=2,cencode=0, data = matched_data) %>% tbl_regression(exp = TRUE) %>% add_n()%>%
+  bold_p(0.05) %>%        # bold p-values under a given threshold (default 0.05)
+  bold_labels()      # bold variable labels with significant p-values
+
+```
+
+
+```{r}
+
+matched_data <- matched_data %>% mutate(AKI_responders_cat2 = ifelse(AKI_responders == "no response", "no response", "overall response"))
+
+table1 <- CreateTableOne(
+  vars = "AKI_responders_cat2",
+  strata = "group",
+  data = matched_data,
+  factorVars = "AKI_responders_cat2"
+)
+
+print(
+  table1,
+  showAllLevels = TRUE
+)
+```
