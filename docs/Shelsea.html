@@ -561,338 +561,745 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">showAllLevels =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">noSpaces =</span> <span class="cn">TRUE</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">noSpaces =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">printToggle =</span> <span class="cn">FALSE</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  T1_all_final_subgroup_csv,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">kableone</span>(T1_all_final_subgroup, <span class="at">nonnormal =</span> num_var, <span class="at">missing =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                         Stratified by group
-                                          Overall                
-  n                                       435                    
-  group = terli (%)                       243 (55.9)             
-  age_admission (median [IQR])            59.00 [50.90, 65.00]   
-  sex = 2 (%)                             177 (40.7)             
-  White = 1 (%)                           370 (85.5)             
-  hispanic_race = 1 (%)                   52 (12.0)              
-  loop_diuretic = 1 (%)                   238 (55.6)             
-  aldosterone_antagonist = 1 (%)          205 (48.1)             
-  lactulose = 1 (%)                       246 (57.5)             
-  rifaximin = 1 (%)                       155 (36.3)             
-  prophylactic_antibiotic = 1 (%)         97 (22.8)              
-  nsaids = 1 (%)                          37 (8.7)               
-  beta_blockers = 1 (%)                   104 (24.2)             
-  albumin_amount_admission (median [IQR]) 175.00 [100.00, 262.50]
-  diabetes = 1 (%)                        138 (31.7)             
-  cad = 1 (%)                             56 (12.9)              
-  htn = 1 (%)                             207 (47.6)             
-  etiology_cirrhosis (%)                                         
-     1                                    219 (50.3)             
-     2                                    24 (5.5)               
-     3                                    103 (23.7)             
-     4                                    41 (9.4)               
-     5                                    48 (11.0)              
-  ascites_admission = 1 (%)               398 (91.5)             
-  encephalopathy_admission = 1 (%)        274 (63.3)             
-  gi_bleed_admission = 1 (%)              96 (22.3)              
-  peritonitis_admission = 1 (%)           87 (20.1)              
-  hcc_admission = 1 (%)                   43 (9.9)               
-  tips_admission = 1 (%)                  36 (8.3)               
-  na_admit (median [IQR])                 132.00 [128.00, 136.00]
-  k_admit (median [IQR])                  4.20 [3.80, 4.80]      
-  cl_admit (median [IQR])                 99.00 [94.00, 104.00]  
-  co2_admit (median [IQR])                19.00 [16.00, 22.00]   
-  bun_admit (median [IQR])                51.00 [36.00, 69.00]   
-  urine_creatinine (median [IQR])         128.00 [90.75, 171.00] 
-  fena (median [IQR])                     0.23 [0.14, 0.43]      
-  he_grade_admission (%)                                         
-     1                                    258 (59.9)             
-     2                                    97 (22.5)              
-     3                                    47 (10.9)              
-     4                                    21 (4.9)               
-     5                                    8 (1.9)                
-  baseline_creatinine (median [IQR])      1.17 [0.87, 1.61]      
-  CLIF_C_Score (median [IQR])             45.66 [39.23, 52.79]   
-  aclf_grade (%)                                                 
-     0                                    2 (0.5)                
-     1                                    65 (14.9)              
-     2                                    139 (32.0)             
-     3                                    229 (52.6)             
-  liver_transplant_listed = 1 (%)         145 (33.3)             
-  icu_admission = 1 (%)                   237 (54.7)             
-  liver_transplant = 1 (%)                112 (25.7)             
-  peak_creatinine (median [IQR])          3.40 [2.60, 4.63]      
-  AKI_responders (%)                                             
-     complete response                    111 (25.6)             
-     no response                          225 (51.8)             
-     partial response                     98 (22.6)              
-  creatinine_admission (median [IQR])     2.26 [1.59, 3.04]      
-  death_in_90days_status = 1 (%)          193 (44.4)             
-  los (median [IQR])                      16.00 [10.00, 27.00]   
-  discharge_disposition (%)                                      
-     1                                    99 (22.8)              
-     2                                    201 (46.2)             
-     3                                    67 (15.4)              
-     4                                    68 (15.6)              
-  palliative_care = 1 (%)                 139 (32.2)             
-  intubated = 1 (%)                       108 (25.0)             
-  MELD_baseline (median [IQR])            27.00 [21.00, 33.00]   
-  MELD_Na_baseline (median [IQR])         30.00 [26.00, 34.00]   
-  time_90days (median [IQR])              25.00 [12.00, 90.00]   
-  status_90days (%)                                              
-     0                                    155 (35.6)             
-     1                                    189 (43.4)             
-     2                                    91 (20.9)              
-  disposition_new = 1 (%)                 67 (25.0)              
-  hrs_responders_cat_2 = 1 (%)            209 (48.2)             
-  etiology_cirrhosis_cat2 = 1 (%)         219 (50.3)             
-  group_numerical = 1 (%)                 243 (55.9)             
-                                         Stratified by group
-                                          hrs                    
-  n                                       192                    
-  group = terli (%)                       0 (0.0)                
-  age_admission (median [IQR])            60.00 [52.00, 66.00]   
-  sex = 2 (%)                             79 (41.1)              
-  White = 1 (%)                           163 (84.9)             
-  hispanic_race = 1 (%)                   14 (7.3)               
-  loop_diuretic = 1 (%)                   119 (62.0)             
-  aldosterone_antagonist = 1 (%)          93 (48.4)              
-  lactulose = 1 (%)                       115 (59.9)             
-  rifaximin = 1 (%)                       73 (38.0)              
-  prophylactic_antibiotic = 1 (%)         31 (16.1)              
-  nsaids = 1 (%)                          17 (8.9)               
-  beta_blockers = 1 (%)                   58 (30.2)              
-  albumin_amount_admission (median [IQR]) 150.00 [100.00, 200.00]
-  diabetes = 1 (%)                        66 (34.4)              
-  cad = 1 (%)                             23 (12.0)              
-  htn = 1 (%)                             98 (51.0)              
-  etiology_cirrhosis (%)                                         
-     1                                    84 (43.8)              
-     2                                    18 (9.4)               
-     3                                    59 (30.7)              
-     4                                    11 (5.7)               
-     5                                    20 (10.4)              
-  ascites_admission = 1 (%)               187 (97.4)             
-  encephalopathy_admission = 1 (%)        131 (68.2)             
-  gi_bleed_admission = 1 (%)              64 (33.3)              
-  peritonitis_admission = 1 (%)           42 (21.9)              
-  hcc_admission = 1 (%)                   23 (12.0)              
-  tips_admission = 1 (%)                  15 (7.8)               
-  na_admit (median [IQR])                 131.00 [126.00, 136.00]
-  k_admit (median [IQR])                  4.50 [3.90, 5.15]      
-  cl_admit (median [IQR])                 97.50 [92.00, 104.00]  
-  co2_admit (median [IQR])                19.00 [16.75, 22.00]   
-  bun_admit (median [IQR])                47.00 [30.75, 64.25]   
-  urine_creatinine (median [IQR])         128.00 [82.15, 172.00] 
-  fena (median [IQR])                     0.25 [0.14, 0.49]      
-  he_grade_admission (%)                                         
-     1                                    117 (61.9)             
-     2                                    32 (16.9)              
-     3                                    22 (11.6)              
-     4                                    15 (7.9)               
-     5                                    3 (1.6)                
-  baseline_creatinine (median [IQR])      1.08 [0.86, 1.39]      
-  CLIF_C_Score (median [IQR])             51.23 [44.93, 55.89]   
-  aclf_grade (%)                                                 
-     0                                    0 (0.0)                
-     1                                    18 (9.4)               
-     2                                    54 (28.1)              
-     3                                    120 (62.5)             
-  liver_transplant_listed = 1 (%)         63 (32.8)              
-  icu_admission = 1 (%)                   109 (57.1)             
-  liver_transplant = 1 (%)                41 (21.4)              
-  peak_creatinine (median [IQR])          3.42 [2.58, 4.73]      
-  AKI_responders (%)                                             
-     complete response                    39 (20.4)              
-     no response                          116 (60.7)             
-     partial response                     36 (18.8)              
-  creatinine_admission (median [IQR])     2.30 [1.64, 3.28]      
-  death_in_90days_status = 1 (%)          90 (46.9)              
-  los (median [IQR])                      12.00 [8.00, 19.25]    
-  discharge_disposition (%)                                      
-     1                                    48 (25.0)              
-     2                                    76 (39.6)              
-     3                                    25 (13.0)              
-     4                                    43 (22.4)              
-  palliative_care = 1 (%)                 59 (30.7)              
-  intubated = 1 (%)                       54 (28.1)              
-  MELD_baseline (median [IQR])            27.00 [21.00, 32.25]   
-  MELD_Na_baseline (median [IQR])         30.00 [25.00, 34.00]   
-  time_90days (median [IQR])              19.50 [10.00, 54.25]   
-  status_90days (%)                                              
-     0                                    68 (35.4)              
-     1                                    90 (46.9)              
-     2                                    34 (17.7)              
-  disposition_new = 1 (%)                 25 (24.8)              
-  hrs_responders_cat_2 = 1 (%)            75 (39.3)              
-  etiology_cirrhosis_cat2 = 1 (%)         84 (43.8)              
-  group_numerical = 1 (%)                 0 (0.0)                
-                                         Stratified by group
-                                          terli                   p     
-  n                                       243                           
-  group = terli (%)                       243 (100.0)             &lt;0.001
-  age_admission (median [IQR])            57.60 [50.00, 63.95]    0.024 
-  sex = 2 (%)                             98 (40.3)               0.941 
-  White = 1 (%)                           207 (85.9)              0.877 
-  hispanic_race = 1 (%)                   38 (15.6)               0.012 
-  loop_diuretic = 1 (%)                   119 (50.4)              0.022 
-  aldosterone_antagonist = 1 (%)          112 (47.9)              0.984 
-  lactulose = 1 (%)                       131 (55.5)              0.415 
-  rifaximin = 1 (%)                       82 (34.9)               0.570 
-  prophylactic_antibiotic = 1 (%)         66 (28.3)               0.004 
-  nsaids = 1 (%)                          20 (8.6)                1.000 
-  beta_blockers = 1 (%)                   46 (19.4)               0.013 
-  albumin_amount_admission (median [IQR]) 200.00 [125.00, 350.00] &lt;0.001
-  diabetes = 1 (%)                        72 (29.6)               0.341 
-  cad = 1 (%)                             33 (13.6)               0.741 
-  htn = 1 (%)                             109 (44.9)              0.236 
-  etiology_cirrhosis (%)                                          &lt;0.001
-     1                                    135 (55.6)                    
-     2                                    6 (2.5)                       
-     3                                    44 (18.1)                     
-     4                                    30 (12.3)                     
-     5                                    28 (11.5)                     
-  ascites_admission = 1 (%)               211 (86.8)              &lt;0.001
-  encephalopathy_admission = 1 (%)        143 (59.3)              0.071 
-  gi_bleed_admission = 1 (%)              32 (13.4)               &lt;0.001
-  peritonitis_admission = 1 (%)           45 (18.7)               0.480 
-  hcc_admission = 1 (%)                   20 (8.3)                0.261 
-  tips_admission = 1 (%)                  21 (8.6)                0.891 
-  na_admit (median [IQR])                 133.00 [129.00, 136.00] 0.038 
-  k_admit (median [IQR])                  4.00 [3.70, 4.40]       &lt;0.001
-  cl_admit (median [IQR])                 101.00 [96.00, 105.00]  &lt;0.001
-  co2_admit (median [IQR])                19.00 [16.00, 21.00]    0.303 
-  bun_admit (median [IQR])                54.00 [39.00, 71.00]    0.003 
-  urine_creatinine (median [IQR])         128.00 [93.00, 171.00]  0.749 
-  fena (median [IQR])                     0.22 [0.14, 0.35]       0.164 
-  he_grade_admission (%)                                          0.020 
-     1                                    141 (58.3)                    
-     2                                    65 (26.9)                     
-     3                                    25 (10.3)                     
-     4                                    6 (2.5)                       
-     5                                    5 (2.1)                       
-  baseline_creatinine (median [IQR])      1.24 [0.88, 1.72]       0.058 
-  CLIF_C_Score (median [IQR])             41.38 [36.19, 47.82]    &lt;0.001
-  aclf_grade (%)                                                  0.001 
-     0                                    2 (0.8)                       
-     1                                    47 (19.3)                     
-     2                                    85 (35.0)                     
-     3                                    109 (44.9)                    
-  liver_transplant_listed = 1 (%)         82 (33.7)               0.918 
-  icu_admission = 1 (%)                   128 (52.9)              0.442 
-  liver_transplant = 1 (%)                71 (29.2)               0.080 
-  peak_creatinine (median [IQR])          3.39 [2.61, 4.52]       0.539 
-  AKI_responders (%)                                              0.004 
-     complete response                    72 (29.6)                     
-     no response                          109 (44.9)                    
-     partial response                     62 (25.5)                     
-  creatinine_admission (median [IQR])     2.23 [1.51, 2.96]       0.102 
-  death_in_90days_status = 1 (%)          103 (42.4)              0.402 
-  los (median [IQR])                      19.00 [13.00, 31.00]    &lt;0.001
-  discharge_disposition (%)                                       0.002 
-     1                                    51 (21.0)                     
-     2                                    125 (51.4)                    
-     3                                    42 (17.3)                     
-     4                                    25 (10.3)                     
-  palliative_care = 1 (%)                 80 (33.3)               0.637 
-  intubated = 1 (%)                       54 (22.5)               0.219 
-  MELD_baseline (median [IQR])            27.00 [22.00, 33.00]    0.796 
-  MELD_Na_baseline (median [IQR])         30.00 [26.00, 34.00]    0.905 
-  time_90days (median [IQR])              30.00 [13.00, 90.00]    0.003 
-  status_90days (%)                                               0.269 
-     0                                    87 (35.8)                     
-     1                                    99 (40.7)                     
-     2                                    57 (23.5)                     
-  disposition_new = 1 (%)                 42 (25.1)               1.000 
-  hrs_responders_cat_2 = 1 (%)            134 (55.1)              0.001 
-  etiology_cirrhosis_cat2 = 1 (%)         135 (55.6)              0.019 
-  group_numerical = 1 (%)                 243 (100.0)             &lt;0.001
-                                         Stratified by group
-                                          test    Missing
-  n                                                      
-  group = terli (%)                               0.0    
-  age_admission (median [IQR])            nonnorm 0.0    
-  sex = 2 (%)                                     0.0    
-  White = 1 (%)                                   0.5    
-  hispanic_race = 1 (%)                           0.0    
-  loop_diuretic = 1 (%)                           1.6    
-  aldosterone_antagonist = 1 (%)                  2.1    
-  lactulose = 1 (%)                               1.6    
-  rifaximin = 1 (%)                               1.8    
-  prophylactic_antibiotic = 1 (%)                 2.3    
-  nsaids = 1 (%)                                  2.5    
-  beta_blockers = 1 (%)                           1.4    
-  albumin_amount_admission (median [IQR]) nonnorm 11.5   
-  diabetes = 1 (%)                                0.0    
-  cad = 1 (%)                                     0.2    
-  htn = 1 (%)                                     0.0    
-  etiology_cirrhosis (%)                          0.0    
-     1                                                   
-     2                                                   
-     3                                                   
-     4                                                   
-     5                                                   
-  ascites_admission = 1 (%)                       0.0    
-  encephalopathy_admission = 1 (%)                0.5    
-  gi_bleed_admission = 1 (%)                      0.9    
-  peritonitis_admission = 1 (%)                   0.5    
-  hcc_admission = 1 (%)                           0.2    
-  tips_admission = 1 (%)                          0.0    
-  na_admit (median [IQR])                 nonnorm 0.0    
-  k_admit (median [IQR])                  nonnorm 0.5    
-  cl_admit (median [IQR])                 nonnorm 0.0    
-  co2_admit (median [IQR])                nonnorm 1.1    
-  bun_admit (median [IQR])                nonnorm 0.5    
-  urine_creatinine (median [IQR])         nonnorm 25.5   
-  fena (median [IQR])                     nonnorm 32.0   
-  he_grade_admission (%)                          0.9    
-     1                                                   
-     2                                                   
-     3                                                   
-     4                                                   
-     5                                                   
-  baseline_creatinine (median [IQR])      nonnorm 9.0    
-  CLIF_C_Score (median [IQR])             nonnorm 2.1    
-  aclf_grade (%)                                  0.0    
-     0                                                   
-     1                                                   
-     2                                                   
-     3                                                   
-  liver_transplant_listed = 1 (%)                 0.0    
-  icu_admission = 1 (%)                           0.5    
-  liver_transplant = 1 (%)                        0.0    
-  peak_creatinine (median [IQR])          nonnorm 0.9    
-  AKI_responders (%)                              0.2    
-     complete response                                   
-     no response                                         
-     partial response                                    
-  creatinine_admission (median [IQR])     nonnorm 1.6    
-  death_in_90days_status = 1 (%)                  0.0    
-  los (median [IQR])                      nonnorm 0.0    
-  discharge_disposition (%)                       0.0    
-     1                                                   
-     2                                                   
-     3                                                   
-     4                                                   
-  palliative_care = 1 (%)                         0.7    
-  intubated = 1 (%)                               0.7    
-  MELD_baseline (median [IQR])            nonnorm 2.8    
-  MELD_Na_baseline (median [IQR])         nonnorm 0.0    
-  time_90days (median [IQR])              nonnorm 0.0    
-  status_90days (%)                               0.0    
-     0                                                   
-     1                                                   
-     2                                                   
-  disposition_new = 1 (%)                         38.4   
-  hrs_responders_cat_2 = 1 (%)                    0.2    
-  etiology_cirrhosis_cat2 = 1 (%)                 0.0    
-  group_numerical = 1 (%)                         0.0    </code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Overall</th>
+<th style="text-align: left;">hrs</th>
+<th style="text-align: left;">terli</th>
+<th style="text-align: left;">p</th>
+<th style="text-align: left;">test</th>
+<th style="text-align: left;">Missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">n</td>
+<td style="text-align: left;">435</td>
+<td style="text-align: left;">192</td>
+<td style="text-align: left;">243</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">group = terli (%)</td>
+<td style="text-align: left;">243 (55.9)</td>
+<td style="text-align: left;">0 ( 0.0)</td>
+<td style="text-align: left;">243 (100.0)</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">age_admission (median [IQR])</td>
+<td style="text-align: left;">59.00 [50.90, 65.00]</td>
+<td style="text-align: left;">60.00 [52.00, 66.00]</td>
+<td style="text-align: left;">57.60 [50.00, 63.95]</td>
+<td style="text-align: left;">0.024</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sex = 2 (%)</td>
+<td style="text-align: left;">177 (40.7)</td>
+<td style="text-align: left;">79 (41.1)</td>
+<td style="text-align: left;">98 ( 40.3)</td>
+<td style="text-align: left;">0.941</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">White = 1 (%)</td>
+<td style="text-align: left;">370 (85.5)</td>
+<td style="text-align: left;">163 (84.9)</td>
+<td style="text-align: left;">207 ( 85.9)</td>
+<td style="text-align: left;">0.877</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hispanic_race = 1 (%)</td>
+<td style="text-align: left;">52 (12.0)</td>
+<td style="text-align: left;">14 ( 7.3)</td>
+<td style="text-align: left;">38 ( 15.6)</td>
+<td style="text-align: left;">0.012</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">loop_diuretic = 1 (%)</td>
+<td style="text-align: left;">238 (55.6)</td>
+<td style="text-align: left;">119 (62.0)</td>
+<td style="text-align: left;">119 ( 50.4)</td>
+<td style="text-align: left;">0.022</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">aldosterone_antagonist = 1 (%)</td>
+<td style="text-align: left;">205 (48.1)</td>
+<td style="text-align: left;">93 (48.4)</td>
+<td style="text-align: left;">112 ( 47.9)</td>
+<td style="text-align: left;">0.984</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lactulose = 1 (%)</td>
+<td style="text-align: left;">246 (57.5)</td>
+<td style="text-align: left;">115 (59.9)</td>
+<td style="text-align: left;">131 ( 55.5)</td>
+<td style="text-align: left;">0.415</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rifaximin = 1 (%)</td>
+<td style="text-align: left;">155 (36.3)</td>
+<td style="text-align: left;">73 (38.0)</td>
+<td style="text-align: left;">82 ( 34.9)</td>
+<td style="text-align: left;">0.570</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">prophylactic_antibiotic = 1 (%)</td>
+<td style="text-align: left;">97 (22.8)</td>
+<td style="text-align: left;">31 (16.1)</td>
+<td style="text-align: left;">66 ( 28.3)</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nsaids = 1 (%)</td>
+<td style="text-align: left;">37 ( 8.7)</td>
+<td style="text-align: left;">17 ( 8.9)</td>
+<td style="text-align: left;">20 ( 8.6)</td>
+<td style="text-align: left;">1.000</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">beta_blockers = 1 (%)</td>
+<td style="text-align: left;">104 (24.2)</td>
+<td style="text-align: left;">58 (30.2)</td>
+<td style="text-align: left;">46 ( 19.4)</td>
+<td style="text-align: left;">0.013</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">albumin_amount_admission (median [IQR])</td>
+<td style="text-align: left;">175.00 [100.00, 262.50]</td>
+<td style="text-align: left;">150.00 [100.00, 200.00]</td>
+<td style="text-align: left;">200.00 [125.00, 350.00]</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">11.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">diabetes = 1 (%)</td>
+<td style="text-align: left;">138 (31.7)</td>
+<td style="text-align: left;">66 (34.4)</td>
+<td style="text-align: left;">72 ( 29.6)</td>
+<td style="text-align: left;">0.341</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cad = 1 (%)</td>
+<td style="text-align: left;">56 (12.9)</td>
+<td style="text-align: left;">23 (12.0)</td>
+<td style="text-align: left;">33 ( 13.6)</td>
+<td style="text-align: left;">0.741</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">htn = 1 (%)</td>
+<td style="text-align: left;">207 (47.6)</td>
+<td style="text-align: left;">98 (51.0)</td>
+<td style="text-align: left;">109 ( 44.9)</td>
+<td style="text-align: left;">0.236</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">etiology_cirrhosis (%)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">219 (50.3)</td>
+<td style="text-align: left;">84 (43.8)</td>
+<td style="text-align: left;">135 ( 55.6)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">24 ( 5.5)</td>
+<td style="text-align: left;">18 ( 9.4)</td>
+<td style="text-align: left;">6 ( 2.5)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">103 (23.7)</td>
+<td style="text-align: left;">59 (30.7)</td>
+<td style="text-align: left;">44 ( 18.1)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">41 ( 9.4)</td>
+<td style="text-align: left;">11 ( 5.7)</td>
+<td style="text-align: left;">30 ( 12.3)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">48 (11.0)</td>
+<td style="text-align: left;">20 (10.4)</td>
+<td style="text-align: left;">28 ( 11.5)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ascites_admission = 1 (%)</td>
+<td style="text-align: left;">398 (91.5)</td>
+<td style="text-align: left;">187 (97.4)</td>
+<td style="text-align: left;">211 ( 86.8)</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">encephalopathy_admission = 1 (%)</td>
+<td style="text-align: left;">274 (63.3)</td>
+<td style="text-align: left;">131 (68.2)</td>
+<td style="text-align: left;">143 ( 59.3)</td>
+<td style="text-align: left;">0.071</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gi_bleed_admission = 1 (%)</td>
+<td style="text-align: left;">96 (22.3)</td>
+<td style="text-align: left;">64 (33.3)</td>
+<td style="text-align: left;">32 ( 13.4)</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peritonitis_admission = 1 (%)</td>
+<td style="text-align: left;">87 (20.1)</td>
+<td style="text-align: left;">42 (21.9)</td>
+<td style="text-align: left;">45 ( 18.7)</td>
+<td style="text-align: left;">0.480</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hcc_admission = 1 (%)</td>
+<td style="text-align: left;">43 ( 9.9)</td>
+<td style="text-align: left;">23 (12.0)</td>
+<td style="text-align: left;">20 ( 8.3)</td>
+<td style="text-align: left;">0.261</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tips_admission = 1 (%)</td>
+<td style="text-align: left;">36 ( 8.3)</td>
+<td style="text-align: left;">15 ( 7.8)</td>
+<td style="text-align: left;">21 ( 8.6)</td>
+<td style="text-align: left;">0.891</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">na_admit (median [IQR])</td>
+<td style="text-align: left;">132.00 [128.00, 136.00]</td>
+<td style="text-align: left;">131.00 [126.00, 136.00]</td>
+<td style="text-align: left;">133.00 [129.00, 136.00]</td>
+<td style="text-align: left;">0.038</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">k_admit (median [IQR])</td>
+<td style="text-align: left;">4.20 [3.80, 4.80]</td>
+<td style="text-align: left;">4.50 [3.90, 5.15]</td>
+<td style="text-align: left;">4.00 [3.70, 4.40]</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cl_admit (median [IQR])</td>
+<td style="text-align: left;">99.00 [94.00, 104.00]</td>
+<td style="text-align: left;">97.50 [92.00, 104.00]</td>
+<td style="text-align: left;">101.00 [96.00, 105.00]</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">co2_admit (median [IQR])</td>
+<td style="text-align: left;">19.00 [16.00, 22.00]</td>
+<td style="text-align: left;">19.00 [16.75, 22.00]</td>
+<td style="text-align: left;">19.00 [16.00, 21.00]</td>
+<td style="text-align: left;">0.303</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">1.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bun_admit (median [IQR])</td>
+<td style="text-align: left;">51.00 [36.00, 69.00]</td>
+<td style="text-align: left;">47.00 [30.75, 64.25]</td>
+<td style="text-align: left;">54.00 [39.00, 71.00]</td>
+<td style="text-align: left;">0.003</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">urine_creatinine (median [IQR])</td>
+<td style="text-align: left;">128.00 [90.75, 171.00]</td>
+<td style="text-align: left;">128.00 [82.15, 172.00]</td>
+<td style="text-align: left;">128.00 [93.00, 171.00]</td>
+<td style="text-align: left;">0.749</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">25.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fena (median [IQR])</td>
+<td style="text-align: left;">0.23 [0.14, 0.43]</td>
+<td style="text-align: left;">0.25 [0.14, 0.49]</td>
+<td style="text-align: left;">0.22 [0.14, 0.35]</td>
+<td style="text-align: left;">0.164</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">32.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">he_grade_admission (%)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.020</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">258 (59.9)</td>
+<td style="text-align: left;">117 (61.9)</td>
+<td style="text-align: left;">141 ( 58.3)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">97 (22.5)</td>
+<td style="text-align: left;">32 (16.9)</td>
+<td style="text-align: left;">65 ( 26.9)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">47 (10.9)</td>
+<td style="text-align: left;">22 (11.6)</td>
+<td style="text-align: left;">25 ( 10.3)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">21 ( 4.9)</td>
+<td style="text-align: left;">15 ( 7.9)</td>
+<td style="text-align: left;">6 ( 2.5)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">8 ( 1.9)</td>
+<td style="text-align: left;">3 ( 1.6)</td>
+<td style="text-align: left;">5 ( 2.1)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">baseline_creatinine (median [IQR])</td>
+<td style="text-align: left;">1.17 [0.87, 1.61]</td>
+<td style="text-align: left;">1.08 [0.86, 1.39]</td>
+<td style="text-align: left;">1.24 [0.88, 1.72]</td>
+<td style="text-align: left;">0.058</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">9.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CLIF_C_Score (median [IQR])</td>
+<td style="text-align: left;">45.66 [39.23, 52.79]</td>
+<td style="text-align: left;">51.23 [44.93, 55.89]</td>
+<td style="text-align: left;">41.38 [36.19, 47.82]</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">2.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aclf_grade (%)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2 ( 0.5)</td>
+<td style="text-align: left;">0 ( 0.0)</td>
+<td style="text-align: left;">2 ( 0.8)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">65 (14.9)</td>
+<td style="text-align: left;">18 ( 9.4)</td>
+<td style="text-align: left;">47 ( 19.3)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">139 (32.0)</td>
+<td style="text-align: left;">54 (28.1)</td>
+<td style="text-align: left;">85 ( 35.0)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">229 (52.6)</td>
+<td style="text-align: left;">120 (62.5)</td>
+<td style="text-align: left;">109 ( 44.9)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">liver_transplant_listed = 1 (%)</td>
+<td style="text-align: left;">145 (33.3)</td>
+<td style="text-align: left;">63 (32.8)</td>
+<td style="text-align: left;">82 ( 33.7)</td>
+<td style="text-align: left;">0.918</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">icu_admission = 1 (%)</td>
+<td style="text-align: left;">237 (54.7)</td>
+<td style="text-align: left;">109 (57.1)</td>
+<td style="text-align: left;">128 ( 52.9)</td>
+<td style="text-align: left;">0.442</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">liver_transplant = 1 (%)</td>
+<td style="text-align: left;">112 (25.7)</td>
+<td style="text-align: left;">41 (21.4)</td>
+<td style="text-align: left;">71 ( 29.2)</td>
+<td style="text-align: left;">0.080</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peak_creatinine (median [IQR])</td>
+<td style="text-align: left;">3.40 [2.60, 4.63]</td>
+<td style="text-align: left;">3.42 [2.58, 4.73]</td>
+<td style="text-align: left;">3.39 [2.61, 4.52]</td>
+<td style="text-align: left;">0.539</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AKI_responders (%)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">complete response</td>
+<td style="text-align: left;">111 (25.6)</td>
+<td style="text-align: left;">39 (20.4)</td>
+<td style="text-align: left;">72 ( 29.6)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no response</td>
+<td style="text-align: left;">225 (51.8)</td>
+<td style="text-align: left;">116 (60.7)</td>
+<td style="text-align: left;">109 ( 44.9)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">partial response</td>
+<td style="text-align: left;">98 (22.6)</td>
+<td style="text-align: left;">36 (18.8)</td>
+<td style="text-align: left;">62 ( 25.5)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">creatinine_admission (median [IQR])</td>
+<td style="text-align: left;">2.26 [1.59, 3.04]</td>
+<td style="text-align: left;">2.30 [1.64, 3.28]</td>
+<td style="text-align: left;">2.23 [1.51, 2.96]</td>
+<td style="text-align: left;">0.102</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">1.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">death_in_90days_status = 1 (%)</td>
+<td style="text-align: left;">193 (44.4)</td>
+<td style="text-align: left;">90 (46.9)</td>
+<td style="text-align: left;">103 ( 42.4)</td>
+<td style="text-align: left;">0.402</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">los (median [IQR])</td>
+<td style="text-align: left;">16.00 [10.00, 27.00]</td>
+<td style="text-align: left;">12.00 [8.00, 19.25]</td>
+<td style="text-align: left;">19.00 [13.00, 31.00]</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">discharge_disposition (%)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.002</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">99 (22.8)</td>
+<td style="text-align: left;">48 (25.0)</td>
+<td style="text-align: left;">51 ( 21.0)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">201 (46.2)</td>
+<td style="text-align: left;">76 (39.6)</td>
+<td style="text-align: left;">125 ( 51.4)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">67 (15.4)</td>
+<td style="text-align: left;">25 (13.0)</td>
+<td style="text-align: left;">42 ( 17.3)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">68 (15.6)</td>
+<td style="text-align: left;">43 (22.4)</td>
+<td style="text-align: left;">25 ( 10.3)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">palliative_care = 1 (%)</td>
+<td style="text-align: left;">139 (32.2)</td>
+<td style="text-align: left;">59 (30.7)</td>
+<td style="text-align: left;">80 ( 33.3)</td>
+<td style="text-align: left;">0.637</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">intubated = 1 (%)</td>
+<td style="text-align: left;">108 (25.0)</td>
+<td style="text-align: left;">54 (28.1)</td>
+<td style="text-align: left;">54 ( 22.5)</td>
+<td style="text-align: left;">0.219</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MELD_baseline (median [IQR])</td>
+<td style="text-align: left;">27.00 [21.00, 33.00]</td>
+<td style="text-align: left;">27.00 [21.00, 32.25]</td>
+<td style="text-align: left;">27.00 [22.00, 33.00]</td>
+<td style="text-align: left;">0.796</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">2.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MELD_Na_baseline (median [IQR])</td>
+<td style="text-align: left;">30.00 [26.00, 34.00]</td>
+<td style="text-align: left;">30.00 [25.00, 34.00]</td>
+<td style="text-align: left;">30.00 [26.00, 34.00]</td>
+<td style="text-align: left;">0.905</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">time_90days (median [IQR])</td>
+<td style="text-align: left;">25.00 [12.00, 90.00]</td>
+<td style="text-align: left;">19.50 [10.00, 54.25]</td>
+<td style="text-align: left;">30.00 [13.00, 90.00]</td>
+<td style="text-align: left;">0.003</td>
+<td style="text-align: left;">nonnorm</td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">status_90days (%)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.269</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">155 (35.6)</td>
+<td style="text-align: left;">68 (35.4)</td>
+<td style="text-align: left;">87 ( 35.8)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">189 (43.4)</td>
+<td style="text-align: left;">90 (46.9)</td>
+<td style="text-align: left;">99 ( 40.7)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">91 (20.9)</td>
+<td style="text-align: left;">34 (17.7)</td>
+<td style="text-align: left;">57 ( 23.5)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">disposition_new = 1 (%)</td>
+<td style="text-align: left;">67 (25.0)</td>
+<td style="text-align: left;">25 (24.8)</td>
+<td style="text-align: left;">42 ( 25.1)</td>
+<td style="text-align: left;">1.000</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">38.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hrs_responders_cat_2 = 1 (%)</td>
+<td style="text-align: left;">209 (48.2)</td>
+<td style="text-align: left;">75 (39.3)</td>
+<td style="text-align: left;">134 ( 55.1)</td>
+<td style="text-align: left;">0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">etiology_cirrhosis_cat2 = 1 (%)</td>
+<td style="text-align: left;">219 (50.3)</td>
+<td style="text-align: left;">84 (43.8)</td>
+<td style="text-align: left;">135 ( 55.6)</td>
+<td style="text-align: left;">0.019</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">group_numerical = 1 (%)</td>
+<td style="text-align: left;">243 (55.9)</td>
+<td style="text-align: left;">0 ( 0.0)</td>
+<td style="text-align: left;">243 (100.0)</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.0</td>
+</tr>
+</tbody>
+</table>
 </div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  T1_all_final_subgroup_csv,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 </section>
 <section id="matching-and-balance-diagnostics" class="level2">
@@ -900,14 +1307,14 @@ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</co
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">matchit</span>(</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  group_numerical <span class="sc">~</span> age_admission <span class="sc">+</span> sex <span class="sc">+</span> ascites_admission <span class="sc">+</span> etiology_cirrhosis_cat2 <span class="sc">+</span> MELD_Na_baseline,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data   =</span> all_final,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"nearest"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">distance =</span> <span class="st">"glm"</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ratio  =</span> <span class="dv">1</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">caliper =</span> <span class="fl">0.2</span>  <span class="co"># common recommendation: 0.2 on PS logit SD</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">matchit</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  group_numerical <span class="sc">~</span> age_admission <span class="sc">+</span> sex <span class="sc">+</span> ascites_admission <span class="sc">+</span> etiology_cirrhosis_cat2 <span class="sc">+</span> MELD_Na_baseline,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data   =</span> all_final,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"nearest"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">distance =</span> <span class="st">"glm"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ratio  =</span> <span class="dv">1</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">caliper =</span> <span class="fl">0.2</span>  <span class="co"># common recommendation: 0.2 on PS logit SD</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Fewer control units than treated units; not all treated units will get
@@ -915,7 +1322,7 @@ a match.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">match.data</span>(matched_data, <span class="at">drop.unmatched =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">match.data</span>(matched_data, <span class="at">drop.unmatched =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="balance-check-before-matching" class="level3">
@@ -960,29 +1367,29 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="dnaqadophd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dnaqadophd table {
+<div id="ukwubjofte" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ukwubjofte table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dnaqadophd thead, #dnaqadophd tbody, #dnaqadophd tfoot, #dnaqadophd tr, #dnaqadophd td, #dnaqadophd th {
+#ukwubjofte thead, #ukwubjofte tbody, #ukwubjofte tfoot, #ukwubjofte tr, #ukwubjofte td, #ukwubjofte th {
   border-style: none;
 }
 
-#dnaqadophd p {
+#ukwubjofte p {
   margin: 0;
   padding: 0;
 }
 
-#dnaqadophd .gt_table {
+#ukwubjofte .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1008,12 +1415,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_caption {
+#ukwubjofte .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dnaqadophd .gt_title {
+#ukwubjofte .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1025,7 +1432,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#dnaqadophd .gt_subtitle {
+#ukwubjofte .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1037,7 +1444,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#dnaqadophd .gt_heading {
+#ukwubjofte .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1049,13 +1456,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_bottom_border {
+#ukwubjofte .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_col_headings {
+#ukwubjofte .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1070,7 +1477,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_col_heading {
+#ukwubjofte .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1090,7 +1497,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#dnaqadophd .gt_column_spanner_outer {
+#ukwubjofte .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1102,15 +1509,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#dnaqadophd .gt_column_spanner_outer:first-child {
+#ukwubjofte .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dnaqadophd .gt_column_spanner_outer:last-child {
+#ukwubjofte .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dnaqadophd .gt_column_spanner {
+#ukwubjofte .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1122,11 +1529,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#dnaqadophd .gt_spanner_row {
+#ukwubjofte .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dnaqadophd .gt_group_heading {
+#ukwubjofte .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1152,7 +1559,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#dnaqadophd .gt_empty_group_heading {
+#ukwubjofte .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1167,15 +1574,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#dnaqadophd .gt_from_md > :first-child {
+#ukwubjofte .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dnaqadophd .gt_from_md > :last-child {
+#ukwubjofte .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dnaqadophd .gt_row {
+#ukwubjofte .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1194,7 +1601,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#dnaqadophd .gt_stub {
+#ukwubjofte .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1207,7 +1614,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#dnaqadophd .gt_stub_row_group {
+#ukwubjofte .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1221,15 +1628,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#dnaqadophd .gt_row_group_first td {
+#ukwubjofte .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dnaqadophd .gt_row_group_first th {
+#ukwubjofte .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dnaqadophd .gt_summary_row {
+#ukwubjofte .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1239,16 +1646,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#dnaqadophd .gt_first_summary_row {
+#ukwubjofte .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_first_summary_row.thick {
+#ukwubjofte .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dnaqadophd .gt_last_summary_row {
+#ukwubjofte .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1258,7 +1665,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_grand_summary_row {
+#ukwubjofte .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1268,7 +1675,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#dnaqadophd .gt_first_grand_summary_row {
+#ukwubjofte .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1278,7 +1685,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_last_grand_summary_row_top {
+#ukwubjofte .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1288,11 +1695,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_striped {
+#ukwubjofte .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dnaqadophd .gt_table_body {
+#ukwubjofte .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1301,7 +1708,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_footnotes {
+#ukwubjofte .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1315,7 +1722,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_footnote {
+#ukwubjofte .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1324,7 +1731,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#dnaqadophd .gt_sourcenotes {
+#ukwubjofte .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1338,7 +1745,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dnaqadophd .gt_sourcenote {
+#ukwubjofte .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1346,72 +1753,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#dnaqadophd .gt_left {
+#ukwubjofte .gt_left {
   text-align: left;
 }
 
-#dnaqadophd .gt_center {
+#ukwubjofte .gt_center {
   text-align: center;
 }
 
-#dnaqadophd .gt_right {
+#ukwubjofte .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dnaqadophd .gt_font_normal {
+#ukwubjofte .gt_font_normal {
   font-weight: normal;
 }
 
-#dnaqadophd .gt_font_bold {
+#ukwubjofte .gt_font_bold {
   font-weight: bold;
 }
 
-#dnaqadophd .gt_font_italic {
+#ukwubjofte .gt_font_italic {
   font-style: italic;
 }
 
-#dnaqadophd .gt_super {
+#ukwubjofte .gt_super {
   font-size: 65%;
 }
 
-#dnaqadophd .gt_footnote_marks {
+#ukwubjofte .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dnaqadophd .gt_asterisk {
+#ukwubjofte .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dnaqadophd .gt_indent_1 {
+#ukwubjofte .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dnaqadophd .gt_indent_2 {
+#ukwubjofte .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dnaqadophd .gt_indent_3 {
+#ukwubjofte .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dnaqadophd .gt_indent_4 {
+#ukwubjofte .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dnaqadophd .gt_indent_5 {
+#ukwubjofte .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dnaqadophd .katex-display {
+#ukwubjofte .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dnaqadophd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ukwubjofte div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1468,33 +1875,33 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(<span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>5 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="njcvdflenr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#njcvdflenr table {
+<div id="ansuvoifzy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ansuvoifzy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#njcvdflenr thead, #njcvdflenr tbody, #njcvdflenr tfoot, #njcvdflenr tr, #njcvdflenr td, #njcvdflenr th {
+#ansuvoifzy thead, #ansuvoifzy tbody, #ansuvoifzy tfoot, #ansuvoifzy tr, #ansuvoifzy td, #ansuvoifzy th {
   border-style: none;
 }
 
-#njcvdflenr p {
+#ansuvoifzy p {
   margin: 0;
   padding: 0;
 }
 
-#njcvdflenr .gt_table {
+#ansuvoifzy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1520,12 +1927,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_caption {
+#ansuvoifzy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#njcvdflenr .gt_title {
+#ansuvoifzy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1537,7 +1944,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#njcvdflenr .gt_subtitle {
+#ansuvoifzy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1549,7 +1956,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#njcvdflenr .gt_heading {
+#ansuvoifzy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1561,13 +1968,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_bottom_border {
+#ansuvoifzy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_col_headings {
+#ansuvoifzy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1582,7 +1989,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_col_heading {
+#ansuvoifzy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1602,7 +2009,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#njcvdflenr .gt_column_spanner_outer {
+#ansuvoifzy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1614,15 +2021,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#njcvdflenr .gt_column_spanner_outer:first-child {
+#ansuvoifzy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#njcvdflenr .gt_column_spanner_outer:last-child {
+#ansuvoifzy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#njcvdflenr .gt_column_spanner {
+#ansuvoifzy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1634,11 +2041,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#njcvdflenr .gt_spanner_row {
+#ansuvoifzy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#njcvdflenr .gt_group_heading {
+#ansuvoifzy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1664,7 +2071,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#njcvdflenr .gt_empty_group_heading {
+#ansuvoifzy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1679,15 +2086,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#njcvdflenr .gt_from_md > :first-child {
+#ansuvoifzy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#njcvdflenr .gt_from_md > :last-child {
+#ansuvoifzy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#njcvdflenr .gt_row {
+#ansuvoifzy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1706,7 +2113,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#njcvdflenr .gt_stub {
+#ansuvoifzy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1719,7 +2126,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#njcvdflenr .gt_stub_row_group {
+#ansuvoifzy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1733,15 +2140,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#njcvdflenr .gt_row_group_first td {
+#ansuvoifzy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#njcvdflenr .gt_row_group_first th {
+#ansuvoifzy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#njcvdflenr .gt_summary_row {
+#ansuvoifzy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1751,16 +2158,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#njcvdflenr .gt_first_summary_row {
+#ansuvoifzy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_first_summary_row.thick {
+#ansuvoifzy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#njcvdflenr .gt_last_summary_row {
+#ansuvoifzy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1770,7 +2177,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_grand_summary_row {
+#ansuvoifzy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1780,7 +2187,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#njcvdflenr .gt_first_grand_summary_row {
+#ansuvoifzy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1790,7 +2197,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_last_grand_summary_row_top {
+#ansuvoifzy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1800,11 +2207,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_striped {
+#ansuvoifzy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#njcvdflenr .gt_table_body {
+#ansuvoifzy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1813,7 +2220,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_footnotes {
+#ansuvoifzy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1827,7 +2234,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_footnote {
+#ansuvoifzy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1836,7 +2243,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#njcvdflenr .gt_sourcenotes {
+#ansuvoifzy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1850,7 +2257,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#njcvdflenr .gt_sourcenote {
+#ansuvoifzy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1858,72 +2265,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#njcvdflenr .gt_left {
+#ansuvoifzy .gt_left {
   text-align: left;
 }
 
-#njcvdflenr .gt_center {
+#ansuvoifzy .gt_center {
   text-align: center;
 }
 
-#njcvdflenr .gt_right {
+#ansuvoifzy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#njcvdflenr .gt_font_normal {
+#ansuvoifzy .gt_font_normal {
   font-weight: normal;
 }
 
-#njcvdflenr .gt_font_bold {
+#ansuvoifzy .gt_font_bold {
   font-weight: bold;
 }
 
-#njcvdflenr .gt_font_italic {
+#ansuvoifzy .gt_font_italic {
   font-style: italic;
 }
 
-#njcvdflenr .gt_super {
+#ansuvoifzy .gt_super {
   font-size: 65%;
 }
 
-#njcvdflenr .gt_footnote_marks {
+#ansuvoifzy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#njcvdflenr .gt_asterisk {
+#ansuvoifzy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#njcvdflenr .gt_indent_1 {
+#ansuvoifzy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#njcvdflenr .gt_indent_2 {
+#ansuvoifzy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#njcvdflenr .gt_indent_3 {
+#ansuvoifzy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#njcvdflenr .gt_indent_4 {
+#ansuvoifzy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#njcvdflenr .gt_indent_5 {
+#ansuvoifzy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#njcvdflenr .katex-display {
+#ansuvoifzy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#njcvdflenr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ansuvoifzy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1994,36 +2401,36 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    prophylactic_antibiotic <span class="sc">+</span> beta_blockers <span class="sc">+</span> k_admit <span class="sc">+</span> cl_admit,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tidycmprsk<span class="sc">::</span><span class="fu">crr</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group <span class="sc">+</span> CLIF_C_Score <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    prophylactic_antibiotic <span class="sc">+</span> beta_blockers <span class="sc">+</span> k_admit <span class="sc">+</span> cl_admit,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">failcode =</span> <span class="dv">1</span>, <span class="at">cencode =</span> <span class="dv">0</span>, <span class="at">data =</span> matched_data</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">exp =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>14 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="xxkpfyerxv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xxkpfyerxv table {
+<div id="viklgltzcy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#viklgltzcy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xxkpfyerxv thead, #xxkpfyerxv tbody, #xxkpfyerxv tfoot, #xxkpfyerxv tr, #xxkpfyerxv td, #xxkpfyerxv th {
+#viklgltzcy thead, #viklgltzcy tbody, #viklgltzcy tfoot, #viklgltzcy tr, #viklgltzcy td, #viklgltzcy th {
   border-style: none;
 }
 
-#xxkpfyerxv p {
+#viklgltzcy p {
   margin: 0;
   padding: 0;
 }
 
-#xxkpfyerxv .gt_table {
+#viklgltzcy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2049,12 +2456,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_caption {
+#viklgltzcy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xxkpfyerxv .gt_title {
+#viklgltzcy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2066,7 +2473,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#xxkpfyerxv .gt_subtitle {
+#viklgltzcy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2078,7 +2485,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#xxkpfyerxv .gt_heading {
+#viklgltzcy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2090,13 +2497,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_bottom_border {
+#viklgltzcy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_col_headings {
+#viklgltzcy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2111,7 +2518,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_col_heading {
+#viklgltzcy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2131,7 +2538,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#xxkpfyerxv .gt_column_spanner_outer {
+#viklgltzcy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2143,15 +2550,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#xxkpfyerxv .gt_column_spanner_outer:first-child {
+#viklgltzcy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xxkpfyerxv .gt_column_spanner_outer:last-child {
+#viklgltzcy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xxkpfyerxv .gt_column_spanner {
+#viklgltzcy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2163,11 +2570,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#xxkpfyerxv .gt_spanner_row {
+#viklgltzcy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xxkpfyerxv .gt_group_heading {
+#viklgltzcy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2193,7 +2600,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#xxkpfyerxv .gt_empty_group_heading {
+#viklgltzcy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2208,15 +2615,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#xxkpfyerxv .gt_from_md > :first-child {
+#viklgltzcy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xxkpfyerxv .gt_from_md > :last-child {
+#viklgltzcy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xxkpfyerxv .gt_row {
+#viklgltzcy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2235,7 +2642,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#xxkpfyerxv .gt_stub {
+#viklgltzcy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2248,7 +2655,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#xxkpfyerxv .gt_stub_row_group {
+#viklgltzcy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2262,15 +2669,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#xxkpfyerxv .gt_row_group_first td {
+#viklgltzcy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xxkpfyerxv .gt_row_group_first th {
+#viklgltzcy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xxkpfyerxv .gt_summary_row {
+#viklgltzcy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2280,16 +2687,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#xxkpfyerxv .gt_first_summary_row {
+#viklgltzcy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_first_summary_row.thick {
+#viklgltzcy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xxkpfyerxv .gt_last_summary_row {
+#viklgltzcy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2299,7 +2706,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_grand_summary_row {
+#viklgltzcy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2309,7 +2716,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#xxkpfyerxv .gt_first_grand_summary_row {
+#viklgltzcy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2319,7 +2726,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_last_grand_summary_row_top {
+#viklgltzcy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2329,11 +2736,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_striped {
+#viklgltzcy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xxkpfyerxv .gt_table_body {
+#viklgltzcy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2342,7 +2749,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_footnotes {
+#viklgltzcy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2356,7 +2763,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_footnote {
+#viklgltzcy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2365,7 +2772,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#xxkpfyerxv .gt_sourcenotes {
+#viklgltzcy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2379,7 +2786,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xxkpfyerxv .gt_sourcenote {
+#viklgltzcy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2387,72 +2794,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#xxkpfyerxv .gt_left {
+#viklgltzcy .gt_left {
   text-align: left;
 }
 
-#xxkpfyerxv .gt_center {
+#viklgltzcy .gt_center {
   text-align: center;
 }
 
-#xxkpfyerxv .gt_right {
+#viklgltzcy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xxkpfyerxv .gt_font_normal {
+#viklgltzcy .gt_font_normal {
   font-weight: normal;
 }
 
-#xxkpfyerxv .gt_font_bold {
+#viklgltzcy .gt_font_bold {
   font-weight: bold;
 }
 
-#xxkpfyerxv .gt_font_italic {
+#viklgltzcy .gt_font_italic {
   font-style: italic;
 }
 
-#xxkpfyerxv .gt_super {
+#viklgltzcy .gt_super {
   font-size: 65%;
 }
 
-#xxkpfyerxv .gt_footnote_marks {
+#viklgltzcy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xxkpfyerxv .gt_asterisk {
+#viklgltzcy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xxkpfyerxv .gt_indent_1 {
+#viklgltzcy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xxkpfyerxv .gt_indent_2 {
+#viklgltzcy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xxkpfyerxv .gt_indent_3 {
+#viklgltzcy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xxkpfyerxv .gt_indent_4 {
+#viklgltzcy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xxkpfyerxv .gt_indent_5 {
+#viklgltzcy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xxkpfyerxv .katex-display {
+#viklgltzcy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xxkpfyerxv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#viklgltzcy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2552,140 +2959,140 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>vars_req1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"etiology_cirrhosis_cat2"</span>,</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"baseline_creatinine"</span>,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumin_amount_admission"</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"creatinine_admission"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>T_req1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> vars_req1,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeNA =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">addOverall =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> all_final,</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">"etiology_cirrhosis_cat2"</span>)</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>T_req1_print <span class="ot">&lt;-</span> <span class="fu">print</span>(</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  T_req1,</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">nonnormal =</span> <span class="fu">c</span>(<span class="st">"baseline_creatinine"</span>, <span class="st">"albumin_amount_admission"</span>, <span class="st">"creatinine_admission"</span>),</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">showAllLevels =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">noSpaces =</span> <span class="cn">TRUE</span></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>vars_req1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"etiology_cirrhosis_cat2"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"baseline_creatinine"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"albumin_amount_admission"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"creatinine_admission"</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>T_req1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> vars_req1,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">includeNA =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">addOverall =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> all_final,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="fu">c</span>(<span class="st">"etiology_cirrhosis_cat2"</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="fu">kableone</span>(T_req1, <span class="at">nonnormal =</span> <span class="fu">c</span>(<span class="st">"baseline_creatinine"</span>, <span class="st">"albumin_amount_admission"</span>, <span class="st">"creatinine_admission"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                         Stratified by group
-                                          hrs                    
-  n                                       192                    
-  etiology_cirrhosis_cat2 = 1 (%)         84 (43.8)              
-  baseline_creatinine (median [IQR])      1.08 [0.86, 1.39]      
-  albumin_amount_admission (median [IQR]) 150.00 [100.00, 200.00]
-  creatinine_admission (median [IQR])     2.30 [1.64, 3.28]      
-                                         Stratified by group
-                                          terli                   p     
-  n                                       243                           
-  etiology_cirrhosis_cat2 = 1 (%)         135 (55.6)              0.019 
-  baseline_creatinine (median [IQR])      1.24 [0.88, 1.72]       0.058 
-  albumin_amount_admission (median [IQR]) 200.00 [125.00, 350.00] &lt;0.001
-  creatinine_admission (median [IQR])     2.23 [1.51, 2.96]       0.102 
-                                         Stratified by group
-                                          test   
-  n                                              
-  etiology_cirrhosis_cat2 = 1 (%)                
-  baseline_creatinine (median [IQR])      nonnorm
-  albumin_amount_admission (median [IQR]) nonnorm
-  creatinine_admission (median [IQR])     nonnorm</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>T_req1_print</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                         Stratified by group
-                                          hrs                      
-  n                                       "192"                    
-  etiology_cirrhosis_cat2 = 1 (%)         "84 (43.8)"              
-  baseline_creatinine (median [IQR])      "1.08 [0.86, 1.39]"      
-  albumin_amount_admission (median [IQR]) "150.00 [100.00, 200.00]"
-  creatinine_admission (median [IQR])     "2.30 [1.64, 3.28]"      
-                                         Stratified by group
-                                          terli                     p       
-  n                                       "243"                     ""      
-  etiology_cirrhosis_cat2 = 1 (%)         "135 (55.6)"              "0.019" 
-  baseline_creatinine (median [IQR])      "1.24 [0.88, 1.72]"       "0.058" 
-  albumin_amount_admission (median [IQR]) "200.00 [125.00, 350.00]" "&lt;0.001"
-  creatinine_admission (median [IQR])     "2.23 [1.51, 2.96]"       "0.102" 
-                                         Stratified by group
-                                          test     
-  n                                       ""       
-  etiology_cirrhosis_cat2 = 1 (%)         ""       
-  baseline_creatinine (median [IQR])      "nonnorm"
-  albumin_amount_admission (median [IQR]) "nonnorm"
-  creatinine_admission (median [IQR])     "nonnorm"</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 6%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">hrs</th>
+<th style="text-align: left;">terli</th>
+<th style="text-align: left;">p</th>
+<th style="text-align: left;">test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">n</td>
+<td style="text-align: left;">192</td>
+<td style="text-align: left;">243</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">etiology_cirrhosis_cat2 = 1 (%)</td>
+<td style="text-align: left;">84 (43.8)</td>
+<td style="text-align: left;">135 (55.6)</td>
+<td style="text-align: left;">0.019</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">baseline_creatinine (median [IQR])</td>
+<td style="text-align: left;">1.08 [0.86, 1.39]</td>
+<td style="text-align: left;">1.24 [0.88, 1.72]</td>
+<td style="text-align: left;">0.058</td>
+<td style="text-align: left;">nonnorm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">albumin_amount_admission (median [IQR])</td>
+<td style="text-align: left;">150.00 [100.00, 200.00]</td>
+<td style="text-align: left;">200.00 [125.00, 350.00]</td>
+<td style="text-align: left;">&lt;0.001</td>
+<td style="text-align: left;">nonnorm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">creatinine_admission (median [IQR])</td>
+<td style="text-align: left;">2.30 [1.64, 3.28]</td>
+<td style="text-align: left;">2.23 [1.51, 2.96]</td>
+<td style="text-align: left;">0.102</td>
+<td style="text-align: left;">nonnorm</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <!-- ## 2. Admission SCr ranges vs overall response (matched cohorts) -->
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define admission SCr using creatinine_admission for both groups</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>scr_day0 <span class="ot">&lt;-</span> terlipressin_numeric <span class="sc">%&gt;%</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjectid, scr_terli_day0)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">merge</span>(scr_day0, <span class="at">by =</span> <span class="st">"subjectid"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_terli_day0 =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(scr_terli_day0),creatinine_admission,scr_terli_day0))</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">scr =</span> scr_terli_day0)</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_cat =</span> <span class="fu">cut</span>(scr, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>tab_req2 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scr_cat, group) <span class="sc">%&gt;%</span></span>
-<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> scr_cat,</span>
-<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
-<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
-<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
-<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(scr_cat) <span class="sc">%&gt;%</span></span>
-<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
-<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"scr_cat"</span></span>
-<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(scr_cat)</span>
-<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>tab_req2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define admission SCr using creatinine_admission for both groups</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>scr_day0 <span class="ot">&lt;-</span> terlipressin_numeric <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subjectid, scr_terli_day0)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">merge</span>(scr_day0, <span class="at">by =</span> <span class="st">"subjectid"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_terli_day0 =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(scr_terli_day0),creatinine_admission,scr_terli_day0))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">scr =</span> scr_terli_day0)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">scr_cat =</span> <span class="fu">cut</span>(scr, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>tab_req2 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scr_cat, group) <span class="sc">%&gt;%</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> scr_cat,</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(scr_cat) <span class="sc">%&gt;%</span></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"scr_cat"</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(scr_cat)</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>tab_req2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 4
@@ -2706,46 +3113,46 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">peak_creatinine_cat =</span> <span class="fu">cut</span>(peak_creatinine, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>tab_req3 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(peak_creatinine_cat, group) <span class="sc">%&gt;%</span></span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> peak_creatinine_cat,</span>
-<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
-<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
-<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
-<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
-<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(peak_creatinine_cat) <span class="sc">%&gt;%</span></span>
-<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
-<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"peak_creatinine_cat"</span></span>
-<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(peak_creatinine_cat)</span>
-<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>tab_req3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>scr_breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.51</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">5.0</span>, <span class="cn">Inf</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>scr_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1.51–1.99"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.0–2.49"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2.5–2.99"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.0–3.49"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3.5–3.99"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.0–4.49"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4.5–4.99"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≥5.0"</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">peak_creatinine_cat =</span> <span class="fu">cut</span>(peak_creatinine, <span class="at">breaks =</span> scr_breaks, <span class="at">labels =</span> scr_labels, <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>tab_req3 <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(peak_creatinine_cat, group) <span class="sc">%&gt;%</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">resp_rate =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> peak_creatinine_cat,</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> group,</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> resp_rate,</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"{group}_pct"</span></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>    matched_data <span class="sc">%&gt;%</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(peak_creatinine_cat) <span class="sc">%&gt;%</span></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">overall_pct =</span> <span class="fu">mean</span>(hrs_responders_cat_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">.groups =</span> <span class="st">"drop"</span>),</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"peak_creatinine_cat"</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(peak_creatinine_cat)</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>tab_req3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 4
@@ -2766,24 +3173,24 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ci_obj <span class="ot">&lt;-</span> tidycmprsk<span class="sc">::</span><span class="fu">cuminc</span>(</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cencode =</span> <span class="dv">0</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>ggsurvfit<span class="sc">::</span><span class="fu">ggcuminc</span>(ci_obj) <span class="sc">+</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Days"</span>,</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cumulative incidence of death"</span>,</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Cohort"</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">15</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>matched_data<span class="sc">$</span>status_90days <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(matched_data<span class="sc">$</span>status_90days)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ci_obj <span class="ot">&lt;-</span> tidycmprsk<span class="sc">::</span><span class="fu">cuminc</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">Surv</span>(time_90days, status_90days) <span class="sc">~</span> group,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cencode =</span> <span class="dv">0</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>ggsurvfit<span class="sc">::</span><span class="fu">ggcuminc</span>(ci_obj) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Days"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cumulative incidence of death"</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Cohort"</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">15</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Plotting outcome "1".</code></pre>
@@ -2800,9 +3207,9 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>hrs_matched <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"hrs"</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subjectid <span class="sc">%in%</span> hrs_matched<span class="sc">$</span>subjectid) <span class="sc">%&gt;%</span> <span class="fu">select</span>(site)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(a<span class="sc">$</span>site)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>hrs_matched <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"hrs"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> hrs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(subjectid <span class="sc">%in%</span> hrs_matched<span class="sc">$</span>subjectid) <span class="sc">%&gt;%</span> <span class="fu">select</span>(site)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(a<span class="sc">$</span>site)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -2815,50 +3222,72 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"total_albumin"</span>,</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"terli_ae_respfail"</span>,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> terlipressin_numeric,</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="cn">NULL</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  table1,</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">nonnormal =</span> <span class="st">"total_albumin"</span>,</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">showAllLevels =</span> <span class="cn">TRUE</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"total_albumin"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"terli_ae_respfail"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> terlipressin_numeric,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="cn">NULL</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kableone</span>(table1, <span class="at">nonnormal =</span> <span class="st">"total_albumin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>                              Stratified by terli_ae_respfail
-                               level 0                   
-  n                                    220               
-  total_albumin (median [IQR])       50.00 [0.00, 125.00]
-                              Stratified by terli_ae_respfail
-                               1                      p      test   
-  n                                23                               
-  total_albumin (median [IQR]) 112.50 [50.00, 200.00]  0.028 nonnorm</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 24%">
+<col style="width: 26%">
+<col style="width: 6%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">0</th>
+<th style="text-align: left;">1</th>
+<th style="text-align: left;">p</th>
+<th style="text-align: left;">test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">n</td>
+<td style="text-align: left;">220</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">total_albumin (median [IQR])</td>
+<td style="text-align: left;">50.00 [0.00, 125.00]</td>
+<td style="text-align: left;">112.50 [50.00, 200.00]</td>
+<td style="text-align: left;">0.028</td>
+<td style="text-align: left;">nonnorm</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>#3 Multiviariate cmp:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="yszvsnljfq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yszvsnljfq table {
+<div id="xextdsyqkc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xextdsyqkc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yszvsnljfq thead, #yszvsnljfq tbody, #yszvsnljfq tfoot, #yszvsnljfq tr, #yszvsnljfq td, #yszvsnljfq th {
+#xextdsyqkc thead, #xextdsyqkc tbody, #xextdsyqkc tfoot, #xextdsyqkc tr, #xextdsyqkc td, #xextdsyqkc th {
   border-style: none;
 }
 
-#yszvsnljfq p {
+#xextdsyqkc p {
   margin: 0;
   padding: 0;
 }
 
-#yszvsnljfq .gt_table {
+#xextdsyqkc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2884,12 +3313,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_caption {
+#xextdsyqkc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yszvsnljfq .gt_title {
+#xextdsyqkc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2901,7 +3330,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#yszvsnljfq .gt_subtitle {
+#xextdsyqkc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2913,7 +3342,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#yszvsnljfq .gt_heading {
+#xextdsyqkc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2925,13 +3354,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_bottom_border {
+#xextdsyqkc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_col_headings {
+#xextdsyqkc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2946,7 +3375,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_col_heading {
+#xextdsyqkc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2966,7 +3395,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#yszvsnljfq .gt_column_spanner_outer {
+#xextdsyqkc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2978,15 +3407,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#yszvsnljfq .gt_column_spanner_outer:first-child {
+#xextdsyqkc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yszvsnljfq .gt_column_spanner_outer:last-child {
+#xextdsyqkc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yszvsnljfq .gt_column_spanner {
+#xextdsyqkc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2998,11 +3427,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#yszvsnljfq .gt_spanner_row {
+#xextdsyqkc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yszvsnljfq .gt_group_heading {
+#xextdsyqkc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3028,7 +3457,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#yszvsnljfq .gt_empty_group_heading {
+#xextdsyqkc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3043,15 +3472,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#yszvsnljfq .gt_from_md > :first-child {
+#xextdsyqkc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yszvsnljfq .gt_from_md > :last-child {
+#xextdsyqkc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yszvsnljfq .gt_row {
+#xextdsyqkc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3070,7 +3499,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#yszvsnljfq .gt_stub {
+#xextdsyqkc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3083,7 +3512,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yszvsnljfq .gt_stub_row_group {
+#xextdsyqkc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3097,15 +3526,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#yszvsnljfq .gt_row_group_first td {
+#xextdsyqkc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yszvsnljfq .gt_row_group_first th {
+#xextdsyqkc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yszvsnljfq .gt_summary_row {
+#xextdsyqkc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3115,16 +3544,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yszvsnljfq .gt_first_summary_row {
+#xextdsyqkc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_first_summary_row.thick {
+#xextdsyqkc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yszvsnljfq .gt_last_summary_row {
+#xextdsyqkc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3134,7 +3563,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_grand_summary_row {
+#xextdsyqkc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3144,7 +3573,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yszvsnljfq .gt_first_grand_summary_row {
+#xextdsyqkc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3154,7 +3583,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_last_grand_summary_row_top {
+#xextdsyqkc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3164,11 +3593,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_striped {
+#xextdsyqkc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yszvsnljfq .gt_table_body {
+#xextdsyqkc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3177,7 +3606,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_footnotes {
+#xextdsyqkc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3191,7 +3620,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_footnote {
+#xextdsyqkc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3200,7 +3629,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yszvsnljfq .gt_sourcenotes {
+#xextdsyqkc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3214,7 +3643,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yszvsnljfq .gt_sourcenote {
+#xextdsyqkc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3222,72 +3651,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#yszvsnljfq .gt_left {
+#xextdsyqkc .gt_left {
   text-align: left;
 }
 
-#yszvsnljfq .gt_center {
+#xextdsyqkc .gt_center {
   text-align: center;
 }
 
-#yszvsnljfq .gt_right {
+#xextdsyqkc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yszvsnljfq .gt_font_normal {
+#xextdsyqkc .gt_font_normal {
   font-weight: normal;
 }
 
-#yszvsnljfq .gt_font_bold {
+#xextdsyqkc .gt_font_bold {
   font-weight: bold;
 }
 
-#yszvsnljfq .gt_font_italic {
+#xextdsyqkc .gt_font_italic {
   font-style: italic;
 }
 
-#yszvsnljfq .gt_super {
+#xextdsyqkc .gt_super {
   font-size: 65%;
 }
 
-#yszvsnljfq .gt_footnote_marks {
+#xextdsyqkc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yszvsnljfq .gt_asterisk {
+#xextdsyqkc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yszvsnljfq .gt_indent_1 {
+#xextdsyqkc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yszvsnljfq .gt_indent_2 {
+#xextdsyqkc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yszvsnljfq .gt_indent_3 {
+#xextdsyqkc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yszvsnljfq .gt_indent_4 {
+#xextdsyqkc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yszvsnljfq .gt_indent_5 {
+#xextdsyqkc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yszvsnljfq .katex-display {
+#xextdsyqkc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yszvsnljfq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xextdsyqkc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3354,23 +3783,23 @@ All     190     190</code></pre>
 <pre><code>49 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="rtallmfpvd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rtallmfpvd table {
+<div id="ktmccfaghx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ktmccfaghx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rtallmfpvd thead, #rtallmfpvd tbody, #rtallmfpvd tfoot, #rtallmfpvd tr, #rtallmfpvd td, #rtallmfpvd th {
+#ktmccfaghx thead, #ktmccfaghx tbody, #ktmccfaghx tfoot, #ktmccfaghx tr, #ktmccfaghx td, #ktmccfaghx th {
   border-style: none;
 }
 
-#rtallmfpvd p {
+#ktmccfaghx p {
   margin: 0;
   padding: 0;
 }
 
-#rtallmfpvd .gt_table {
+#ktmccfaghx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3396,12 +3825,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_caption {
+#ktmccfaghx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rtallmfpvd .gt_title {
+#ktmccfaghx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3413,7 +3842,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#rtallmfpvd .gt_subtitle {
+#ktmccfaghx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3425,7 +3854,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#rtallmfpvd .gt_heading {
+#ktmccfaghx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3437,13 +3866,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_bottom_border {
+#ktmccfaghx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_col_headings {
+#ktmccfaghx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3458,7 +3887,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_col_heading {
+#ktmccfaghx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3478,7 +3907,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#rtallmfpvd .gt_column_spanner_outer {
+#ktmccfaghx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3490,15 +3919,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#rtallmfpvd .gt_column_spanner_outer:first-child {
+#ktmccfaghx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rtallmfpvd .gt_column_spanner_outer:last-child {
+#ktmccfaghx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rtallmfpvd .gt_column_spanner {
+#ktmccfaghx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3510,11 +3939,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#rtallmfpvd .gt_spanner_row {
+#ktmccfaghx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rtallmfpvd .gt_group_heading {
+#ktmccfaghx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3540,7 +3969,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#rtallmfpvd .gt_empty_group_heading {
+#ktmccfaghx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3555,15 +3984,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#rtallmfpvd .gt_from_md > :first-child {
+#ktmccfaghx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rtallmfpvd .gt_from_md > :last-child {
+#ktmccfaghx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rtallmfpvd .gt_row {
+#ktmccfaghx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3582,7 +4011,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#rtallmfpvd .gt_stub {
+#ktmccfaghx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3595,7 +4024,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#rtallmfpvd .gt_stub_row_group {
+#ktmccfaghx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3609,15 +4038,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#rtallmfpvd .gt_row_group_first td {
+#ktmccfaghx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rtallmfpvd .gt_row_group_first th {
+#ktmccfaghx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rtallmfpvd .gt_summary_row {
+#ktmccfaghx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3627,16 +4056,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#rtallmfpvd .gt_first_summary_row {
+#ktmccfaghx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_first_summary_row.thick {
+#ktmccfaghx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rtallmfpvd .gt_last_summary_row {
+#ktmccfaghx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3646,7 +4075,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_grand_summary_row {
+#ktmccfaghx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3656,7 +4085,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#rtallmfpvd .gt_first_grand_summary_row {
+#ktmccfaghx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3666,7 +4095,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_last_grand_summary_row_top {
+#ktmccfaghx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3676,11 +4105,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_striped {
+#ktmccfaghx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rtallmfpvd .gt_table_body {
+#ktmccfaghx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3689,7 +4118,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_footnotes {
+#ktmccfaghx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3703,7 +4132,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_footnote {
+#ktmccfaghx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3712,7 +4141,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#rtallmfpvd .gt_sourcenotes {
+#ktmccfaghx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3726,7 +4155,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtallmfpvd .gt_sourcenote {
+#ktmccfaghx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3734,72 +4163,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#rtallmfpvd .gt_left {
+#ktmccfaghx .gt_left {
   text-align: left;
 }
 
-#rtallmfpvd .gt_center {
+#ktmccfaghx .gt_center {
   text-align: center;
 }
 
-#rtallmfpvd .gt_right {
+#ktmccfaghx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rtallmfpvd .gt_font_normal {
+#ktmccfaghx .gt_font_normal {
   font-weight: normal;
 }
 
-#rtallmfpvd .gt_font_bold {
+#ktmccfaghx .gt_font_bold {
   font-weight: bold;
 }
 
-#rtallmfpvd .gt_font_italic {
+#ktmccfaghx .gt_font_italic {
   font-style: italic;
 }
 
-#rtallmfpvd .gt_super {
+#ktmccfaghx .gt_super {
   font-size: 65%;
 }
 
-#rtallmfpvd .gt_footnote_marks {
+#ktmccfaghx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rtallmfpvd .gt_asterisk {
+#ktmccfaghx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rtallmfpvd .gt_indent_1 {
+#ktmccfaghx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rtallmfpvd .gt_indent_2 {
+#ktmccfaghx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rtallmfpvd .gt_indent_3 {
+#ktmccfaghx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rtallmfpvd .gt_indent_4 {
+#ktmccfaghx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rtallmfpvd .gt_indent_5 {
+#ktmccfaghx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rtallmfpvd .katex-display {
+#ktmccfaghx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rtallmfpvd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ktmccfaghx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3894,23 +4323,23 @@ All     190     190</code></pre>
 <pre><code>49 cases omitted due to missing values</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="ympnlzceiq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ympnlzceiq table {
+<div id="kunfwvpjmt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kunfwvpjmt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ympnlzceiq thead, #ympnlzceiq tbody, #ympnlzceiq tfoot, #ympnlzceiq tr, #ympnlzceiq td, #ympnlzceiq th {
+#kunfwvpjmt thead, #kunfwvpjmt tbody, #kunfwvpjmt tfoot, #kunfwvpjmt tr, #kunfwvpjmt td, #kunfwvpjmt th {
   border-style: none;
 }
 
-#ympnlzceiq p {
+#kunfwvpjmt p {
   margin: 0;
   padding: 0;
 }
 
-#ympnlzceiq .gt_table {
+#kunfwvpjmt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3936,12 +4365,12 @@ All     190     190</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_caption {
+#kunfwvpjmt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ympnlzceiq .gt_title {
+#kunfwvpjmt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3953,7 +4382,7 @@ All     190     190</code></pre>
   border-bottom-width: 0;
 }
 
-#ympnlzceiq .gt_subtitle {
+#kunfwvpjmt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3965,7 +4394,7 @@ All     190     190</code></pre>
   border-top-width: 0;
 }
 
-#ympnlzceiq .gt_heading {
+#kunfwvpjmt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3977,13 +4406,13 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_bottom_border {
+#kunfwvpjmt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_col_headings {
+#kunfwvpjmt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3998,7 +4427,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_col_heading {
+#kunfwvpjmt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4018,7 +4447,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#ympnlzceiq .gt_column_spanner_outer {
+#kunfwvpjmt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4030,15 +4459,15 @@ All     190     190</code></pre>
   padding-right: 4px;
 }
 
-#ympnlzceiq .gt_column_spanner_outer:first-child {
+#kunfwvpjmt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ympnlzceiq .gt_column_spanner_outer:last-child {
+#kunfwvpjmt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ympnlzceiq .gt_column_spanner {
+#kunfwvpjmt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4050,11 +4479,11 @@ All     190     190</code></pre>
   width: 100%;
 }
 
-#ympnlzceiq .gt_spanner_row {
+#kunfwvpjmt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ympnlzceiq .gt_group_heading {
+#kunfwvpjmt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4080,7 +4509,7 @@ All     190     190</code></pre>
   text-align: left;
 }
 
-#ympnlzceiq .gt_empty_group_heading {
+#kunfwvpjmt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4095,15 +4524,15 @@ All     190     190</code></pre>
   vertical-align: middle;
 }
 
-#ympnlzceiq .gt_from_md > :first-child {
+#kunfwvpjmt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ympnlzceiq .gt_from_md > :last-child {
+#kunfwvpjmt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ympnlzceiq .gt_row {
+#kunfwvpjmt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4122,7 +4551,7 @@ All     190     190</code></pre>
   overflow-x: hidden;
 }
 
-#ympnlzceiq .gt_stub {
+#kunfwvpjmt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4135,7 +4564,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#ympnlzceiq .gt_stub_row_group {
+#kunfwvpjmt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4149,15 +4578,15 @@ All     190     190</code></pre>
   vertical-align: top;
 }
 
-#ympnlzceiq .gt_row_group_first td {
+#kunfwvpjmt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ympnlzceiq .gt_row_group_first th {
+#kunfwvpjmt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ympnlzceiq .gt_summary_row {
+#kunfwvpjmt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4167,16 +4596,16 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#ympnlzceiq .gt_first_summary_row {
+#kunfwvpjmt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_first_summary_row.thick {
+#kunfwvpjmt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ympnlzceiq .gt_last_summary_row {
+#kunfwvpjmt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4186,7 +4615,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_grand_summary_row {
+#kunfwvpjmt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4196,7 +4625,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#ympnlzceiq .gt_first_grand_summary_row {
+#kunfwvpjmt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4206,7 +4635,7 @@ All     190     190</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_last_grand_summary_row_top {
+#kunfwvpjmt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4216,11 +4645,11 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_striped {
+#kunfwvpjmt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ympnlzceiq .gt_table_body {
+#kunfwvpjmt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4229,7 +4658,7 @@ All     190     190</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_footnotes {
+#kunfwvpjmt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4243,7 +4672,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_footnote {
+#kunfwvpjmt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4252,7 +4681,7 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#ympnlzceiq .gt_sourcenotes {
+#kunfwvpjmt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4266,7 +4695,7 @@ All     190     190</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ympnlzceiq .gt_sourcenote {
+#kunfwvpjmt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4274,72 +4703,72 @@ All     190     190</code></pre>
   padding-right: 5px;
 }
 
-#ympnlzceiq .gt_left {
+#kunfwvpjmt .gt_left {
   text-align: left;
 }
 
-#ympnlzceiq .gt_center {
+#kunfwvpjmt .gt_center {
   text-align: center;
 }
 
-#ympnlzceiq .gt_right {
+#kunfwvpjmt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ympnlzceiq .gt_font_normal {
+#kunfwvpjmt .gt_font_normal {
   font-weight: normal;
 }
 
-#ympnlzceiq .gt_font_bold {
+#kunfwvpjmt .gt_font_bold {
   font-weight: bold;
 }
 
-#ympnlzceiq .gt_font_italic {
+#kunfwvpjmt .gt_font_italic {
   font-style: italic;
 }
 
-#ympnlzceiq .gt_super {
+#kunfwvpjmt .gt_super {
   font-size: 65%;
 }
 
-#ympnlzceiq .gt_footnote_marks {
+#kunfwvpjmt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ympnlzceiq .gt_asterisk {
+#kunfwvpjmt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ympnlzceiq .gt_indent_1 {
+#kunfwvpjmt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ympnlzceiq .gt_indent_2 {
+#kunfwvpjmt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ympnlzceiq .gt_indent_3 {
+#kunfwvpjmt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ympnlzceiq .gt_indent_4 {
+#kunfwvpjmt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ympnlzceiq .gt_indent_5 {
+#kunfwvpjmt .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ympnlzceiq .katex-display {
+#kunfwvpjmt .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ympnlzceiq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kunfwvpjmt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4431,26 +4860,52 @@ All     190     190</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AKI_responders_cat2 =</span> <span class="fu">ifelse</span>(AKI_responders <span class="sc">==</span> <span class="st">"no response"</span>, <span class="st">"no response"</span>, <span class="st">"overall response"</span>))</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"AKI_responders_cat2"</span>,</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="st">"AKI_responders_cat2"</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  table1,</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">showAllLevels =</span> <span class="cn">TRUE</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> matched_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AKI_responders_cat2 =</span> <span class="fu">ifelse</span>(AKI_responders <span class="sc">==</span> <span class="st">"no response"</span>, <span class="st">"no response"</span>, <span class="st">"overall response"</span>))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="st">"AKI_responders_cat2"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="st">"group"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> matched_data,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">factorVars =</span> <span class="st">"AKI_responders_cat2"</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kableone</span>(table1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>                         Stratified by group
-                          level            hrs         terli       p      test
-  n                                        190         190                    
-  AKI_responders_cat2 (%) no response      114 (60.3)   84 (44.2)   0.002     
-                          overall response  75 (39.7)  106 (55.8)             </code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 57%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 8%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">hrs</th>
+<th style="text-align: left;">terli</th>
+<th style="text-align: left;">p</th>
+<th style="text-align: left;">test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">n</td>
+<td style="text-align: left;">190</td>
+<td style="text-align: left;">190</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AKI_responders_cat2 = overall response (%)</td>
+<td style="text-align: left;">75 (39.7)</td>
+<td style="text-align: left;">106 (55.8)</td>
+<td style="text-align: left;">0.002</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 

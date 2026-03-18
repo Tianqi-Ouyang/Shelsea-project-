@@ -401,13 +401,16 @@ T1_all_final_subgroup_csv <- print(
   showAllLevels = FALSE,
   missing = TRUE,
   quote = FALSE,
-  noSpaces = TRUE
+  noSpaces = TRUE,
+  printToggle = FALSE
 )
 
 write.csv(
   T1_all_final_subgroup_csv,
   file = "/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"
 )
+
+kableone(T1_all_final_subgroup, nonnormal = num_var, missing = TRUE)
 ```
 
 ## Matching and balance diagnostics
@@ -496,16 +499,7 @@ T_req1 <- CreateTableOne(
   factorVars = c("etiology_cirrhosis_cat2")
 )
 
-T_req1_print <- print(
-  T_req1,
-  nonnormal = c("baseline_creatinine", "albumin_amount_admission", "creatinine_admission"),
-  showAllLevels = FALSE,
-  missing = FALSE,
-  quote = FALSE,
-  noSpaces = TRUE
-)
-
-T_req1_print
+kableone(T_req1, nonnormal = c("baseline_creatinine", "albumin_amount_admission", "creatinine_admission"))
 ```
 
 <!-- ## 2. Admission SCr ranges vs overall response (matched cohorts) -->
@@ -651,11 +645,7 @@ table1 <- CreateTableOne(
   factorVars = NULL
 )
 
-print(
-  table1,
-  nonnormal = "total_albumin",
-  showAllLevels = TRUE
-)
+kableone(table1, nonnormal = "total_albumin")
 ```
 
 #3  Multiviariate cmp:  
@@ -694,8 +684,5 @@ table1 <- CreateTableOne(
   factorVars = "AKI_responders_cat2"
 )
 
-print(
-  table1,
-  showAllLevels = TRUE
-)
+kableone(table1)
 ```
