@@ -639,10 +639,8 @@ ggsurvfit::ggcuminc(ci_obj) +
 <!-- ## 5. Off-label vasoconstrictor participants per site (matched off-label cohort) -->
 
 ```{r}
-hrs_matched <- matched_data %>% filter(group == "hrs")
-site_info <- hrs %>% select(subjectid, site) %>% distinct(subjectid, .keep_all = TRUE)
-hrs_matched_with_site <- hrs_matched %>% left_join(site_info, by = "subjectid")
-table(hrs_matched_with_site$site)
+terli_matched <- matched_data %>% filter(group == "terli")
+table(terli_matched$site)
 ```
 
 ```{r}
