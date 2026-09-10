@@ -1111,11 +1111,13 @@ CreateTableOne(
   data = matched_data_rrt,
   factorVars = "rrt"
 ) %>%
-  print(printToggle = FALSE) %>%
+  # `rrt_crrt` is unrecorded for much of the off-label cohort, so show the
+  # missing count: tableone's percentages use non-missing denominators.
+  print(printToggle = FALSE, missing = TRUE) %>%
   as.data.frame() %>%
   tibble::rownames_to_column("Variable") %>%
   rename(`Off-label vasoconstrictor` = hrs, Terlipressin = terli) %>%
-  kable(align = c("l", rep("r", 4)),
+  kable(align = c("l", rep("r", 5)),
         caption = "Renal replacement therapy by cohort (matched)") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 full_width = FALSE)
