@@ -1,16 +1,69 @@
 ---
-title: "HRS Terli project"
+title: "Terlipressin vs. Off-Label Vasoconstrictors in HRS-AKI"
+subtitle: "Matched-cohort analysis of treatment response and 90-day outcomes"
+date: today
 format:
   html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    toc-title: "Contents"
+    toc-expand: 2
+    number-sections: true
+    number-depth: 3
     code-fold: true
     code-summary: "Show code"
-date: today
+    code-tools: true
+    code-overflow: wrap
+    fig-width: 7
+    fig-height: 5
+    fig-align: center
+    tbl-cap-location: top
+    anchor-sections: true
+    smooth-scroll: true
+    include-in-header:
+      text: |
+        <style>
+          .quarto-title-block .quarto-title-banner { background: #2c8dbb; }
+          h2 { border-bottom: 2px solid #e3e8ee; padding-bottom: .3rem; margin-top: 2.2rem; }
+          h3 { margin-top: 1.6rem; color: #23527c; }
+          #quarto-margin-sidebar, #TOC { font-size: .9rem; }
+          .gt_table { font-size: 13.5px; }
+          table.table { font-size: 13.5px; }
+          .cell-output-display { margin-bottom: 1.1rem; }
+        </style>
 execute:
   warning: false
   message: false
 ---
 
-```{r, include=FALSE}
+# Overview {#sec-overview}
+
+This report compares patients with hepatorenal syndrome–acute kidney injury (HRS-AKI)
+treated with **terlipressin** against a historical cohort treated with **off-label
+vasoconstrictors** (midodrine/octreotide, norepinephrine, or vasopressin).
+
+| Item | Definition |
+|:-----|:-----------|
+| Terlipressin cohort | HARMONY multi-center registry (`group = "terli"`) |
+| Off-label cohort | Prior multi-center HRS registry, restricted to `final_type_of_aki == 2` and `hrs_vasoconstrictor == 1` (`group = "hrs"`) |
+| Treatment response | `hrs_responders_cat_2`: **1** = complete or partial response, **0** = no response |
+| Follow-up time | `time_90days` — days from treatment initiation, truncated at 90 |
+| 90-day status | `status_90days` — **0** = alive/censored, **1** = death, **2** = liver transplant (competing event) |
+| Matching | 1:1 nearest-neighbour propensity score, caliper 0.2 SD |
+
+::: {.callout-note}
+## How to read this report
+All code is folded by default — use **Show code** on any block, or the `</> Code`
+menu at the top right to expand everything. Sections **5** and **6** contain the
+creatinine–response tables and the new 90-day survival analyses.
+:::
+
+```{r}
+#| label: setup
+#| include: false
+
 library(tidyverse)
 library(tableone)
 library(writexl)
@@ -27,44 +80,66 @@ library(DescTools)
 library(survminer)
 library(finalfit)
 library(tidycmprsk)
-library(ggsurvfit) 
+library(ggsurvfit)
 library(sqldf)
 library(table1)
 library(cobalt)
-library(kableExtra)
 library(MatchIt)
+library(gt)
+library(knitr)
+library(kableExtra)
+
+# En dashes and >= symbols in table labels only survive a UTF-8 locale; a bare
+# `quarto render` from a shell without LANG set otherwise escapes them as <U+2013>.
+if (!isTRUE(l10n_info()$`UTF-8`)) {
+  try(Sys.setlocale("LC_CTYPE", "en_US.UTF-8"), silent = TRUE)
+}
+
+# Shared colours used throughout the report
+col_no_resp <- "#c0392b"
+col_resp    <- "#2c8dbb"
+col_hrs     <- "#e08214"
+col_terli   <- "#2c8dbb"
 ```
 
+# Data preparation {#sec-data}
+
+## Terlipressin cohort (HARMONY)
+
+Variables are coerced to numeric where possible, renamed to a common schema shared
+with the off-label cohort, and re-coded so that categorical levels line up across
+the two registries.
+
 ```{r}
+#| label: prep-terli
+
 terlipressin <- read_xlsx("/Users/to909/Desktop/Terlipressin/final_master_0508.xlsx")
 
 terlipressin_numeric <- terlipressin  # make a copy
 
-
-
 for (col in names(terlipressin_numeric)) {
   # Suppress warnings like "NAs introduced by coercion"
   converted <- suppressWarnings(as.numeric(terlipressin_numeric[[col]]))
-  
+
   # If at least one value successfully converted (not NA), keep it
   if (any(!is.na(converted))) {
     terlipressin_numeric[[col]] <- converted
   }
 }
 
-terlipressin_numeric <- terlipressin_numeric %>% 
+terlipressin_numeric <- terlipressin_numeric %>%
   mutate(
     group = "terli",
     death_discharge = ifelse(disposition == 5, 1, 0)
-  ) %>% 
+  ) %>%
   rename(
     terli_resfailuretype_day2 = terli_resfailuretype_day1_day2
-  ) %>% 
-  select(-any_of(c("fena"))) %>% 
+  ) %>%
+  select(-any_of(c("fena"))) %>%
   rename(
-    age_admission = age, 
+    age_admission = age,
     sex = sex_male,
-    White = race, 
+    White = race,
     hispanic_race = hispanic,
     loop_diuretic = diuretics_preadmission,
     aldosterone_antagonist = potsp_diuretic_preadmission,
@@ -114,11 +189,11 @@ terlipressin_numeric <- terlipressin_numeric %>%
   mutate(
     # sex_male==1 -> sex==2 (male)
     sex = if_else(sex == 1, 1, 2), # updated 1129
-    
+
     # race / ethnicity
     White = if_else(White == 1, 1, 0),
     hispanic_race = if_else(hispanic_race == 1, 1, 0),
-    
+
     # medication use
     Loop_diuretic = if_else(loop_diuretic == 1, 1, 0),
     aldosterone_antagonist = if_else(aldosterone_antagonist == 1, 1, 0),
@@ -127,14 +202,14 @@ terlipressin_numeric <- terlipressin_numeric %>%
     prophylactic_antibiotic = if_else(prophylactic_antibiotic == 0, 0, 1),
     nsaids = if_else(nsaids == 1, 1, 0),
     beta_blockers = if_else(beta_blockers == 1, 1, 0),
-    # rrt 
+    # rrt
     rrt = ifelse(rrt == 2, 0, rrt),
-    
+
     # comorbidities
     diabetes = if_else(diabetes == 1, 1, 0),
     cad = if_else(cad == 1, 1, 0),
     htn = if_else(htn == 1, 1, 0),
-    
+
     # cirrhosis etiology mapping (reverse of your previous)
     etiology_cirrhosis = case_when(
       etiology_cirrhosis == 1 ~ 1,
@@ -144,7 +219,7 @@ terlipressin_numeric <- terlipressin_numeric %>%
       etiology_cirrhosis == 6 ~ 5,
       TRUE ~ NA_real_
     ),  # changed 1129
-    
+
     # complications
     ascites_admission = if_else(ascites_admission == 1, 1, 0),
     encephalopathy_admission = if_else(encephalopathy_admission == 1, 1, 0),
@@ -152,8 +227,8 @@ terlipressin_numeric <- terlipressin_numeric %>%
     peritonitis_admission = if_else(peritonitis_admission == 1, 1, 0),
     hcc_admission = if_else(hcc_admission == 1, 1, 0),
     tips_admission = if_else(tips_admission == 1, 1, 0),
-    
-    # hepatic encephalopathy grade: new(0–4) → old(1–5)
+
+    # hepatic encephalopathy grade: new(0-4) -> old(1-5)
     he_grade_admission = case_when(
       he_grade_admission == 0 ~ 1,
       he_grade_admission == 1 ~ 2,
@@ -163,7 +238,7 @@ terlipressin_numeric <- terlipressin_numeric %>%
       TRUE ~ NA_real_
     ),
     liver_transplant = ifelse(liver_transplant == 1 | liver_transplant == 2, 1, 0),
-    
+
     discharge_disposition = case_when(
       discharge_disposition == 5 ~ 1,
       discharge_disposition == 1 ~ 2,
@@ -182,10 +257,10 @@ terlipressin_numeric <- terlipressin_numeric %>%
 create_first_nonzero_value <- function(data, original_variable, new_variable) {
   # Build the expected column names
   day_vars <- paste0(original_variable, "_day", 1:13)
-  
+
   # Keep only those that exist in the dataset
   valid_day_vars <- day_vars[day_vars %in% names(data)]
-  
+
   # Apply logic and keep only subjectid + new_variable
   data %>%
     rowwise() %>%
@@ -215,76 +290,70 @@ var1 <- c(
   "creatinine_admission",
   "death_in_90days_status", "los", "discharge_disposition",
   "palliative_care", "intubated", "MELD_baseline",
-  "MELD_Na_baseline", "time_90days", "status_90days","subjectid"
+  "MELD_Na_baseline", "time_90days", "status_90days", "subjectid"
 )
 
-final_terlipressin <- terlipressin_numeric %>% select(var1)
+final_terlipressin <- terlipressin_numeric %>% select(all_of(var1))
 final_terlipressin <- final_terlipressin %>%
-  mutate(MELD_Na_baseline = ifelse(is.na(MELD_Na_baseline), median(MELD_Na_baseline, na.rm = TRUE), MELD_Na_baseline))
+  mutate(MELD_Na_baseline = ifelse(is.na(MELD_Na_baseline),
+                                   median(MELD_Na_baseline, na.rm = TRUE),
+                                   MELD_Na_baseline))
 
 order_names <- names(final_terlipressin)
 ```
 
+## Off-label vasoconstrictor cohort
+
+Site-level supplements (sediment findings, RRT/CRRT, days to peak and last
+creatinine) are merged onto the core registry before harmonising variable coding.
+
 ```{r}
-# read hrs 
+#| label: prep-hrs
+
+# read hrs
 hrs <- read_excel("/Users/to909/Desktop/Andrew/All_edited_new_12142022.xlsx")
 
 # read additional site-level data
-Baylor0913 <- read_excel("/Users/to909/Desktop/Andrew/Baylor0913.xlsx") %>%
+site_vars <- c("study_id", "creatinine_last_available", "nephrology_sediment",
+               "granular_casts", "sediment_description", "rrt_crrt",
+               "days_peak_cre", "days_last_cre", "albumin_amount_prior")
 
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+Baylor0913 <- read_excel("/Users/to909/Desktop/Andrew/Baylor0913.xlsx") %>%
+  select(all_of(site_vars))
 
 Indiana0913 <- read_excel("/Users/to909/Desktop/Andrew/Indiana0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 Jacksonville0913 <- read_excel("/Users/to909/Desktop/Andrew/Jacksonville0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 Kentukey0913 <- read_excel("/Users/to909/Desktop/Andrew/Kentukey0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 MCW0913 <- read_excel("/Users/to909/Desktop/Andrew/MCW0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 MGH0913 <- read_excel("/Users/to909/Desktop/Andrew/MGH0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 Michigan0913 <- read_excel("/Users/to909/Desktop/Andrew/Michigan0913.xlsx") %>%
   mutate(sediment_description = NA, albumin_amount_prior = NA) %>%
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 Oschner0913 <- read_excel("/Users/to909/Desktop/Andrew/Oschner0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 Rochester0913 <- read_excel("/Users/to909/Desktop/Andrew/Rochester0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 USC0913 <- read_excel("/Users/to909/Desktop/Andrew/USC0913.xlsx") %>%
   mutate(sediment_description = NA, creatinine_last_available = NA,
-         rrt_crrt = NA, days_peak_cre = NA, days_last_cre = NA, albumin_amount_prior = NA) %>%
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+         rrt_crrt = NA, days_peak_cre = NA, days_last_cre = NA,
+         albumin_amount_prior = NA) %>%
+  select(all_of(site_vars))
 
 Yale0913 <- read_excel("/Users/to909/Desktop/Andrew/Yale0913.xlsx") %>%
-
-  select(study_id,  creatinine_last_available, nephrology_sediment, granular_casts,
-         sediment_description, rrt_crrt, days_peak_cre, days_last_cre, albumin_amount_prior)
+  select(all_of(site_vars))
 
 addtional_vars <- rbind(
   Baylor0913, Indiana0913, Jacksonville0913, Kentukey0913, MCW0913,
@@ -292,11 +361,11 @@ addtional_vars <- rbind(
 ) %>%
   select(-albumin_amount_prior)
 
-# merge all 
+# merge all
 hrs <- merge(hrs, addtional_vars, by = "study_id", all.x = TRUE) %>%
   rename(subjectid = study_id)
 
-# Clean variables 
+# Clean variables
 hrs <- hrs %>%
   mutate(
     White = ifelse(White == 1, 1, 0),
@@ -317,30 +386,33 @@ hrs <- hrs %>%
 #     # Time variable: whichever event happens first
 #  # 1. TIME: The time is the minimum of the two event times
 #     time_to_death_90days_cmp = pmin(death_in_90days_time, liver_transplant_90days_time, na.rm = TRUE),
-#     
+#
 #     # 2. STATUS: Determine which event happened first
 #     status_90days = case_when(
 #       # Condition 1: Death happened first (or on the exact same day as transplant)
 #       time_to_death_90days_cmp == death_in_90days_time & death_in_90days_status == 1 ~ 1,
-#       
+#
 #       # Condition 2: Transplant happened first before death
 #       time_to_death_90days_cmp == liver_transplant_90days_time & liver_transplant_90days_status == 1 ~ 2,
-#       
+#
 #       # Condition 0: Censored (Neither happened by the time of their follow-up/90 days)
 #       TRUE ~ 0
 #     )
 #   )
 
-
-
-
-
-
 final_hrs_aki <- hrs %>%
   mutate(group = "hrs") %>%
   filter(final_type_of_aki == 2, hrs_vasoconstrictor == 1) %>%
-  select(order_names) %>%
-  mutate(MELD_Na_baseline = ifelse(is.na(MELD_Na_baseline), median(MELD_Na_baseline, na.rm = TRUE), MELD_Na_baseline))
+  select(all_of(order_names)) %>%
+  mutate(MELD_Na_baseline = ifelse(is.na(MELD_Na_baseline),
+                                   median(MELD_Na_baseline, na.rm = TRUE),
+                                   MELD_Na_baseline))
+```
+
+## Combined analytic dataset
+
+```{r}
+#| label: prep-combined
 
 all_final <- rbind(final_hrs_aki, final_terlipressin) %>%
   mutate(
@@ -353,10 +425,7 @@ all_final <- rbind(final_hrs_aki, final_terlipressin) %>%
     etiology_cirrhosis_cat2 = ifelse(etiology_cirrhosis == 1, 1, 0),
     group_numerical = ifelse(group == "hrs", 0, 1)
   )
-```
 
-
-```{r}
 num_var <- c(
   "age_admission",
   "age",
@@ -378,16 +447,37 @@ num_var <- c(
   "MELD_baseline", "admit_meld", "MELD_Na_baseline", "admit_meld_na",
   "clif_score", "MAP", "map_terli_day0_time0", "CLIF_C_Score",
   "baseline_creatinine", "baseline_scr", "los", "days_to_discharge",
-  "death_in_90days_time", "dc_days_to_death", "creatinine_admission", "time_90days","site"
+  "death_in_90days_time", "dc_days_to_death", "creatinine_admission",
+  "time_90days", "site"
 )
 
 all_var <- setdiff(names(all_final), "subjectid")
 cat_var <- setdiff(all_var, num_var)
 ```
 
-## Table 1 
+```{r}
+#| label: cohort-counts
+#| echo: false
+
+all_final %>%
+  count(group) %>%
+  mutate(Cohort = ifelse(group == "hrs", "Off-label vasoconstrictor", "Terlipressin")) %>%
+  select(Cohort, `Patients (N)` = n) %>%
+  gt() %>%
+  tab_header(title = "Unmatched analytic cohorts") %>%
+  tab_options(table.width = pct(55), heading.title.font.weight = "bold")
+```
+
+# Baseline characteristics {#sec-baseline}
+
+## Full baseline comparison by cohort
+
+Continuous variables are summarised as median [IQR] and compared with non-parametric
+tests; categorical variables are compared with chi-square tests.
 
 ```{r}
+#| label: table-one
+
 # create Table 1 for exposure response
 T1_all_final_subgroup <- CreateTableOne(
   vars = all_var,
@@ -413,87 +503,28 @@ write.csv(
   file = "/Users/to909/Desktop/Terlipressin projects/Shelsea/Table1_all_final_11302025.csv"
 )
 
-print(T1_all_final_subgroup, nonnormal = num_var, missing = TRUE, printToggle = FALSE) %>%
-  knitr::kable(format = "html", caption = "Table 1: Patient Characteristics") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
+T1_all_final_subgroup_csv %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column("Variable") %>%
+  rename(`Off-label vasoconstrictor` = hrs, Terlipressin = terli) %>%
+  kable(align = c("l", rep("r", 5)),
+        caption = "Table 1. Baseline characteristics, unmatched cohorts") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = TRUE, fixed_thead = TRUE) %>%
+  scroll_box(height = "520px")
 ```
 
-## Matching and balance diagnostics
+## Key baseline variables
 
 ```{r}
-matched_data <- matchit(
-  group_numerical ~ age_admission + sex + ascites_admission + etiology_cirrhosis_cat2 + MELD_Na_baseline,
-  data   = all_final,
-  method = "nearest",
-  distance = "glm",
-  ratio  = 1,
-  caliper = 0.2  # common recommendation: 0.2 on PS logit SD
-)
+#| label: table-key-baseline
 
-matched_data <- match.data(matched_data, drop.unmatched = TRUE)
-```
-
-### Balance check before matching
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-bal.tab(
-  group_numerical ~ age_admission + sex + ascites_admission + etiology_cirrhosis_cat2 + MELD_Na_baseline,
-  data    = all_final,
-  disp    = c("means", "sds")
-)
-```
-
-### Balance check after matching
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-bal.tab(
-  group_numerical ~ age_admission + sex + ascites_admission + etiology_cirrhosis_cat2 + MELD_Na_baseline,
-  data    = matched_data,
-  treat   = matched_data$group_numerical,
-  weights = matched_data$weight.ATE,
-  disp    = c("means", "sds")
-)
-```
-
-## Fine and Gray models (death vs transplant)
-
-```{r}
-matched_data$status_90days <- as.factor(matched_data$status_90days)
-tidycmprsk::crr(Surv(time_90days, status_90days) ~ group,
-                failcode = 1, cencode = 0, data = matched_data) %>%
-  tbl_regression(exp = TRUE)
-```
-
-```{r}
-matched_data$status_90days <- as.factor(matched_data$status_90days)
-tidycmprsk::crr(Surv(time_90days, status_90days) ~ group + CLIF_C_Score,
-                failcode = 1, cencode = 0, data = matched_data) %>%
-  tbl_regression(exp = TRUE) %>%
-  add_n()
-```
-
-```{r}
-matched_data$status_90days <- as.factor(matched_data$status_90days)
-tidycmprsk::crr(
-  Surv(time_90days, status_90days) ~ group + CLIF_C_Score +
-    prophylactic_antibiotic + beta_blockers + k_admit + cl_admit,
-  failcode = 1, cencode = 0, data = matched_data
-) %>%
-  tbl_regression(exp = TRUE) %>%
-  add_n()
-```
-
-<!-- ## 1. Baseline comparison prior to matching -->
-
-```{r}
 vars_req1 <- c(
   "etiology_cirrhosis_cat2",
   "baseline_creatinine",
   "albumin_amount_admission",
   "creatinine_admission"
 )
-
-
 
 T_req1 <- CreateTableOne(
   vars = vars_req1,
@@ -504,201 +535,560 @@ T_req1 <- CreateTableOne(
   factorVars = c("etiology_cirrhosis_cat2")
 )
 
-print(T_req1, nonnormal = c("baseline_creatinine", "albumin_amount_admission", "creatinine_admission"), printToggle = FALSE) %>%
-  knitr::kable(format = "html", caption = "Baseline Comparison Prior to Matching") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
+T_req1_print <- print(
+  T_req1,
+  nonnormal = c("baseline_creatinine", "albumin_amount_admission", "creatinine_admission"),
+  showAllLevels = FALSE,
+  missing = FALSE,
+  quote = FALSE,
+  noSpaces = TRUE,
+  printToggle = FALSE
+)
+
+T_req1_print %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column("Variable") %>%
+  rename(`Off-label vasoconstrictor` = hrs, Terlipressin = terli) %>%
+  kable(align = c("l", rep("r", 4)),
+        caption = "Alcohol-related etiology, baseline and admission creatinine, and albumin (unmatched cohorts)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE)
 ```
 
-<!-- ## 2. Admission SCr ranges vs overall response (matched cohorts) -->
+# Propensity-score matching {#sec-matching}
+
+## Matching specification
+
+1:1 nearest-neighbour matching on the logit of a propensity score estimated from
+age, sex, ascites at admission, alcohol-related cirrhosis, and baseline MELD-Na,
+with a 0.2 SD caliper. Unmatched patients are dropped.
 
 ```{r}
-# Define admission SCr using creatinine_admission for both groups
+#| label: matching
 
+matched_data <- matchit(
+  group_numerical ~ age_admission + sex + ascites_admission +
+    etiology_cirrhosis_cat2 + MELD_Na_baseline,
+  data   = all_final,
+  method = "nearest",
+  distance = "glm",
+  ratio  = 1,
+  caliper = 0.2  # common recommendation: 0.2 on PS logit SD
+)
+
+matched_data <- match.data(matched_data, drop.unmatched = TRUE)
+
+matched_data %>%
+  count(group) %>%
+  mutate(Cohort = ifelse(group == "hrs", "Off-label vasoconstrictor", "Terlipressin")) %>%
+  select(Cohort, `Matched patients (N)` = n) %>%
+  gt() %>%
+  tab_header(title = "Matched analytic cohorts") %>%
+  tab_options(table.width = pct(55), heading.title.font.weight = "bold")
+```
+
+## Covariate balance before matching
+
+```{r}
+#| label: balance-before
+#| echo: false
+
+bal.tab(
+  group_numerical ~ age_admission + sex + ascites_admission +
+    etiology_cirrhosis_cat2 + MELD_Na_baseline,
+  data    = all_final,
+  disp    = c("means", "sds")
+)
+```
+
+## Covariate balance after matching
+
+```{r}
+#| label: balance-after
+#| echo: false
+
+bal.tab(
+  group_numerical ~ age_admission + sex + ascites_admission +
+    etiology_cirrhosis_cat2 + MELD_Na_baseline,
+  data    = matched_data,
+  treat   = matched_data$group_numerical,
+  weights = matched_data$weight.ATE,
+  disp    = c("means", "sds")
+)
+```
+
+# HRS-AKI treatment response {#sec-scr-response}
+
+Everything in this section uses the **matched** cohorts. In the creatinine tables,
+`N` is the number of matched patients in each band; response percentages are
+calculated among patients with a documented response outcome.
+
+```{r}
+#| label: scr-categories
+
+# Serum creatinine at treatment initiation: terlipressin day-0 SCr where available,
+# otherwise admission SCr (used for the off-label cohort).
 scr_day0 <- terlipressin_numeric %>%
   select(subjectid, scr_terli_day0)
 
-
-matched_data <- matched_data %>% merge(scr_day0, by = "subjectid", all.x = TRUE) %>%
-  mutate(
-    scr_terli_day0 = ifelse(is.na(scr_terli_day0),creatinine_admission,scr_terli_day0))
-
 matched_data <- matched_data %>%
+  merge(scr_day0, by = "subjectid", all.x = TRUE) %>%
+  mutate(scr_terli_day0 = ifelse(is.na(scr_terli_day0), creatinine_admission, scr_terli_day0)) %>%
   rename(scr = scr_terli_day0)
 
-scr_breaks <- c(1.51, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, Inf)
-scr_labels <- c(
-  "1.51–1.99",
-  "2.0–2.49",
-  "2.5–2.99",
-  "3.0–3.49",
-  "3.5–3.99",
-  "4.0–4.49",
-  "4.5–4.99",
-  "≥5.0"
-)
+# Creatinine bands. Values below 1.51 mg/dL now get their own explicit level
+# instead of being silently dropped into NA.
+scr_breaks <- c(-Inf, 1.51, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, Inf)
+scr_labels <- c("<1.51", "1.51–1.99", "2.0–2.49", "2.5–2.99", "3.0–3.49",
+                "3.5–3.99", "4.0–4.49", "4.5–4.99", "≥5.0")
 
 matched_data <- matched_data %>%
   mutate(
-    scr_cat = cut(scr, breaks = scr_breaks, labels = scr_labels, right = FALSE)
-  )
-
-tab_req2 <- matched_data %>%
-  group_by(scr_cat, group) %>%
-  summarise(
-    n = n(),
-    resp_rate = mean(hrs_responders_cat_2, na.rm = TRUE) * 100,
-    .groups = "drop"
-  ) %>%
-  tidyr::pivot_wider(
-    id_cols = scr_cat,
-    names_from = group,
-    values_from = resp_rate,
-    names_glue = "{group}_pct"
-  ) %>%
-  dplyr::left_join(
-    matched_data %>%
-      group_by(scr_cat) %>%
-      summarise(overall_pct = mean(hrs_responders_cat_2, na.rm = TRUE) * 100, .groups = "drop"),
-    by = "scr_cat"
-  ) %>%
-  arrange(scr_cat)
-
-tab_req2
-```
-
-<!-- ## 3. Peak SCr ranges vs overall response (overall cohorts) -->
-
-```{r}
-
-scr_breaks <- c(1.51, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, Inf)
-scr_labels <- c(
-  "1.51–1.99",
-  "2.0–2.49",
-  "2.5–2.99",
-  "3.0–3.49",
-  "3.5–3.99",
-  "4.0–4.49",
-  "4.5–4.99",
-  "≥5.0"
-)
-
-
-matched_data <- matched_data %>%
-  mutate(
+    scr_cat             = cut(scr, breaks = scr_breaks, labels = scr_labels, right = FALSE),
     peak_creatinine_cat = cut(peak_creatinine, breaks = scr_breaks, labels = scr_labels, right = FALSE)
-  )
+  ) %>%
+  mutate(across(c(scr_cat, peak_creatinine_cat),
+                ~ forcats::fct_na_value_to_level(.x, "Missing")))
 
-tab_req3 <- matched_data %>%
-  group_by(peak_creatinine_cat, group) %>%
-  summarise(
-    n = n(),
-    resp_rate = mean(hrs_responders_cat_2, na.rm = TRUE) * 100,
-    .groups = "drop"
-  ) %>%
-  tidyr::pivot_wider(
-    id_cols = peak_creatinine_cat,
-    names_from = group,
-    values_from = resp_rate,
-    names_glue = "{group}_pct"
-  ) %>%
-  dplyr::left_join(
-    matched_data %>%
-      group_by(peak_creatinine_cat) %>%
-      summarise(overall_pct = mean(hrs_responders_cat_2, na.rm = TRUE) * 100, .groups = "drop"),
-    by = "peak_creatinine_cat"
-  ) %>%
-  arrange(peak_creatinine_cat)
+# Responders by creatinine band, with N for each cohort and overall.
+resp_by_cat <- function(data, catvar) {
+  cat_sym <- rlang::sym(catvar)
 
-tab_req3
+  by_grp <- data %>%
+    group_by(!!cat_sym, group) %>%
+    summarise(N      = n(),
+              n_resp = sum(hrs_responders_cat_2 == 1, na.rm = TRUE),
+              n_eval = sum(!is.na(hrs_responders_cat_2)),
+              .groups = "drop") %>%
+    tidyr::pivot_wider(id_cols = !!cat_sym, names_from = group,
+                       values_from = c(N, n_resp, n_eval), values_fill = 0)
+
+  overall <- data %>%
+    group_by(!!cat_sym) %>%
+    summarise(N_all      = n(),
+              n_resp_all = sum(hrs_responders_cat_2 == 1, na.rm = TRUE),
+              n_eval_all = sum(!is.na(hrs_responders_cat_2)),
+              .groups = "drop")
+
+  by_grp %>%
+    left_join(overall, by = catvar) %>%
+    arrange(!!cat_sym) %>%
+    mutate(
+      resp_hrs   = sprintf("%d (%.1f)", n_resp_hrs,   100 * n_resp_hrs   / pmax(n_eval_hrs, 1)),
+      resp_terli = sprintf("%d (%.1f)", n_resp_terli, 100 * n_resp_terli / pmax(n_eval_terli, 1)),
+      resp_all   = sprintf("%d (%.1f)", n_resp_all,   100 * n_resp_all   / pmax(n_eval_all, 1))
+    ) %>%
+    select(band = !!cat_sym,
+           N_hrs, resp_hrs, N_terli, resp_terli, N_all, resp_all)
+}
+
+resp_gt <- function(tab, band_label, title, subtitle) {
+  tab %>%
+    gt() %>%
+    cols_label(band = band_label,
+               N_hrs = "N", resp_hrs = "Response, n (%)",
+               N_terli = "N", resp_terli = "Response, n (%)",
+               N_all = "N", resp_all = "Response, n (%)") %>%
+    tab_spanner(label = "Off-label vasoconstrictor", columns = c(N_hrs, resp_hrs)) %>%
+    tab_spanner(label = "Terlipressin", columns = c(N_terli, resp_terli)) %>%
+    tab_spanner(label = "Overall", columns = c(N_all, resp_all)) %>%
+    tab_header(title = title, subtitle = subtitle) %>%
+    cols_align(align = "center", columns = -band) %>%
+    tab_style(style = cell_text(weight = "bold"),
+              locations = list(cells_column_labels(), cells_column_spanners())) %>%
+    tab_style(style = cell_fill(color = "#f4f8fb"),
+              locations = cells_body(columns = c(N_all, resp_all))) %>%
+    tab_footnote(
+      footnote = "Response = complete or partial HRS-AKI response (hrs_responders_cat_2 = 1). Percentages use patients with a documented response outcome as the denominator; one off-label patient has a missing response status.",
+      locations = cells_column_spanners(spanners = "Overall")
+    ) %>%
+    tab_options(heading.title.font.weight = "bold",
+                table.font.size = pct(95),
+                data_row.padding = px(4))
+}
 ```
 
-<!-- ## 4. Cumulative incidence of 90-day death (competing risk: transplant) -->
+## Overall response by cohort
 
 ```{r}
+#| label: tbl-response-overall
+
+matched_data <- matched_data %>%
+  mutate(AKI_responders_cat2 = ifelse(AKI_responders == "no response",
+                                      "no response", "overall response"))
+
+CreateTableOne(
+  vars = "AKI_responders_cat2",
+  strata = "group",
+  data = matched_data,
+  factorVars = "AKI_responders_cat2"
+) %>%
+  print(printToggle = FALSE) %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column("Variable") %>%
+  rename(`Off-label vasoconstrictor` = hrs, Terlipressin = terli) %>%
+  kable(align = c("l", rep("r", 4)),
+        caption = "Overall HRS-AKI response by cohort (matched)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = FALSE)
+```
+
+## Serum creatinine at treatment initiation vs. response
+
+Day-0 serum creatinine for the terlipressin cohort, admission serum creatinine for
+the off-label cohort.
+
+```{r}
+#| label: tbl-scr-initiation
+
+tab_req2 <- resp_by_cat(matched_data, "scr_cat")
+
+resp_gt(
+  tab_req2,
+  band_label = "SCr at initiation (mg/dL)",
+  title = "HRS-AKI response by serum creatinine at treatment initiation",
+  subtitle = "Matched cohorts"
+)
+```
+
+## Peak in-hospital serum creatinine vs. response
+
+```{r}
+#| label: tbl-scr-peak
+
+tab_req3 <- resp_by_cat(matched_data, "peak_creatinine_cat")
+
+resp_gt(
+  tab_req3,
+  band_label = "Peak SCr (mg/dL)",
+  title = "HRS-AKI response by peak in-hospital serum creatinine",
+  subtitle = "Matched cohorts"
+)
+```
+
+# Ninety-day survival by treatment response {#sec-survival-response}
+
+Patients are split by cohort (`group`) and by HRS-AKI response
+(`hrs_responders_cat_2`: response = complete or partial). Kaplan–Meier estimates
+treat death as the event and censor liver transplant at the time of transplant; the
+competing-risk view in @sec-cuminc-response treats transplant as a competing event.
+
+```{r}
+#| label: surv-data
+
+surv_dat <- matched_data %>%
+  mutate(status_90days = as.numeric(as.character(status_90days))) %>%
+  filter(!is.na(hrs_responders_cat_2)) %>%
+  mutate(
+    cohort = factor(ifelse(group == "hrs", "Off-label vasoconstrictor", "Terlipressin"),
+                    levels = c("Off-label vasoconstrictor", "Terlipressin")),
+    response = factor(ifelse(hrs_responders_cat_2 == 1, "Response", "No response"),
+                      levels = c("No response", "Response")),
+    death      = as.numeric(status_90days == 1),
+    transplant = as.numeric(status_90days == 2)
+  )
+```
+
+## Survival estimates at 90 days
+
+```{r}
+#| label: tbl-surv-90d
+
+km_row <- function(d, label_cohort, label_resp) {
+  f <- survfit(Surv(time_90days, death) ~ 1, data = d)
+  s <- summary(f, times = 90, extend = TRUE)
+  tibble(
+    Cohort = label_cohort, Response = label_resp,
+    N = nrow(d), Deaths = sum(d$death), Transplants = sum(d$transplant),
+    surv = 100 * s$surv, lo = 100 * s$lower, hi = 100 * s$upper
+  )
+}
+
+surv_tab <- bind_rows(
+  surv_dat %>% group_split(cohort) %>%
+    purrr::map_dfr(~ km_row(.x, as.character(.x$cohort[1]), "All patients")),
+  surv_dat %>% group_split(cohort, response) %>%
+    purrr::map_dfr(~ km_row(.x, as.character(.x$cohort[1]), as.character(.x$response[1])))
+) %>%
+  mutate(Response = factor(Response, levels = c("All patients", "No response", "Response"))) %>%
+  arrange(Cohort, Response) %>%
+  mutate(surv_ci = sprintf("%.1f (%.1f–%.1f)", surv, lo, hi)) %>%
+  select(Cohort, Response, N, Deaths, Transplants, surv_ci)
+
+surv_tab %>%
+  gt(groupname_col = "Cohort") %>%
+  cols_label(Response = "Group", N = "N",
+             Deaths = "Deaths by 90 d", Transplants = "Transplants by 90 d",
+             surv_ci = "90-day survival, % (95% CI)") %>%
+  tab_header(title = "Ninety-day survival by cohort and HRS-AKI response",
+             subtitle = "Kaplan–Meier estimates; transplant censored") %>%
+  cols_align(align = "center", columns = c(N, Deaths, Transplants, surv_ci)) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = list(cells_column_labels(), cells_row_groups())) %>%
+  tab_style(style = cell_text(style = "italic"),
+            locations = cells_body(columns = Response,
+                                   rows = Response == "All patients")) %>%
+  tab_options(heading.title.font.weight = "bold", data_row.padding = px(4))
+```
+
+## Kaplan–Meier curves
+
+```{r}
+#| label: fig-km-response
+#| fig-cap:
+#|   - "Ninety-day survival by HRS-AKI response — off-label vasoconstrictor cohort."
+#|   - "Ninety-day survival by HRS-AKI response — terlipressin cohort."
+#| fig-width: 6.2
+#| fig-height: 5
+#| layout-ncol: 2
+
+km_plot <- function(d, title) {
+  survfit2(Surv(time_90days, death) ~ response, data = d) %>%
+    ggsurvfit(linewidth = 0.9) +
+    add_confidence_interval(alpha = 0.12) +
+    add_risktable(risktable_stats = "n.risk", size = 3.2) +
+    add_risktable_strata_symbol(symbol = "\U25CF", size = 11) +
+    add_pvalue(location = "annotation", caption = "Log-rank {p.value}",
+               x = 5, y = 0.06, hjust = 0, size = 3.6) +
+    scale_x_continuous(breaks = seq(0, 90, 15), limits = c(0, 90),
+                       expand = expansion(add = c(3.5, 1.5))) +
+    scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+    scale_color_manual(values = c("No response" = col_no_resp, "Response" = col_resp)) +
+    scale_fill_manual(values  = c("No response" = col_no_resp, "Response" = col_resp)) +
+    labs(title = title, x = "Days from treatment initiation", y = "Survival probability") +
+    theme_classic(base_size = 12) +
+    theme(legend.position = "top", legend.title = element_blank(),
+          plot.title = element_text(face = "bold", size = 12))
+}
+
+km_plot(filter(surv_dat, cohort == "Off-label vasoconstrictor"), "Off-label vasoconstrictor")
+km_plot(filter(surv_dat, cohort == "Terlipressin"), "Terlipressin")
+```
+
+## Association of response with 90-day mortality
+
+Unadjusted Cox models fitted separately within each cohort, with response as the
+only covariate.
+
+```{r}
+#| label: tbl-cox-response
+
+cox_tab <- purrr::map_dfr(levels(surv_dat$cohort), function(cc) {
+  d  <- surv_dat %>% filter(cohort == cc)
+  sd <- survdiff(Surv(time_90days, death) ~ response, data = d)
+  cx <- summary(coxph(Surv(time_90days, death) ~ response, data = d))
+  tibble(
+    Cohort = cc,
+    hr  = sprintf("%.2f (%.2f–%.2f)", cx$conf.int[1], cx$conf.int[3], cx$conf.int[4]),
+    p_cox = cx$coefficients[5],
+    p_lr  = pchisq(sd$chisq, df = 1, lower.tail = FALSE)
+  )
+}) %>%
+  mutate(across(c(p_cox, p_lr),
+                ~ ifelse(.x < 0.001, "<0.001", sprintf("%.3f", .x))))
+
+cox_tab %>%
+  gt() %>%
+  cols_label(Cohort = "Cohort",
+             hr = "HR for death, response vs. no response (95% CI)",
+             p_cox = "Cox p", p_lr = "Log-rank p") %>%
+  tab_header(title = "Unadjusted association of HRS-AKI response with 90-day mortality") %>%
+  cols_align(align = "center", columns = c(hr, p_cox, p_lr)) %>%
+  tab_style(style = cell_text(weight = "bold"), locations = cells_column_labels()) %>%
+  tab_options(heading.title.font.weight = "bold", data_row.padding = px(4))
+```
+
+## Competing-risk cumulative incidence {#sec-cuminc-response}
+
+Liver transplant is treated as a competing event, so these estimates are the
+probability of dying by day 90 accounting for transplant.
+
+```{r}
+#| label: tbl-cuminc-response
+
+ci_tab <- purrr::map_dfr(levels(surv_dat$cohort), function(cc) {
+  d  <- surv_dat %>% filter(cohort == cc) %>% mutate(st = factor(status_90days))
+  ci <- tidycmprsk::cuminc(Surv(time_90days, st) ~ response, data = d)
+  ci %>%
+    tidy(times = 90) %>%
+    filter(outcome == "1") %>%
+    transmute(Cohort = cc, Response = as.character(strata),
+              est = sprintf("%.1f (%.1f–%.1f)",
+                            100 * estimate, 100 * conf.low, 100 * conf.high),
+              p_gray = ci$cmprsk$Tests["1", "pv"])
+}) %>%
+  mutate(p_gray = ifelse(p_gray < 0.001, "<0.001", sprintf("%.3f", p_gray))) %>%
+  # Gray's test is a single test per cohort; blank the repeat so it does not read
+  # as two independent p-values.
+  mutate(p_gray = ifelse(duplicated(Cohort), "", p_gray))
+
+ci_tab %>%
+  gt(groupname_col = "Cohort") %>%
+  cols_label(Response = "Group",
+             est = "90-day cumulative incidence of death, % (95% CI)",
+             p_gray = "Gray's test p") %>%
+  tab_header(title = "Ninety-day cumulative incidence of death by HRS-AKI response",
+             subtitle = "Liver transplant treated as a competing event") %>%
+  cols_align(align = "center", columns = c(est, p_gray)) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = list(cells_column_labels(), cells_row_groups())) %>%
+  tab_options(heading.title.font.weight = "bold", data_row.padding = px(4))
+```
+
+```{r}
+#| label: fig-cuminc-response
+#| fig-cap:
+#|   - "Cumulative incidence of death by day 90 by HRS-AKI response — off-label vasoconstrictor cohort."
+#|   - "Cumulative incidence of death by day 90 by HRS-AKI response — terlipressin cohort."
+#| fig-width: 6.2
+#| fig-height: 4.6
+#| layout-ncol: 2
+
+cuminc_plot <- function(d, title) {
+  d <- d %>% mutate(st = factor(status_90days))
+  tidycmprsk::cuminc(Surv(time_90days, st) ~ response, data = d) %>%
+    ggcuminc(outcome = "1", linewidth = 0.9) +
+    add_confidence_interval(alpha = 0.12) +
+    scale_x_continuous(breaks = seq(0, 90, 15), limits = c(0, 90),
+                       expand = expansion(add = c(1, 1.5))) +
+    scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+    scale_color_manual(values = c("No response" = col_no_resp, "Response" = col_resp)) +
+    scale_fill_manual(values  = c("No response" = col_no_resp, "Response" = col_resp)) +
+    labs(title = title, x = "Days from treatment initiation",
+         y = "Cumulative incidence of death") +
+    theme_classic(base_size = 12) +
+    theme(legend.position = "top", legend.title = element_blank(),
+          plot.title = element_text(face = "bold", size = 12))
+}
+
+cuminc_plot(filter(surv_dat, cohort == "Off-label vasoconstrictor"), "Off-label vasoconstrictor")
+cuminc_plot(filter(surv_dat, cohort == "Terlipressin"), "Terlipressin")
+```
+
+# Ninety-day mortality: cohort comparison {#sec-cohort-mortality}
+
+## Cumulative incidence of death by cohort
+
+```{r}
+#| label: fig-cuminc-cohort
+#| fig-cap: "Cumulative incidence of death by day 90, terlipressin vs. off-label vasoconstrictors (matched cohorts, transplant as competing event)."
+#| fig-width: 7.5
+#| fig-height: 5
+
 matched_data$status_90days <- as.factor(matched_data$status_90days)
+
 ci_obj <- tidycmprsk::cuminc(
   formula = Surv(time_90days, status_90days) ~ group,
   data = matched_data,
   cencode = 0
 )
-ggsurvfit::ggcuminc(ci_obj) +
-  labs(
-    x = "Days",
-    y = "Cumulative incidence of death",
-    color = "Cohort"
-  ) +
-  scale_x_continuous(breaks = seq(0, 90, by = 15), limits = c(0, 90)) +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank()
-  )
 
+ggsurvfit::ggcuminc(ci_obj, linewidth = 0.9) +
+  add_confidence_interval(alpha = 0.12) +
+  # No `color =` title here: naming only the colour guide splits it from the
+  # confidence-interval fill guide and draws the legend twice.
+  labs(x = "Days from treatment initiation",
+       y = "Cumulative incidence of death") +
+  scale_x_continuous(breaks = seq(0, 90, by = 15), limits = c(0, 90),
+                     expand = expansion(add = c(1, 1.5))) +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  scale_color_manual(values = c("hrs" = col_hrs, "terli" = col_terli),
+                     labels = c("Off-label vasoconstrictor", "Terlipressin")) +
+  scale_fill_manual(values = c("hrs" = col_hrs, "terli" = col_terli),
+                    labels = c("Off-label vasoconstrictor", "Terlipressin")) +
+  theme_classic(base_size = 12) +
+  theme(legend.position = "top", legend.title = element_blank())
 ```
 
-<!-- ## 5. Off-label vasoconstrictor participants per site (matched off-label cohort) -->
+## Fine–Gray models
+
+Subdistribution hazard of death within 90 days, with liver transplant as the
+competing event.
+
+### Unadjusted
 
 ```{r}
-terli_matched <- matched_data %>% filter(group == "terli") %>%
-  mutate(site = gsub("-.*", "", subjectid))
-table(terli_matched$site)
-```
+#| label: fg-crude
 
-```{r}
-table1 <- CreateTableOne(
-  vars = "total_albumin",
-  strata = "terli_ae_respfail",
-  data = terlipressin_numeric,
-  factorVars = NULL
-)
-
-print(table1, nonnormal = "total_albumin", printToggle = FALSE) %>%
-  knitr::kable(format = "html", caption = "Total Albumin by Respiratory Failure") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
-```
-
-#3  Multiviariate cmp:  
-```{r,echo=FALSE,warning=FALSE,message=F}
-tidycmprsk::crr(Surv(time_90days,status_90days) ~group,failcode=1,cencode=0, data = matched_data) %>% tbl_regression(exp = TRUE) %>% add_n()%>%
-  bold_p(0.05) %>%        # bold p-values under a given threshold (default 0.05)
+matched_data$status_90days <- as.factor(matched_data$status_90days)
+tidycmprsk::crr(Surv(time_90days, status_90days) ~ group,
+                failcode = 1, cencode = 0, data = matched_data) %>%
+  tbl_regression(exp = TRUE) %>%
+  add_n() %>%
+  bold_p(0.05) %>%   # bold p-values under a given threshold (default 0.05)
   bold_labels()      # bold variable labels with significant p-values
-
 ```
 
-#4  Multiviariate cmp:   death
-```{r,echo=FALSE,warning=FALSE,message=F}
-tidycmprsk::crr(Surv(time_90days,status_90days) ~group +CLIF_C_Score+age_admission+gi_bleed_admission+albumin_amount_admission,failcode=1,cencode=0, data = matched_data) %>% tbl_regression(exp = TRUE) %>% add_n()%>%
-  bold_p(0.05) %>%        # bold p-values under a given threshold (default 0.05)
-  bold_labels()      # bold variable labels with significant p-values
-
-```
-
-#4  Multiviariate cmp:   livertransplant 
-```{r,echo=FALSE,warning=FALSE,message=F}
-tidycmprsk::crr(Surv(time_90days,status_90days) ~group +CLIF_C_Score+age_admission+gi_bleed_admission+albumin_amount_admission,failcode=2,cencode=0, data = matched_data) %>% tbl_regression(exp = TRUE) %>% add_n()%>%
-  bold_p(0.05) %>%        # bold p-values under a given threshold (default 0.05)
-  bold_labels()      # bold variable labels with significant p-values
-
-```
-
+### Adjusted for CLIF-C score
 
 ```{r}
+#| label: fg-clif
 
-matched_data <- matched_data %>% mutate(AKI_responders_cat2 = ifelse(AKI_responders == "no response", "no response", "overall response"))
-
-table1 <- CreateTableOne(
-  vars = "AKI_responders_cat2",
-  strata = "group",
-  data = matched_data,
-  factorVars = "AKI_responders_cat2"
-)
-
-print(table1, printToggle = FALSE) %>%
-  knitr::kable(format = "html", caption = "AKI Responders by Group") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
+tidycmprsk::crr(Surv(time_90days, status_90days) ~ group + CLIF_C_Score,
+                failcode = 1, cencode = 0, data = matched_data) %>%
+  tbl_regression(exp = TRUE) %>%
+  add_n()
 ```
 
+### Fully adjusted
+
 ```{r}
+#| label: fg-full
+
+tidycmprsk::crr(
+  Surv(time_90days, status_90days) ~ group + CLIF_C_Score +
+    prophylactic_antibiotic + beta_blockers + k_admit + cl_admit,
+  failcode = 1, cencode = 0, data = matched_data
+) %>%
+  tbl_regression(exp = TRUE) %>%
+  add_n()
+```
+
+### Adjusted for CLIF-C, age, GI bleed, and albumin
+
+```{r}
+#| label: fg-clinical-death
+
+tidycmprsk::crr(
+  Surv(time_90days, status_90days) ~ group + CLIF_C_Score + age_admission +
+    gi_bleed_admission + albumin_amount_admission,
+  failcode = 1, cencode = 0, data = matched_data
+) %>%
+  tbl_regression(exp = TRUE) %>%
+  add_n() %>%
+  bold_p(0.05) %>%
+  bold_labels()
+```
+
+### Liver transplant as the outcome
+
+Same covariates, but modelling the subdistribution hazard of **liver transplant**
+(`failcode = 2`), with death as the competing event.
+
+```{r}
+#| label: fg-clinical-transplant
+
+tidycmprsk::crr(
+  Surv(time_90days, status_90days) ~ group + CLIF_C_Score + age_admission +
+    gi_bleed_admission + albumin_amount_admission,
+  failcode = 2, cencode = 0, data = matched_data
+) %>%
+  tbl_regression(exp = TRUE) %>%
+  add_n() %>%
+  bold_p(0.05) %>%
+  bold_labels()
+```
+
+# Supportive care and cohort composition {#sec-sites}
+
+## Renal replacement therapy by cohort
+
+`rrt` for the terlipressin cohort and `rrt_crrt` for the off-label cohort are
+combined into a single indicator before tabulating.
+
+```{r}
+#| label: tbl-rrt
+
 # Build unified rrt variable from both cohorts
 rrt_terli <- terlipressin_numeric %>%
   select(subjectid, rrt) %>%
@@ -715,14 +1105,61 @@ rrt_all <- bind_rows(rrt_terli, rrt_hrs) %>%
 matched_data_rrt <- matched_data %>%
   left_join(rrt_all, by = "subjectid")
 
-table1_rrt <- CreateTableOne(
+CreateTableOne(
   vars = "rrt",
   strata = "group",
   data = matched_data_rrt,
   factorVars = "rrt"
-)
+) %>%
+  print(printToggle = FALSE) %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column("Variable") %>%
+  rename(`Off-label vasoconstrictor` = hrs, Terlipressin = terli) %>%
+  kable(align = c("l", rep("r", 4)),
+        caption = "Renal replacement therapy by cohort (matched)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = FALSE)
+```
 
-print(table1_rrt, printToggle = FALSE) %>%
-  knitr::kable(format = "html", caption = "RRT by Group") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
+## Terlipressin patients by site
+
+Site is taken from the prefix of `subjectid`.
+
+```{r}
+#| label: tbl-sites-terli
+
+terli_matched <- matched_data %>%
+  filter(group == "terli") %>%
+  mutate(site = gsub("-.*", "", subjectid))
+
+terli_matched %>%
+  count(site, name = "Patients") %>%
+  arrange(desc(Patients)) %>%
+  rename(Site = site) %>%
+  gt() %>%
+  tab_header(title = "Matched terlipressin patients by site") %>%
+  cols_align(align = "center", columns = Patients) %>%
+  tab_style(style = cell_text(weight = "bold"), locations = cells_column_labels()) %>%
+  tab_options(table.width = pct(55), heading.title.font.weight = "bold",
+              data_row.padding = px(4))
+```
+
+## Total albumin by respiratory failure (terlipressin cohort)
+
+```{r}
+#| label: tbl-albumin-respfail
+
+CreateTableOne(
+  vars = "total_albumin",
+  strata = "terli_ae_respfail",
+  data = terlipressin_numeric,
+  factorVars = NULL
+) %>%
+  print(nonnormal = "total_albumin", printToggle = FALSE) %>%
+  as.data.frame() %>%
+  tibble::rownames_to_column("Variable") %>%
+  kable(align = c("l", rep("r", 4)),
+        caption = "Total albumin by terlipressin-associated respiratory failure") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = FALSE)
 ```
